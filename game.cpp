@@ -1,10 +1,9 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL.h>
 
 using namespace std;
 
-int main(int argc, const char* argv[])
+int main(int argc, char* argv[])
 {    
     bool quit = false;
     SDL_Event event;
@@ -13,8 +12,11 @@ int main(int argc, const char* argv[])
     
     SDL_DisplayMode DM;
     SDL_GetCurrentDisplayMode(0, &DM);
-    int Width = DM.w * 0.75;
-    int Height = DM.h * 0.75;
+
+    float displayscale = 1;
+
+    int Width = DM.w * displayscale;
+    int Height = DM.h * displayscale;
     auto midWidth = Width / 2;
     auto midHeight = Height / 2;
 
@@ -24,36 +26,39 @@ int main(int argc, const char* argv[])
         0, 0, Width, Height, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
 
-    SDL_Rect player;
+    struct Player {
+        SDL_Rect rect;
+        float x, y;
+        float velx, vely;
+        float accx, accy;
+        bool onground;
+    };
+
+    Player player;
+    player.rect.x = midWidth;
+    player.rect.y = midHeight;
+    player.rect.w = 75 * displayscale;
+    player.rect.h = 75 * displayscale;
+
     player.x = midWidth;
     player.y = midHeight;
-    player.w = 50;
-    player.h = 50;
+    player.velx = 0;
+    player.vely = 0;
+    player.accx = 0;
+    player.accy = 0;
 
-    float x = midWidth;
-    float y = midHeight;
-
-    float vx = 0;
-    float vy = 0;
-
-    float ax = 0;
-    float ay = 0;
+    player.onground = true;
 
     bool UP = false;
     bool RIGHT = false; 
     bool DOWN = false; 
     bool LEFT = false;
 
-    bool lastUP = false;
-
-    float scale;
-
     Uint32 time;
     Uint32 lasttime = SDL_GetTicks();
-    float dt = 1.0/60;
+    float dt = 1.0/fps;
 
-    while (!quit)
-    {
+    while (!quit) {
         time = SDL_GetTicks();
 
         SDL_PollEvent(&event);
@@ -100,70 +105,69 @@ int main(int argc, const char* argv[])
                 break;
         }
 
-        ax = 0;
-        ay = 0;
+        player.accx = 0;
+        player.accy = 0;
+
+        // player in air
+        if (player.y+player.rect.h >= Height) {
+            player.onground = true;
+        } else {
+            player.onground = false;
+        }
 
         // Move rect
-        scale = 1 - (x + player.w/2 - midWidth) / midWidth;
-        scale = min(1.0f, max(scale, 0.00005f));
-        if (!lastUP && UP){ay -= 2;}
-        if (RIGHT){x += 20*scale;}
-        if (LEFT){x -= 20*scale;}
+        if (player.onground && UP){player.accy -= 2000;}
+        if (RIGHT){player.x += 1200*dt;}
+        if (LEFT){player.x -= 1200*dt;}
 
-        lastUP = UP;
-
-        if (player.y+player.h < Height) {
-            ay += 0.1;
+        if (!player.onground) {
+            player.accy += 98;
         }
 
-        vx += ax;
-        vy += ay;
+        player.velx += player.accx;
+        player.vely += player.accy;
 
-        x += vx*dt*scale;
-        y += vy*dt*scale;
+        player.x += player.velx*dt;
+        player.y += player.vely*dt;
 
-        if (player.y+player.h > Height) {
-            vy = 0;
-            y = Height-player.h;
+        if (player.y+player.rect.h > Height) {
+            player.vely = 0;
+            player.y = Height-player.rect.h;
         }
-        if (player.y < -1) {
-            vy = 0;
-            y = 0; 
+        if (player.y < 0) {
+            player.vely = 0;
+            player.y = 0; 
         }
-        if (player.x+player.w > Width) {
-            vx = 0;
-            x = Width-player.w; 
+        if (player.x+player.rect.w > Width) {
+            player.velx = 0;
+            player.x = Width-player.rect.w; 
         }
-        if (player.x < -1) {
-            vx = 0;
-            x = 0; 
+        if (player.x < 0) {
+            player.velx = 0;
+            player.x = 0; 
         }
 
-        player.x = (int)x;
-        player.y = (int)y;
+        player.rect.x = (int)player.x;
+        player.rect.y = (int)player.y;
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
 
-        // Show time field
-        for (int i = 0; i <= midWidth; i++) {
-            float ratio = (float)i/midWidth;
-            SDL_SetRenderDrawColor(renderer, 34*ratio, 139*ratio, 34*ratio, 255);
-            SDL_RenderDrawLine(renderer, i+midWidth, 0, i+midWidth, Height);
-        }
-
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        SDL_RenderFillRect(renderer, &player);
+        SDL_RenderFillRect(renderer, &player.rect);
 
         SDL_RenderPresent(renderer);
 
         lasttime = SDL_GetTicks();
-
-        SDL_Delay(max((1000.0/60-(float)(lasttime-time)), 0.0));
-        dt = SDL_GetTicks()-time;
+        
+        
+        SDL_Delay(max((1000.0/fps-(float)(lasttime-time)), 0.0));
+        dt = (float)(SDL_GetTicks()-time)/1000;
     }
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+
+    return 0;
 }
