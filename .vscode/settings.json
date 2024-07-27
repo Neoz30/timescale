@@ -46,5 +46,13 @@
         "typeinfo": "cpp",
         "bit": "cpp"
     },
-    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++"
+    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "c:\\Users\\enzom\\Desktop\\Projets\\timescale",
+            "binaryPath": "c:\\Users\\enzom\\Desktop\\Projets\\timescale\\game.exe",
+            "binaryArgs": []
+        }
+    ],
+    "makefile.makefilePath": "makefile",
 }
