@@ -27,8 +27,8 @@ class TileMap {
         }
 
         void pos_to_tilemap(int x, int y, int* result) {
-            result[0] = (x - cam_x) / tilesize;
-            result[1] = (y - cam_y) / tilesize;
+            result[0] = x / tilesize;
+            result[1] = y / tilesize;
         } 
 
         void display(SDL_Renderer* renderer) {
@@ -39,8 +39,8 @@ class TileMap {
                 for (int j = 0; j < 64; j++) {
 
                     if (tiles[i][j] > 0) {
-                        tile.x = tilesize*i + cam_x;
-                        tile.y = -tilesize*(j+1) + 1080 + cam_y;
+                        tile.x = tilesize*i - cam_x;
+                        tile.y = -tilesize*(j+1) + 1080 - cam_y;
 
                         SDL_SetRenderDrawColor(renderer, 64, 128, 32, 255);
                         SDL_RenderFillRect(renderer, &tile);
@@ -187,9 +187,19 @@ int main(int argc, char* argv[])
             int tile_pos[2];
             int mx, my;
             SDL_GetMouseState(&mx, &my);
-            my = -my + Height;
+            mx = max(0, min(Width, mx + map.cam_x));
+            my = max(0, min(Height, Height - my + map.cam_y));
             map.pos_to_tilemap(mx, my, tile_pos);
             map.tiles[tile_pos[0]][tile_pos[1]] = 1;
+        }
+        if (Button2) {
+            int tile_pos[2];
+            int mx, my;
+            SDL_GetMouseState(&mx, &my);
+            mx = max(0, min(Width, mx + map.cam_x));
+            my = max(0, min(Height, Height - my + map.cam_y));
+            map.pos_to_tilemap(mx, my, tile_pos);
+            map.tiles[tile_pos[0]][tile_pos[1]] = 0;
         }
 
         player.accx = 0;
@@ -233,6 +243,9 @@ int main(int argc, char* argv[])
             player.velx = 0;
             player.x = player.rect.w/2; 
         }
+
+        map.cam_x += player.x - midWidth;
+        player.x = midWidth;
 
         player.rect.x = (int)(player.x-player.rect.h/2);
         player.rect.y = (int)(-player.y+Height-player.rect.h/2);
