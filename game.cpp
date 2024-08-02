@@ -92,13 +92,10 @@ int main(int argc, char* argv[])
 
     player.onground = true;
 
-    bool UP = false;
-    bool RIGHT = false; 
-    bool DOWN = false; 
-    bool LEFT = false;
-
-    bool Button1 = false;
-    bool Button2 = false;
+    // Input handle
+    const Uint8* keys = SDL_GetKeyboardState(NULL);
+    int mouse_x, mouse_y; 
+    Uint32 mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
 
     Uint32 time;
     Uint32 lasttime = SDL_GetTicks();
@@ -114,92 +111,28 @@ int main(int argc, char* argv[])
             case SDL_QUIT:
                 quit = true;
                 break;
-            
-            // Keyboard input update
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym) {
-                    case SDLK_z:
-                        UP = true;
-                        break;
-                    case SDLK_d:
-                        RIGHT = true;
-                        break;
-                    case SDLK_s:
-                        DOWN = true;
-                        break;
-                    case SDLK_q:
-                        LEFT = true;
-                        break;
-                }
-                break;
-            
-            case SDL_KEYUP:
-                switch (event.key.keysym.sym) {
-                    case SDLK_z:
-                        UP = false;
-                        break;
-                    case SDLK_d:
-                        RIGHT = false;
-                        break;
-                    case SDLK_s:
-                        DOWN = false;
-                        break;
-                    case SDLK_q:
-                        LEFT = false;
-                        break;
-                }
-                break;
-            // Mouse button update;
-            case SDL_MOUSEBUTTONDOWN:
-                switch (event.button.button)
-                {
-                case SDL_BUTTON_LEFT:
-                    Button1 = true;
-                    break;
-                
-                case SDL_BUTTON_RIGHT:
-                    Button2 = true;
-                    break;
-                
-                default:
-                    break;
-                }
-                break;
-            
-            case SDL_MOUSEBUTTONUP:
-                switch (event.button.button)
-                {
-                case SDL_BUTTON_LEFT:
-                    Button1 = false;
-                    break;
-                
-                case SDL_BUTTON_RIGHT:
-                    Button2 = false;
-                    break;
-                
-                default:
-                    break;
-                }
-                break;
         }
 
-        if (Button1) {
-            int tile_pos[2];
-            int mx, my;
-            SDL_GetMouseState(&mx, &my);
-            mx = max(0, min(Width, mx + map.cam_x));
-            my = max(0, min(Height, Height - my + map.cam_y));
-            map.pos_to_tilemap(mx, my, tile_pos);
-            map.tiles[tile_pos[0]][tile_pos[1]] = 1;
+        // Mouse handle
+        mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
+
+        if (mouse & SDL_BUTTON(1)) {
+            if (0 <= mouse_x && mouse_x < Width && 0 <= mouse_y && mouse_y < Height) {
+                int tile_pos[2];
+                int mx = max(0, min(Width, mouse_x + map.cam_x));
+                int my = max(0, min(Height, Height - mouse_y + map.cam_y));
+                map.pos_to_tilemap(mx, my, tile_pos);
+                map.tiles[tile_pos[0]][tile_pos[1]] = 1;
+            }
         }
-        if (Button2) {
-            int tile_pos[2];
-            int mx, my;
-            SDL_GetMouseState(&mx, &my);
-            mx = max(0, min(Width, mx + map.cam_x));
-            my = max(0, min(Height, Height - my + map.cam_y));
-            map.pos_to_tilemap(mx, my, tile_pos);
-            map.tiles[tile_pos[0]][tile_pos[1]] = 0;
+        if (mouse & SDL_BUTTON(3)) {
+            if (0 <= mouse_x && mouse_x < Width && 0 <= mouse_y && mouse_y < Height) {
+                int tile_pos[2];
+                int mx = max(0, min(Width, mouse_x + map.cam_x));
+                int my = max(0, min(Height, Height - mouse_y + map.cam_y));
+                map.pos_to_tilemap(mx, my, tile_pos);
+                map.tiles[tile_pos[0]][tile_pos[1]] = 0;
+            }
         }
 
         player.accx = 0;
@@ -213,9 +146,9 @@ int main(int argc, char* argv[])
         }
 
         // Move rect
-        if (player.onground && UP){player.accy += 2000;}
-        if (RIGHT){player.x += 1200*dt;}
-        if (LEFT){player.x -= 1200*dt;}
+        if (player.onground && keys[SDL_SCANCODE_W]){player.accy += 2000;}
+        if (keys[SDL_SCANCODE_D]){player.x += 1200*dt;}
+        if (keys[SDL_SCANCODE_A]){player.x -= 1200*dt;}
 
         if (!player.onground) {
             player.accy -= 98;
@@ -244,8 +177,8 @@ int main(int argc, char* argv[])
             player.x = player.rect.w/2; 
         }
 
-        map.cam_x += player.x - midWidth;
-        player.x = midWidth;
+        /*map.cam_x += player.x - midWidth;
+        player.x = midWidth;*/
 
         player.rect.x = (int)(player.x-player.rect.h/2);
         player.rect.y = (int)(-player.y+Height-player.rect.h/2);
