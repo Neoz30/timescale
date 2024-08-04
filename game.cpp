@@ -59,6 +59,11 @@ class TileMap {
         }
 };
 
+bool TileCollision(int tile_x, int tile_y, Player player) {
+    float midsize = 1;
+    return (player.x+midsize > tile_x && player.x-midsize < tile_x+1);
+}
+
 int main(int argc, char* argv[])
 {    
     bool quit = false;
