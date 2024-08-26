@@ -1,9 +1,0 @@
-{
-    "makefile.launchConfigurations": [
-        {
-            "cwd": "/home/neoz30/Desktop/timescale",
-            "binaryPath": "/home/neoz30/Desktop/timescale/game",
-            "binaryArgs": []
-        }
-    ]
-}

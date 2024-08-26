@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 using namespace std;
 
@@ -77,9 +77,8 @@ int main(int argc, char* argv[])
     int fps = DM.refresh_rate;
 
     SDL_Window* window = SDL_CreateWindow("SDL2 TimeScale Beta",
-        0, 0, DM.w, DM.h, SDL_WINDOW_FULLSCREEN);
+        0, 0, DM.w, DM.h, 0);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-
 
     TileMap map(&DM);
     map.tiles[0][0] = 1;
@@ -103,7 +102,7 @@ int main(int argc, char* argv[])
     Uint32 mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
 
     Uint32 time;
-    Uint32 lasttime;
+    Uint32 lasttime = SDL_GetTicks();
     float dt = 1.0/fps;
 
     while (!quit) {
@@ -199,7 +198,7 @@ int main(int argc, char* argv[])
 
         lasttime = SDL_GetTicks();
         
-        SDL_Delay(max(1000.0/fps-(float)(lasttime-time), 0.0));
+        SDL_Delay(max((1000.0/fps-(float)(lasttime-time)), 0.0));
         dt = (float)(SDL_GetTicks()-time)/1000;
     }
 
