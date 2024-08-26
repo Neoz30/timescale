@@ -1,13 +1,14 @@
 #include <iostream>
 #include <SDL.h>
+#include "vec2.h"
 
 using namespace std;
 
 struct Player {
         SDL_Rect rect;
-        float x, y;
-        float velx, vely;
-        float accx, accy;
+        vec2f position;
+        vec2f oldposition;
+        vec2f acceleration;
         bool onground;
     };
 
@@ -59,10 +60,10 @@ class TileMap {
         }
 };
 
-bool TileCollision(int tile_x, int tile_y, Player player) {
+/*bool TileCollision(int tile_x, int tile_y, Player player) {
     float midsize = 1;
     return (player.x+midsize > tile_x && player.x-midsize < tile_x+1);
-}
+}*/
 
 int main(int argc, char* argv[])
 {    
@@ -76,9 +77,10 @@ int main(int argc, char* argv[])
 
     int fps = DM.refresh_rate;
 
-    SDL_Window* window = SDL_CreateWindow("SDL2 TimeScale Beta",
-        0, 0, DM.w, DM.h, 0);
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+    SDL_Window* window = SDL_CreateWindow(
+        "SDL2 TimeScale Beta", 0, 0, DM.w, DM.h, SDL_WINDOW_FULLSCREEN
+        );
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     TileMap map(&DM);
     map.tiles[0][0] = 1;
@@ -87,18 +89,16 @@ int main(int argc, char* argv[])
     player.rect.w = 80;
     player.rect.h = 80;
 
-    player.x = 1;
-    player.y = 1;
-    player.velx = 0;
-    player.vely = 0;
-    player.accx = 0;
-    player.accy = 0;
-
+    player.position = {0, 0};
+    player.oldposition = {0, 0};
+    player.acceleration = {0, 0};
     player.onground = true;
+    float aircontrol = 0.1;
+    float friction = 0.75;
 
     // Input handle
     const Uint8* keys = SDL_GetKeyboardState(NULL);
-    int mouse_x, mouse_y; 
+    int mouse_x, mouse_y;
     Uint32 mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
 
     Uint32 time;
@@ -139,50 +139,44 @@ int main(int argc, char* argv[])
             }
         }
 
-        player.accx = 0;
-        player.accy = 0;
+        player.acceleration = {0, 0};
 
         // player in air
-        if (player.y <= 1) {
+        if (player.position.y <= 1) {
             player.onground = true;
         } else {
             player.onground = false;
         }
 
         // Move rect
-        if (player.onground && keys[SDL_SCANCODE_SPACE]){player.accy += 32;}
-        if (keys[SDL_SCANCODE_D]){player.x += 16*dt;}
-        if (keys[SDL_SCANCODE_A]){player.x -= 16*dt;}
+        int move = 16;
+        if (!player.onground) {move *= aircontrol;}
+        if (player.onground && keys[SDL_SCANCODE_SPACE]){player.acceleration.y += 32;}
+        if (keys[SDL_SCANCODE_D]){player.acceleration.x += 16;}
+        if (keys[SDL_SCANCODE_A]){player.acceleration.x -= 16;}
 
         if (!player.onground) {
-            player.accy -= 2;
+            player.acceleration.y -= 2;
         }
 
-        player.velx += player.accx;
-        player.vely += player.accy;
+        vec2f velocity = player.position - player.oldposition;
+        
+        if (player.onground) {
+            velocity.x *= 1-friction;
+        } else {
+            velocity.x *= 1-friction*0.1;
+        }
+        
+        player.oldposition = player.position;
+        player.position = player.acceleration*dt + velocity + player.position;
 
-        player.x += player.velx*dt;
-        player.y += player.vely*dt;
-
-        if (player.y-1 < 0) {
-            player.vely = 0;
-            player.y = 1;
-        }
-        if (player.y+1 > 64) {
-            player.vely = 0;
-            player.y = 63;
-        }
-        if (player.x+1 > 64) {
-            player.velx = 0;
-            player.x = 63;
-        }
-        if (player.x-1 < 0) {
-            player.velx = 0;
-            player.x = 1; 
-        }
+        if (player.position.y-1 < 0) {player.position.y = 1;}
+        if (player.position.y+1 > 64) {player.position.y = 63;}
+        if (player.position.x+1 > 64) {player.position.x = 63;}
+        if (player.position.x-1 < 0) {player.position.x = 1;}
 
         int display_player[2];
-        map.TileposToDislpaypos(player.x, player.y, display_player);
+        map.TileposToDislpaypos(player.position.x, player.position.y, display_player);
         player.rect.x = (int)(display_player[0]-player.rect.w/2);
         player.rect.y = (int)(display_player[1]-player.rect.h/2);
 
@@ -196,9 +190,6 @@ int main(int argc, char* argv[])
 
         SDL_RenderPresent(renderer);
 
-        lasttime = SDL_GetTicks();
-        
-        SDL_Delay(max((1000.0/fps-(float)(lasttime-time)), 0.0));
         dt = (float)(SDL_GetTicks()-time)/1000;
     }
 
