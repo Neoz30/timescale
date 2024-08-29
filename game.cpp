@@ -4,76 +4,6 @@
 
 using namespace std;
 
-struct Hitbox {
-    float w, h;
-};
-
-class Player {
-        public:
-            SDL_Rect rect;
-            Hitbox hitbox;
-            vec2f position;
-            vec2f oldposition;
-            vec2f acceleration = {0, 0};
-            float friction = 0.8;
-            bool onground = false;
-
-            Player(vec2f basepos, int width, int height) {
-                position = basepos;
-                oldposition = basepos;
-                hitbox.w = width;
-                hitbox.h = height;
-            }
-
-            bool touchground() {
-                return (position.y-hitbox.h/2 <= 0) ? true : false; 
-            }
-
-            void key_movement(const Uint8* keys) {
-                float move = onground ? 16 : 1.6;
-                if (onground && keys[SDL_SCANCODE_SPACE]){acceleration.y += 38;}
-                if (keys[SDL_SCANCODE_D]){acceleration.x += move;}
-                if (keys[SDL_SCANCODE_A]){acceleration.x -= move;}
-            }
-
-            void collision() {
-                if (position.y-hitbox.h/2 < 0) position.y = hitbox.h/2;
-                if (position.y+hitbox.h/2 > 64) position.y = 64-hitbox.h/2;
-                if (position.x-hitbox.w/2 < 0) position.x = hitbox.w/2;
-                if (position.x+hitbox.w/2 > 64) position.x = 64-hitbox.w/2;
-            }
-
-            void physic(float dt) {
-                // Gravity Force
-                if (!onground) {
-                    acceleration.y -= 2;
-                }
-
-                //Update physic player
-                vec2f velocity = position - oldposition;
-                velocity.x *= onground ? 1-friction : 1;
-                oldposition = position;
-                position = acceleration*dt + velocity + position;
-            
-                collision();
-            }
-
-            void update(const Uint8* keys, float dt) {
-                acceleration = {0, 0};
-                onground = touchground();
-                key_movement(keys);
-                physic(dt);
-            }
-
-            void draw(SDL_Renderer* renderer, int* screenspace, int scale) {
-                rect.x = (int)screenspace[0]-scale/2;
-                rect.y = (int)screenspace[1]-scale/2;
-                rect.w = (int)hitbox.w*scale;
-                rect.h = (int)hitbox.h*scale;
-                SDL_RenderFillRect(renderer, &rect);
-            }
-};
-
 class TileMap {
     public:
         SDL_DisplayMode* display;
@@ -120,6 +50,100 @@ class TileMap {
                 }
             }
         }
+};
+
+struct Hitbox {
+    float w, h;
+};
+
+class Player {
+        public:
+            SDL_Rect rect;
+            Hitbox hitbox;
+            vec2f position;
+            vec2f oldposition;
+            vec2f acceleration = {0, 0};
+            float friction = 0.8;
+            bool onground = false;
+
+            Player(vec2f basepos, int width, int height) {
+                position = basepos;
+                oldposition = basepos;
+                hitbox.w = width;
+                hitbox.h = height;
+            }
+
+            bool touchground() {
+                return position.y-hitbox.h/2 <= 0;
+            }
+
+            void key_movement(const Uint8* keys) {
+                float move = onground ? 16 : 1.6;
+                if (onground && keys[SDL_SCANCODE_SPACE]){acceleration.y += 38;}
+                if (keys[SDL_SCANCODE_D]){acceleration.x += move;}
+                if (keys[SDL_SCANCODE_A]){acceleration.x -= move;}
+            }
+
+            void edge_collision() {
+                if (position.y-hitbox.h/2 < 0) position.y = hitbox.h/2;
+                if (position.y+hitbox.h/2 > 64) position.y = 64-hitbox.h/2;
+                if (position.x-hitbox.w/2 < 0) position.x = hitbox.w/2;
+                if (position.x+hitbox.w/2 > 64) position.x = 64-hitbox.w/2;
+            }
+
+            bool block_detection(int blockX, int blockY) {
+                return position.x-hitbox.w/2 < blockX+1 && position.x+hitbox.w/2 > blockX &&
+                position.y-hitbox.h/2 < blockY+1 && position.y+hitbox.h/2 > blockY;
+            }
+
+            void block_collision(TileMap* map) {
+                for (int dx = -1; dx <= 1; dx++) {
+                    for (int dy = -1; dy <= 1; dy++) {
+                        int x = (int)position.x, y = (int)position.y;
+                        int blockX = x+dx, blockY = y+dy;
+                        int playerX = position.x-hitbox.w/2, playerY = position.y-hitbox.h/2;
+
+                        if (map->tiles[x+dx][y+dy] && block_detection(blockX, blockY)) {
+                            if (playerX < blockX) position.x += blockX-playerX;
+                            if (playerX+hitbox.w > blockX) position.x -= playerX-blockX;
+                            if (playerY < blockY) position.y += blockY-playerY;
+                            if (playerY+hitbox.h > blockY) position.y -= playerY-blockY;
+                        }
+
+                    }
+                }
+            }
+
+            void physic(float dt, TileMap* map) {
+                // Gravity Force
+                if (!onground) {
+                    acceleration.y -= 2;
+                }
+
+                //Update physic player
+                vec2f velocity = position - oldposition;
+                velocity.x *= onground ? 1-friction : 1;
+                oldposition = position;
+                position = acceleration*dt + velocity + position;
+            
+                edge_collision();
+                block_collision(map);
+            }
+
+            void update(const Uint8* keys, float dt, TileMap* map) {
+                acceleration = {0, 0};
+                onground = touchground();
+                key_movement(keys);
+                physic(dt, map);
+            }
+
+            void draw(SDL_Renderer* renderer, int* screenspace, int scale) {
+                rect.x = (int)screenspace[0]-scale/2;
+                rect.y = (int)screenspace[1]-scale/2;
+                rect.w = (int)hitbox.w*scale;
+                rect.h = (int)hitbox.h*scale;
+                SDL_RenderFillRect(renderer, &rect);
+            }
 };
 
 int main(int argc, char* argv[])
@@ -186,7 +210,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        player.update(keys, dt);
+        player.update(keys, dt, &map);
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderClear(renderer);
