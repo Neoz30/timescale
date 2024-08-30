@@ -99,22 +99,23 @@ class Player {
             void block_collision(TileMap* map) {
                 for (int dx = -1; dx <= 1; dx++) {
                     for (int dy = -1; dy <= 1; dy++) {
-                        int x = (int)position.x, y = (int)position.y;
+                        int x = (int)position.x, y = (int)oldposition.y;
                         
                         int blockX = x+dx, blockY = y+dy;
                         if (blockX < 0 || blockX > 63 || blockY < 0 || blockY > 63) {
                             continue;
                         }
-                        int playerX = position.x-hitbox.w/2, playerY = position.y-hitbox.h/2;
                         unsigned int blockstate = map->tiles[blockX][blockY];
 
                         if (blockstate == 1 && block_detection(blockX, blockY)) {                            
-                            int centerblockX = blockX+0.5, centerblockY = blockY+0.5;
+                            float centerblockX = blockX+0.5, centerblockY = blockY+0.5;
                             vec2f delta = {centerblockX-position.x, centerblockY-position.y};
+                            vec2f dir = vec2f(delta).normalize();
 
-                            if (position.x < centerblockX) {
-                                position.x -= (hitbox.w/2 + 0.5) - delta.x;
-                            }
+                            if (dir.x > 0.71) {position.x -= hitbox.w/2+0.5 - delta.x;}
+                            if (dir.x < -0.71) {position.x += hitbox.w/2+0.5 + delta.x;}
+                            if (dir.y > 0.71) {position.y -= hitbox.h/2+0.5 - delta.y;}
+                            if (dir.y < -0.71) {position.y += hitbox.h/2+0.5 + delta.y;}
                         }
                     }
                 }
