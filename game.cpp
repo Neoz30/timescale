@@ -7,7 +7,7 @@ using namespace std;
 class TileMap {
     public:
         SDL_DisplayMode* display;
-        int tiles[64][64];
+        unsigned int tiles[64][64];
         int tilesize = 40;
 
         TileMap(SDL_DisplayMode* dm) {
@@ -37,7 +37,7 @@ class TileMap {
             for (int i = 0; i < 64; i++) {
                 for (int j = 0; j < 64; j++) {
 
-                    if (tiles[i][j] > 0) {
+                    if (tiles[i][j]) {
                         int tile_pos[2];
                         TileposToDislpaypos((float)i, (float)j, tile_pos);
                         tile.x = tile_pos[0];
@@ -100,16 +100,22 @@ class Player {
                 for (int dx = -1; dx <= 1; dx++) {
                     for (int dy = -1; dy <= 1; dy++) {
                         int x = (int)position.x, y = (int)position.y;
+                        
                         int blockX = x+dx, blockY = y+dy;
-                        int playerX = position.x-hitbox.w/2, playerY = position.y-hitbox.h/2;
-
-                        if (map->tiles[x+dx][y+dy] && block_detection(blockX, blockY)) {
-                            if (playerX < blockX) position.x += blockX-playerX;
-                            if (playerX+hitbox.w > blockX) position.x -= playerX-blockX;
-                            if (playerY < blockY) position.y += blockY-playerY;
-                            if (playerY+hitbox.h > blockY) position.y -= playerY-blockY;
+                        if (blockX < 0 || blockX > 63 || blockY < 0 || blockY > 63) {
+                            continue;
                         }
+                        int playerX = position.x-hitbox.w/2, playerY = position.y-hitbox.h/2;
+                        unsigned int blockstate = map->tiles[blockX][blockY];
 
+                        if (blockstate == 1 && block_detection(blockX, blockY)) {                            
+                            int centerblockX = blockX+0.5, centerblockY = blockY+0.5;
+                            vec2f delta = {centerblockX-position.x, centerblockY-position.y};
+
+                            if (position.x < centerblockX) {
+                                position.x -= (hitbox.w/2 + 0.5) - delta.x;
+                            }
+                        }
                     }
                 }
             }
@@ -164,7 +170,6 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
     TileMap map(&DM);
-    map.tiles[0][0] = 1;
 
     Player player(vec2f(16, 16), 1, 1);
 
