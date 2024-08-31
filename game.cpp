@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include "vec2.h"
 
+#define CS45 0.7071068f
+
 using namespace std;
 
 class TileMap {
@@ -99,23 +101,22 @@ class Player {
             void block_collision(TileMap* map) {
                 for (int dx = -1; dx <= 1; dx++) {
                     for (int dy = -1; dy <= 1; dy++) {
-                        int x = (int)position.x, y = (int)oldposition.y;
-                        
-                        int blockX = x+dx, blockY = y+dy;
-                        if (blockX < 0 || blockX > 63 || blockY < 0 || blockY > 63) {
+                        vec2<int> player = {(int)position.x, (int)position.y};
+                        vec2<int> block = {player.x+dx, player.y+dy};
+                        if (block.x < 0 || block.x > 63 || block.y < 0 || block.y > 63) {
                             continue;
                         }
-                        unsigned int blockstate = map->tiles[blockX][blockY];
 
-                        if (blockstate == 1 && block_detection(blockX, blockY)) {                            
-                            float centerblockX = blockX+0.5, centerblockY = blockY+0.5;
-                            vec2f delta = {centerblockX-position.x, centerblockY-position.y};
+                        unsigned int blockstate = map->tiles[block.x][block.y];
+
+                        if (blockstate == 1 && block_detection(block.x, block.y)) {                            
+                            vec2f delta = {(float)block.x-position.x+0.5f, (float)block.y-position.y+0.5f};
                             vec2f dir = vec2f(delta).normalize();
 
-                            if (dir.x > 0.71) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                            if (dir.x < -0.71) {position.x += hitbox.w/2+0.5 + delta.x;}
-                            if (dir.y > 0.71) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                            if (dir.y < -0.71) {position.y += hitbox.h/2+0.5 + delta.y;}
+                            if (dir.x > CS45) {position.x -= hitbox.w/2+0.5 - delta.x;}
+                            if (dir.x < -CS45) {position.x += hitbox.w/2+0.5 + delta.x;}
+                            if (dir.y > CS45) {position.y -= hitbox.h/2+0.5 - delta.y;}
+                            if (dir.y < -CS45) {position.y += hitbox.h/2+0.5 + delta.y;}
                         }
                     }
                 }
