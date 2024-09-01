@@ -65,7 +65,6 @@ class Player {
             vec2f position;
             vec2f oldposition;
             vec2f acceleration = {0, 0};
-            float friction = 0.8;
             bool onground = false;
 
             Player(vec2f basepos, int width, int height) {
@@ -79,11 +78,10 @@ class Player {
                 return position.y-hitbox.h/2 <= 0;
             }
 
-            void key_movement(const Uint8* keys) {
-                float move = onground ? 16 : 1.6;
-                if (onground && keys[SDL_SCANCODE_SPACE]){acceleration.y += 38;}
-                if (keys[SDL_SCANCODE_D]){acceleration.x += move;}
-                if (keys[SDL_SCANCODE_A]){acceleration.x -= move;}
+            void key_movement(const Uint8* keys, float dt) {
+                if (onground && keys[SDL_SCANCODE_SPACE]){acceleration.y += 48;}
+                if (keys[SDL_SCANCODE_D]){acceleration.x += 8;}
+                if (keys[SDL_SCANCODE_A]){acceleration.x -= 8;}
             }
 
             void edge_collision() {
@@ -130,7 +128,12 @@ class Player {
 
                 //Update physic player
                 vec2f velocity = position - oldposition;
-                velocity.x *= onground ? 1-friction : 1;
+
+                float kineticfriction = 0.1f*pow(velocity.length(), 2);
+                vec2f veldir = vec2(velocity).normalize();
+                vec2f dirfriction = veldir*(kineticfriction+0.01f);
+                velocity -= dirfriction;
+                
                 oldposition = position;
                 position = acceleration*dt + velocity + position;
             
@@ -141,8 +144,8 @@ class Player {
             void update(const Uint8* keys, float dt, TileMap* map) {
                 acceleration = {0, 0};
                 onground = touchground();
-                key_movement(keys);
-                physic(dt, map);
+                key_movement(keys, dt);
+                physic(dt, map); 
             }
 
             void draw(SDL_Renderer* renderer, int* screenspace, int scale) {
