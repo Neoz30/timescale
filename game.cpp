@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
-#include "vec2.h"
+#include <math.h>
+#include "vec2.hpp"
 
 #define CS45 0.7071068f
 
@@ -30,7 +31,6 @@ class TileMap {
             result[0] = (int)(x * tilesize);
             result[1] = (int)(-y * tilesize + display->h);
         }
-
 
         void draw(SDL_Renderer* renderer) {
             SDL_Rect tile;
@@ -66,6 +66,7 @@ class Player {
             vec2f oldposition;
             vec2f acceleration = {0, 0};
             bool onground = false;
+            bool jump = false;
 
             Player(vec2f basepos, int width, int height) {
                 position = basepos;
@@ -74,12 +75,19 @@ class Player {
                 hitbox.h = height;
             }
 
-            bool touchground() {
-                return position.y-hitbox.h/2 <= 0;
+            bool touchground(TileMap* map) {
+                if (position.y-1 < 0) {return true;}
+                int underblock1 = map->tiles[(int)(position.x-0.5)][(int)(position.y-0.51)];
+                int underblock2 = map->tiles[(int)(position.x+0.5)][(int)(position.y-0.51)];
+                if (underblock1 == 1 || underblock2 == 1) {return true;}
+                return false;
             }
 
             void key_movement(const Uint8* keys, float dt) {
-                if (onground && keys[SDL_SCANCODE_SPACE]){acceleration.y += 48;}
+                if (onground && !jump && keys[SDL_SCANCODE_SPACE]){
+                    acceleration.y += 1024;
+                    jump = true;
+                }
                 if (keys[SDL_SCANCODE_D]){acceleration.x += 8;}
                 if (keys[SDL_SCANCODE_A]){acceleration.x -= 8;}
             }
@@ -99,8 +107,8 @@ class Player {
             void block_collision(TileMap* map) {
                 for (int dx = -1; dx <= 1; dx++) {
                     for (int dy = -1; dy <= 1; dy++) {
-                        vec2<int> player = {(int)position.x, (int)position.y};
-                        vec2<int> block = {player.x+dx, player.y+dy};
+                        vec2i player = {(int)position.x, (int)position.y};
+                        vec2i block = {player.x+dx, player.y+dy};
                         if (block.x < 0 || block.x > 63 || block.y < 0 || block.y > 63) {
                             continue;
                         }
@@ -122,20 +130,18 @@ class Player {
 
             void physic(float dt, TileMap* map) {
                 // Gravity Force
-                if (!onground) {
-                    acceleration.y -= 2;
-                }
+                acceleration.y -= 16;
 
                 //Update physic player
                 vec2f velocity = position - oldposition;
 
-                float kineticfriction = 0.1f*pow(velocity.length(), 2);
+                float kineticfriction = 0.5f*pow(velocity.length(), 2);
                 vec2f veldir = vec2(velocity).normalize();
-                vec2f dirfriction = veldir*(kineticfriction+0.01f);
-                velocity -= dirfriction;
+                vec2f dirfriction = veldir*-kineticfriction;
+                acceleration += dirfriction;
                 
                 oldposition = position;
-                position = acceleration*dt + velocity + position;
+                position = acceleration*dt*dt + velocity + position;
             
                 edge_collision();
                 block_collision(map);
@@ -143,7 +149,8 @@ class Player {
 
             void update(const Uint8* keys, float dt, TileMap* map) {
                 acceleration = {0, 0};
-                onground = touchground();
+                onground = touchground(map);
+                if (!onground && jump) {jump = false;}
                 key_movement(keys, dt);
                 physic(dt, map); 
             }
@@ -172,11 +179,12 @@ int main(int argc, char* argv[])
     SDL_Window* window = SDL_CreateWindow(
         "SDL2 TimeScale Beta", 0, 0, DM.w, DM.h, SDL_WINDOW_FULLSCREEN
         );
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     TileMap map(&DM);
 
     Player player(vec2f(16, 16), 1, 1);
+    map.tiles[16][0] = 1;
 
     // Input handle
     const Uint8* keys = SDL_GetKeyboardState(NULL);
@@ -185,6 +193,7 @@ int main(int argc, char* argv[])
 
     Uint32 time;
     float dt = 1.0/fps;
+    Uint32 graphiclastframe = 16;
 
     while (!quit) {
         time = SDL_GetTicks();
@@ -222,19 +231,23 @@ int main(int argc, char* argv[])
 
         player.update(keys, dt, &map);
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
+        if (time-graphiclastframe > 1000.0/fps) {
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_RenderClear(renderer);
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        // Draw the player
-        int displaypos[2];
-        map.TileposToDislpaypos(player.position.x, player.position.y, displaypos);
-        player.draw(renderer, displaypos, map.tilesize);
-        
-        map.draw(renderer);
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+            // Draw the player
+            int displaypos[2];
+            map.TileposToDislpaypos(player.position.x, player.position.y, displaypos);
+            player.draw(renderer, displaypos, map.tilesize);
+            
+            map.draw(renderer);
 
-        SDL_RenderPresent(renderer);
+            SDL_RenderPresent(renderer);
+            graphiclastframe = time;
+        }
 
+        SDL_Delay(4);
         dt = (float)(SDL_GetTicks()-time)/1000;
     }
 
