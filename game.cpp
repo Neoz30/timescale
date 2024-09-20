@@ -66,7 +66,6 @@ class Player {
             vec2f oldposition;
             vec2f acceleration = {0, 0};
             bool onground = false;
-            bool jump = false;
 
             Player(vec2f basepos, int width, int height) {
                 position = basepos;
@@ -76,17 +75,16 @@ class Player {
             }
 
             bool touchground(TileMap* map) {
-                if (position.y-1 < 0) {return true;}
-                int underblock1 = map->tiles[(int)(position.x-0.5)][(int)(position.y-0.51)];
-                int underblock2 = map->tiles[(int)(position.x+0.5)][(int)(position.y-0.51)];
-                if (underblock1 == 1 || underblock2 == 1) {return true;}
+                if ((int)position.y-1 < 0) {return false;}
+                int underblockX = (int)position.x; 
+                int underblockY = (int)position.y-1;
+                if (map->tiles[underblockX][underblockY] == 1 && block_detection(underblockX, underblockY)) {return true;}
                 return false;
             }
 
             void key_movement(const Uint8* keys, float dt) {
-                if (onground && !jump && keys[SDL_SCANCODE_SPACE]){
+                if (onground && keys[SDL_SCANCODE_SPACE]){
                     acceleration.y += 1024;
-                    jump = true;
                 }
                 if (keys[SDL_SCANCODE_D]){acceleration.x += 8;}
                 if (keys[SDL_SCANCODE_A]){acceleration.x -= 8;}
@@ -150,7 +148,6 @@ class Player {
             void update(const Uint8* keys, float dt, TileMap* map) {
                 acceleration = {0, 0};
                 onground = touchground(map);
-                if (!onground && jump) {jump = false;}
                 key_movement(keys, dt);
                 physic(dt, map); 
             }
@@ -184,7 +181,9 @@ int main(int argc, char* argv[])
     TileMap map(&DM);
 
     Player player(vec2f(16, 16), 1, 1);
-    map.tiles[16][0] = 1;
+    for (int i = 0; i < 64; i++) {
+        map.tiles[i][0] = 1;
+    }
 
     // Input handle
     const Uint8* keys = SDL_GetKeyboardState(NULL);
