@@ -105,11 +105,11 @@ public:
 		return vec2(y, -x);
 	}
 	
-	static float dot(vec2 v1, vec2 v2) {
-		return v1.x * v2.x + v1.y * v2.y;
+	float dot(vec2 v1) {
+		return v1.x * x + v1.y * y;
 	}
-	static float cross(vec2 v1, vec2 v2) {
-		return (v1.x * v2.y) - (v1.y * v2.x);
+	float cross(vec2 v1) {
+		return (v1.x * y) - (v1.y * x);
 	}
 	
 };

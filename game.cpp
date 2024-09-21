@@ -75,10 +75,15 @@ class Player {
             }
 
             bool touchground(TileMap* map) {
-                if ((int)position.y-1 < 0) {return false;}
-                int underblockX = (int)position.x; 
+                int underblockX = (int)position.x;
                 int underblockY = (int)position.y-1;
-                if (map->tiles[underblockX][underblockY] == 1 && block_detection(underblockX, underblockY)) {return true;}
+                if (map->tiles[underblockX][underblockY] == 0) {return false;}
+
+                vec2f delta = vec2f(
+                    (float)underblockX+0.5-position.x,
+                    (float)underblockY+0.5-position.y
+                );
+                if (delta.length() <= 1.05 && delta.normalize().dot(vec2f(0.f, -1.f)) > CS45) {return true;}
                 return false;
             }
 
@@ -148,6 +153,7 @@ class Player {
             void update(const Uint8* keys, float dt, TileMap* map) {
                 acceleration = {0, 0};
                 onground = touchground(map);
+                cout << onground << endl;
                 key_movement(keys, dt);
                 physic(dt, map); 
             }
