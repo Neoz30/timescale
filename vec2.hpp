@@ -117,21 +117,4 @@ public:
 typedef vec2<float> vec2f;
 typedef vec2<int> vec2i;
 
-// Reverse operation for vec2f
-vec2f operator+(double s, vec2f& v) {
-	return vec2f(v.x+s, v.y+s);
-}
-vec2f operator*(double s, vec2f& v) {
-	return vec2f(v.x * s, v.y * s);
-}
-
-// Reverse operation for vec2i
-vec2i operator+(double s, vec2i& v) {
-	return vec2i(v.x+s, v.y+s);
-}
-vec2i operator*(double s, vec2i& v) {
-	return vec2i(v.x * s, v.y * s);
-}
-
-
 #endif
