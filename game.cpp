@@ -86,10 +86,10 @@ class Player {
 
             void key_movement(const Uint8* keys, float dt) {
                 if (onground && keys[SDL_SCANCODE_SPACE]){
-                    acceleration.y += 1024;
+                    acceleration.y += 2048;
                 }
-                if (keys[SDL_SCANCODE_D]){acceleration.x += 8;}
-                if (keys[SDL_SCANCODE_A]){acceleration.x -= 8;}
+                if (keys[SDL_SCANCODE_D]){acceleration.x += 32;}
+                if (keys[SDL_SCANCODE_A]){acceleration.x -= 32;}
             }
 
             void edge_collision() {
@@ -130,16 +130,20 @@ class Player {
 
             void physic(float dt, TileMap* map) {
                 // Gravity Force
-                acceleration.y -= 16;
+                acceleration.y -= 64;
 
                 //Update physic player
                 vec2f velocity = position - oldposition;
-
-                float kineticfriction = 0.5f*pow(velocity.length(), 2);
-                vec2f veldir = vec2(velocity).normalize();
-                vec2f dirfriction = veldir*-kineticfriction;
-                acceleration += dirfriction;
                 
+                vec2f inverse_speed = velocity/-dt;
+                float speedfriction = 0.1f*pow(inverse_speed.length(), 2);
+                vec2f kineticfriction = vec2f(inverse_speed).normalize()*speedfriction;
+                acceleration += kineticfriction;
+                if (onground) {
+                    vec2f staticfriction = inverse_speed.normalize()*16;
+                    acceleration += staticfriction;
+                }
+
                 oldposition = position;
                 position = acceleration*dt*dt + velocity + position;
             
