@@ -89,7 +89,7 @@ class Player {
 
             void key_movement(const Uint8* keys, float dt) {
                 if (onground && keys[SDL_SCANCODE_SPACE]){
-                    acceleration.y += 1024;
+                    acceleration.y += 2048;
                 }
                 if (keys[SDL_SCANCODE_D]){acceleration.x += 32;}
                 if (keys[SDL_SCANCODE_A]){acceleration.x -= 32;}
@@ -156,9 +156,9 @@ class Player {
 
             void update(const Uint8* keys, float dt, TileMap* map) {
                 acceleration = {0, 0};
-                onground = touchground(map);
                 key_movement(keys, dt);
-                physic(dt, map); 
+                onground = touchground(map);
+                physic(dt, map);
             }
 
             void draw(SDL_Renderer* renderer, int* screenspace, int scale) {
