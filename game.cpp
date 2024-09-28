@@ -18,9 +18,9 @@ class TileMap {
             for (int i = 0; i < 64; i++) {
                 for (int j = 0; j < 64; j++) {
                         tiles[i][j] = 0;
-                    }
-
                 }
+            }
+            //tilesize = 1.0/64*display->w;
         }
 
         void DisplayposToTilepos(int x, int y, int* result) {
@@ -75,18 +75,21 @@ class Player {
             }
 
             bool touchground(TileMap* map) {
-                int underblockX = (int)position.x;
-                int underblockY = (int)position.y-1;
-                if (map->tiles[underblockX][underblockY] == 0) {return false;}
+                vec2i underblock(position.x, position.y-1);
+                int offset = (position.x-underblock.x < 0.5) ? -1 : 1;
+                vec2i underblock2(position.x+offset, position.y-1);
+                if (map->tiles[underblock.x][underblock.y] == 0 && map->tiles[underblock2.x][underblock2.y] == 0) {
+                    return false;
+                }
 
-                float deltaY = position.y-(underblockY+0.5);
+                float deltaY = position.y-(underblock.y+0.5);
                 if (deltaY <= 1.05 && 0 <= deltaY) {return true;}
                 return false;
             }
 
             void key_movement(const Uint8* keys, float dt) {
                 if (onground && keys[SDL_SCANCODE_SPACE]){
-                    acceleration.y += 2048;
+                    acceleration.y += 1024;
                 }
                 if (keys[SDL_SCANCODE_D]){acceleration.x += 32;}
                 if (keys[SDL_SCANCODE_A]){acceleration.x -= 32;}
