@@ -49,7 +49,12 @@ class TileMap {
                         tile.x = tile_pos[0];
                         tile.y = tile_pos[1] - tilesize;
 
-                        int code = (tiles[i-1][j] << 3) | (tiles[i][j-1] << 2) | (tiles[i+1][j] << 1) | tiles[i][j+1];
+                        int code = 0;
+                        if (j+1 < 64) code |= tiles[i][j+1];
+                        if (i+1 < 64) code |= (tiles[i+1][j] << 1);
+                        if (j-1 >= 0) code |= (tiles[i][j-1] << 2);
+                        if (i-1 >= 0) code |= (tiles[i-1][j] << 3);
+
                         texturepos.x = (0b0011 & code)*16;
                         texturepos.y = (code >> 2)*16;
 
@@ -197,7 +202,7 @@ int main(int argc, char* argv[])
 
     IMG_Init(IMG_INIT_PNG);
     SDL_Surface* grass;
-    grass = IMG_Load("./textures/grass_block/grass1.png");
+    grass = IMG_Load("./textures/grass_block/grass2.png");
     if (!grass) cout << "tileset not loaded !" << endl;
     SDL_Texture* grassTexture = SDL_CreateTextureFromSurface(renderer, grass);
 
