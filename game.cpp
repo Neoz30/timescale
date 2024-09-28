@@ -1,6 +1,9 @@
 #include <iostream>
-#include <SDL.h>
 #include <math.h>
+
+#include <SDL.h>
+#include "SDL_image.h"
+
 #include "vec2.hpp"
 
 #define CS45 0.7071068f
@@ -32,7 +35,8 @@ class TileMap {
             result[1] = (int)(-y * tilesize + display->h);
         }
 
-        void draw(SDL_Renderer* renderer) {
+        void draw(SDL_Renderer* renderer, SDL_Texture* texture) {
+            SDL_Rect texturepos = {0, 0, 16, 16};
             SDL_Rect tile;
             tile.w = tilesize;
             tile.h = tilesize;
@@ -45,10 +49,13 @@ class TileMap {
                         tile.x = tile_pos[0];
                         tile.y = tile_pos[1] - tilesize;
 
-                        SDL_SetRenderDrawColor(renderer, 64, 128, 32, 255);
-                        SDL_RenderFillRect(renderer, &tile);
-                    }
+                        int code = (tiles[i][j-1] << 1) | tiles[i-1][j];
+                        //texturepos.x += code*16;
 
+                        /*SDL_SetRenderDrawColor(renderer, 64, 128, 32, 255);
+                        SDL_RenderFillRect(renderer, &tile);*/
+                        SDL_RenderCopy(renderer, texture, &texturepos, &tile);
+                    }
                 }
             }
         }
@@ -187,6 +194,12 @@ int main(int argc, char* argv[])
         );
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
+    IMG_Init(IMG_INIT_PNG);
+    SDL_Surface* grass;
+    grass = IMG_Load("./textures/grass_block/grass1.png");
+    if (!grass) cout << "tileset not loaded !" << endl;
+    SDL_Texture* grassTexture = SDL_CreateTextureFromSurface(renderer, grass);
+
     TileMap map(&DM);
 
     Player player(vec2f(16, 16), 1, 1);
@@ -249,7 +262,7 @@ int main(int argc, char* argv[])
             map.TileposToDislpaypos(player.position.x, player.position.y, displaypos);
             player.draw(renderer, displaypos, map.tilesize);
             
-            map.draw(renderer);
+            map.draw(renderer, grassTexture);
 
             SDL_RenderPresent(renderer);
             graphiclastframe = time;
@@ -261,6 +274,11 @@ int main(int argc, char* argv[])
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+
+    SDL_FreeSurface(grass);
+    SDL_DestroyTexture(grassTexture);
+
+    IMG_Quit();
     SDL_Quit();
 
     return 0;
