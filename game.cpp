@@ -49,8 +49,9 @@ class TileMap {
                         tile.x = tile_pos[0];
                         tile.y = tile_pos[1] - tilesize;
 
-                        int code = (tiles[i][j-1] << 1) | tiles[i-1][j];
-                        //texturepos.x += code*16;
+                        int code = (tiles[i-1][j] << 3) | (tiles[i][j-1] << 2) | (tiles[i+1][j] << 1) | tiles[i][j+1];
+                        texturepos.x = (0b0011 & code)*16;
+                        texturepos.y = (code >> 2)*16;
 
                         /*SDL_SetRenderDrawColor(renderer, 64, 128, 32, 255);
                         SDL_RenderFillRect(renderer, &tile);*/
