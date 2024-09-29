@@ -202,10 +202,13 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     IMG_Init(IMG_INIT_PNG);
-    SDL_Surface* grass;
-    grass = IMG_Load("./textures/grass_block/grass2.png");
-    if (!grass) cout << "tileset not loaded !" << endl;
-    SDL_Texture* grassTexture = SDL_CreateTextureFromSurface(renderer, grass);
+
+    SDL_Surface* block = IMG_Load("./textures/grass_block/grass2.png");
+    SDL_Surface* background = IMG_Load("./textures/mountain_background2.png");
+    if (!block || !background) cout << "TextureSet not loaded !" << endl;
+
+    SDL_Texture* blockTexture = SDL_CreateTextureFromSurface(renderer, block);
+    SDL_Texture* backgroundTexture = SDL_CreateTextureFromSurface(renderer, background);
 
     TileMap map(&DM);
 
@@ -262,6 +265,7 @@ int main(int argc, char* argv[])
         if (time-graphiclastframe > 1000.0/fps) {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
 
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             // Draw the player
@@ -269,7 +273,7 @@ int main(int argc, char* argv[])
             map.TileposToDislpaypos(player.position.x, player.position.y, displaypos);
             player.draw(renderer, displaypos, map.tilesize);
             
-            map.draw(renderer, grassTexture);
+            map.draw(renderer, blockTexture);
 
             SDL_RenderPresent(renderer);
             graphiclastframe = time;
@@ -282,8 +286,10 @@ int main(int argc, char* argv[])
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
-    SDL_FreeSurface(grass);
-    SDL_DestroyTexture(grassTexture);
+    SDL_FreeSurface(block);
+    SDL_DestroyTexture(blockTexture);
+    SDL_FreeSurface(background);
+    SDL_DestroyTexture(backgroundTexture);
 
     IMG_Quit();
     SDL_Quit();
