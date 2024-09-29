@@ -6,9 +6,9 @@
 
 #include "vec2.hpp"
 
-#define CS45 0.7071068f
-
 using namespace std;
+
+const float CS45 = sin(M_PI/4);
 
 class TileMap {
     public:
@@ -90,6 +90,7 @@ class Player {
             bool touchground(TileMap* map) {
                 vec2i underblock(position.x, position.y-1);
                 int offset = (position.x-underblock.x < 0.5) ? -1 : 1;
+                if (position.x-underblock.x == 0.5) offset = 0;
                 vec2i underblock2(position.x+offset, position.y-1);
                 if (map->tiles[underblock.x][underblock.y] == 0 && map->tiles[underblock2.x][underblock2.y] == 0) {
                     return false;
@@ -131,7 +132,7 @@ class Player {
 
                         unsigned int blockstate = map->tiles[block.x][block.y];
 
-                        if (blockstate == 1 && block_detection(block.x, block.y)) {                            
+                        if (blockstate == 1 && block_detection(block.x, block.y)) {                          
                             vec2f delta = {(float)block.x-position.x+0.5f, (float)block.y-position.y+0.5f};
                             vec2f dir = vec2f(delta).normalize();
 
