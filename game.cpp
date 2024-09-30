@@ -2,13 +2,15 @@
 #include <math.h>
 
 #include <SDL.h>
-#include "SDL_image.h"
+#include <SDL_image.h>
 
 #include "vec2.hpp"
 
 using namespace std;
 
 const float CS45 = sin(M_PI/4);
+
+vec2f camerapos(0, 0);
 
 class TileMap {
     public:
@@ -46,7 +48,7 @@ class TileMap {
                     if (tiles[i][j]) {
                         int tile_pos[2];
                         TileposToDislpaypos((float)i, (float)j, tile_pos);
-                        tile.x = tile_pos[0];
+                        tile.x = tile_pos[0] - camerapos.x;
                         tile.y = tile_pos[1] - tilesize;
 
                         int code = 0;
@@ -176,7 +178,7 @@ class Player {
             }
 
             void draw(SDL_Renderer* renderer, int* screenspace, int scale) {
-                rect.x = (int)screenspace[0]-scale/2;
+                rect.x = (int)screenspace[0]-scale/2 - camerapos.x;
                 rect.y = (int)screenspace[1]-scale/2;
                 rect.w = (int)hitbox.w*scale;
                 rect.h = (int)hitbox.h*scale;
@@ -227,6 +229,7 @@ int main(int argc, char* argv[])
     Uint32 graphiclastframe = 16;
 
     while (!quit) {
+        camerapos.x = (player.position.x-20)*40;
         time = SDL_GetTicks();
 
         SDL_PollEvent(&event);
