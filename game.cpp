@@ -230,7 +230,8 @@ int main(int argc, char* argv[])
     Uint32 graphiclastframe = 16;
 
     while (!quit) {
-        camerapos.x += (player.position.x-camerapos.x-camerasize.x/2)/64;
+        float playercam = player.position.x-(camerapos.x+camerasize.x/2);
+        camerapos.x += pow(playercam, 3)/8000;
         time = SDL_GetTicks();
 
         SDL_PollEvent(&event);
