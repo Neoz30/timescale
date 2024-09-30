@@ -20,6 +20,7 @@ class TileMap {
 
         TileMap(SDL_DisplayMode* dm) {
             display = dm;
+
             for (int i = 0; i < 64; i++) {
                 for (int j = 0; j < 64; j++) {
                         tiles[i][j] = 0;
@@ -47,8 +48,8 @@ class TileMap {
 
                     if (tiles[i][j]) {
                         int tile_pos[2];
-                        TileposToDislpaypos((float)i, (float)j, tile_pos);
-                        tile.x = tile_pos[0] - camerapos.x;
+                        TileposToDislpaypos((float)i-camerapos.x, (float)j, tile_pos);
+                        tile.x = tile_pos[0];
                         tile.y = tile_pos[1] - tilesize;
 
                         int code = 0;
@@ -60,8 +61,6 @@ class TileMap {
                         texturepos.x = (0b0011 & code)*16;
                         texturepos.y = (code >> 2)*16;
 
-                        /*SDL_SetRenderDrawColor(renderer, 64, 128, 32, 255);
-                        SDL_RenderFillRect(renderer, &tile);*/
                         SDL_RenderCopy(renderer, texture, &texturepos, &tile);
                     }
                 }
@@ -138,10 +137,10 @@ class Player {
                             vec2f delta = {(float)block.x-position.x+0.5f, (float)block.y-position.y+0.5f};
                             vec2f dir = vec2f(delta).normalize();
 
-                            if (dir.x > CS45) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                            if (dir.x < -CS45) {position.x += hitbox.w/2+0.5 + delta.x;}
-                            if (dir.y > CS45) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                            if (dir.y < -CS45) {position.y += hitbox.h/2+0.5 + delta.y;}
+                            if (dir.x > CS45+0.05) {position.x -= hitbox.w/2+0.5 - delta.x;}
+                            if (dir.x < -CS45-0.05) {position.x += hitbox.w/2+0.5 + delta.x;}
+                            if (dir.y > CS45+0.05) {position.y -= hitbox.h/2+0.5 - delta.y;}
+                            if (dir.y < -CS45-0.05) {position.y += hitbox.h/2+0.5 + delta.y;}
                         }
                     }
                 }
@@ -178,7 +177,7 @@ class Player {
             }
 
             void draw(SDL_Renderer* renderer, int* screenspace, int scale) {
-                rect.x = (int)screenspace[0]-scale/2 - camerapos.x;
+                rect.x = (int)screenspace[0]-scale/2;
                 rect.y = (int)screenspace[1]-scale/2;
                 rect.w = (int)hitbox.w*scale;
                 rect.h = (int)hitbox.h*scale;
@@ -205,8 +204,8 @@ int main(int argc, char* argv[])
 
     IMG_Init(IMG_INIT_PNG);
 
-    SDL_Surface* block = IMG_Load("./textures/grass_block/grass2.png");
-    SDL_Surface* background = IMG_Load("./textures/mountain_background2.png");
+    SDL_Surface* block = IMG_Load("./textures/celeste_tileset/grass.png");
+    SDL_Surface* background = IMG_Load("./textures/mountain_background.png");
     if (!block || !background) cout << "TextureSet not loaded !" << endl;
 
     SDL_Texture* blockTexture = SDL_CreateTextureFromSurface(renderer, block);
@@ -219,6 +218,8 @@ int main(int argc, char* argv[])
         map.tiles[i][0] = 1;
     }
 
+    vec2f camerasize((float)DM.w/map.tilesize, (float)DM.h/map.tilesize);
+
     // Input handle
     const Uint8* keys = SDL_GetKeyboardState(NULL);
     int mouse_x, mouse_y;
@@ -229,7 +230,7 @@ int main(int argc, char* argv[])
     Uint32 graphiclastframe = 16;
 
     while (!quit) {
-        camerapos.x = (player.position.x-20)*40;
+        camerapos.x += (player.position.x-camerapos.x-camerasize.x/2)/64;
         time = SDL_GetTicks();
 
         SDL_PollEvent(&event);
@@ -243,24 +244,14 @@ int main(int argc, char* argv[])
 
         // Mouse handle
         mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
+        if (mouse && (0 <= mouse_x && mouse_x < DM.w && 0 <= mouse_y && mouse_y < DM.h)) {
+            int tile_pos[2];
+            int mx = max(0, min(DM.w, mouse_x)) + camerapos.x*map.tilesize;
+            int my = max(0, min(DM.h, mouse_y)) + camerapos.y*map.tilesize;
+            map.DisplayposToTilepos(mx, my, tile_pos);
 
-        if (mouse & SDL_BUTTON(1)) {
-            if (0 <= mouse_x && mouse_x < DM.w && 0 <= mouse_y && mouse_y < DM.h) {
-                int tile_pos[2];
-                int mx = max(0, min(DM.w, mouse_x));
-                int my = max(0, min(DM.h, mouse_y));
-                map.DisplayposToTilepos(mx, my, tile_pos);
-                map.tiles[tile_pos[0]][tile_pos[1]] = 1;
-            }
-        }
-        if (mouse & SDL_BUTTON(3)) {
-            if (0 <= mouse_x && mouse_x < DM.w && 0 <= mouse_y && mouse_y < DM.h) {
-                int tile_pos[2];
-                int mx = max(0, min(DM.w, mouse_x));
-                int my = max(0, min(DM.h, mouse_y));
-                map.DisplayposToTilepos(mx, my, tile_pos);
-                map.tiles[tile_pos[0]][tile_pos[1]] = 0;
-            }
+            if (mouse & SDL_BUTTON(1)) map.tiles[tile_pos[0]][tile_pos[1]] = 1;
+            if (mouse & SDL_BUTTON(3)) map.tiles[tile_pos[0]][tile_pos[1]] = 0;
         }
 
         player.update(keys, dt, &map);
@@ -273,7 +264,7 @@ int main(int argc, char* argv[])
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             // Draw the player
             int displaypos[2];
-            map.TileposToDislpaypos(player.position.x, player.position.y, displaypos);
+            map.TileposToDislpaypos(player.position.x - camerapos.x, player.position.y, displaypos);
             player.draw(renderer, displaypos, map.tilesize);
             
             map.draw(renderer, blockTexture);
