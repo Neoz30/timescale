@@ -214,6 +214,7 @@ int main(int argc, char* argv[])
     TileMap map(&DM);
 
     Player player(vec2f(16, 16), 1, 1);
+    
     for (int i = 0; i < 64; i++) {
         map.tiles[i][0] = 1;
     }
@@ -230,8 +231,14 @@ int main(int argc, char* argv[])
     Uint32 graphiclastframe = 16;
 
     while (!quit) {
+        // Camera position
         float playercam = player.position.x-(camerapos.x+camerasize.x/2);
-        camerapos.x += pow(playercam, 3)/8000;
+        if (playercam > 0) {
+            camerapos.x += 0.01*max(abs(playercam)-10,0.f);
+        } else {
+            camerapos.x -= 0.01*max(abs(playercam)-10,0.f);
+        }
+
         time = SDL_GetTicks();
 
         SDL_PollEvent(&event);
