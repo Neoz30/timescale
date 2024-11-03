@@ -108,6 +108,9 @@ public:
 	float dot(vec2 v1) {
 		return v1.x * x + v1.y * y;
 	}
+	float det(vec2 v1) {
+		return v1.x * y - v1.y * x;
+	}
 	float cross(vec2 v1) {
 		return (v1.x * y) - (v1.y * x);
 	}

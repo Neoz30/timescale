@@ -1,4 +1,2 @@
-#pragma once
+#include "graphics.hpp"
 
-#include <SDL.h>
-#include <SDL_image.h>

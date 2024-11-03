@@ -1,10 +1,7 @@
 #include <iostream>
 #include <math.h>
 
-#include <SDL.h>
-#include <SDL_image.h>
-
-#include "vec2.hpp"
+#include "graphics.hpp"
 
 using namespace std;
 
@@ -26,6 +23,7 @@ class TileMap {
                         tiles[i][j] = 0;
                 }
             }
+            // Debug for view all map in camera
             //tilesize = 1.0/64*display->w;
         }
 
@@ -46,7 +44,7 @@ class TileMap {
             for (int i = 0; i < 64; i++) {
                 for (int j = 0; j < 64; j++) {
 
-                    if (tiles[i][j]) {
+                    if (tiles[i][j] == 1) {
                         int tile_pos[2];
                         TileposToDislpaypos((float)i-camerapos.x, (float)j, tile_pos);
                         tile.x = tile_pos[0];
@@ -117,30 +115,40 @@ class Player {
                 if (position.x+hitbox.w/2 > 64) position.x = 64-hitbox.w/2;
             }
 
-            bool block_detection(int blockX, int blockY) {
-                return position.x-hitbox.w/2 < blockX+1 && position.x+hitbox.w/2 > blockX &&
-                position.y-hitbox.h/2 < blockY+1 && position.y+hitbox.h/2 > blockY;
-            }
-
             void block_collision(TileMap* map) {
-                for (int dx = -1; dx <= 1; dx++) {
-                    for (int dy = -1; dy <= 1; dy++) {
+                for (int dx = -2; dx <= 2; dx++) {
+                    for (int dy = -2; dy <= 2; dy++) {
                         vec2i player = {(int)position.x, (int)position.y};
                         vec2i block = {player.x+dx, player.y+dy};
                         if (block.x < 0 || block.x > 63 || block.y < 0 || block.y > 63) {
                             continue;
                         }
-
                         unsigned int blockstate = map->tiles[block.x][block.y];
+                        if (blockstate) {continue;}
 
-                        if (blockstate == 1 && block_detection(block.x, block.y)) {                          
-                            vec2f delta = {(float)block.x-position.x+0.5f, (float)block.y-position.y+0.5f};
-                            vec2f dir = vec2f(delta).normalize();
-
-                            if (dir.x > CS45+0.05) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                            if (dir.x < -CS45-0.05) {position.x += hitbox.w/2+0.5 + delta.x;}
-                            if (dir.y > CS45+0.05) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                            if (dir.y < -CS45-0.05) {position.y += hitbox.h/2+0.5 + delta.y;}
+                        vec2 veldir = (oldposition - position).normalize();
+                        for (int i = 0; i < 4; i++) {
+                            vec2f side(0, 0);
+                            vec2f a(0, 0);
+                            
+                            if (i == 0) {
+                                side.x = 0; side.y = 1;
+                                a.x = block.x; a.y = block.y+1;
+                            }
+                            if (i == 1) {
+                                side.x = 1; side.y = 0;
+                                a.x = block.x+1; a.y = block.y+1;
+                            }
+                            if (i == 2) {
+                                side.x = 0; side.y = -1;
+                                a.x = block.x+1; a.y = block.y;
+                            }
+                            if (i == 4) {
+                                side.x = -1;side.y = 0;
+                                a.x = block.x; a.y = block.y;
+                            }
+                            
+                            if (veldir.det(side) == 0 || veldir.dot(side) > 0) {continue;}
                         }
                     }
                 }
