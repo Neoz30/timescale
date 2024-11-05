@@ -126,29 +126,41 @@ class Player {
                         unsigned int blockstate = map->tiles[block.x][block.y];
                         if (blockstate) {continue;}
 
-                        vec2 veldir = (oldposition - position).normalize();
+                        vec2 velocity = oldposition - position;
                         for (int i = 0; i < 4; i++) {
+                            vec2f side_norm(0, 0);
                             vec2f side(0, 0);
                             vec2f a(0, 0);
                             
                             if (i == 0) {
-                                side.x = 0; side.y = 1;
+                                side_norm.x = 0; side_norm.y = 1;
                                 a.x = block.x; a.y = block.y+1;
                             }
                             if (i == 1) {
-                                side.x = 1; side.y = 0;
+                                side_norm.x = 1; side_norm.y = 0;
                                 a.x = block.x+1; a.y = block.y+1;
                             }
                             if (i == 2) {
-                                side.x = 0; side.y = -1;
+                                side_norm.x = 0; side_norm.y = -1;
                                 a.x = block.x+1; a.y = block.y;
                             }
                             if (i == 4) {
-                                side.x = -1;side.y = 0;
+                                side_norm.x = -1;side_norm.y = 0;
                                 a.x = block.x; a.y = block.y;
                             }
+                            side = side_norm.ortho();
+
+                            cout << side.x << side.y << endl;
+                            cout << side_norm.x << side_norm.y << endl;
                             
-                            if (veldir.det(side) == 0 || veldir.dot(side) > 0) {continue;}
+                            if (velocity.det(side) == 0 || velocity.dot(side_norm) > 0) {continue;}
+
+                            float t = (side.x*(position.y-a.y) - side.y*(position.x-a.x)) / ((velocity.x*side.y) - (velocity.y*side.x));
+                            
+                            if (0 < t && t < 1) {
+                                oldposition.x = 16; oldposition.y = 16;
+                                position.x = 16; position.y = 16;
+                            }
                         }
                     }
                 }
