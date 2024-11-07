@@ -124,14 +124,14 @@ class Player {
                             continue;
                         }
                         unsigned int blockstate = map->tiles[block.x][block.y];
-                        if (blockstate == 0) {continue;}
+                        if (!blockstate) {continue;}
 
                         vec2 velocity = oldposition - position;
                         for (int i = 0; i < 4; i++) {
-                            vec2f side(0, 0);
-                            vec2f a(0, 0);
+                            vec2f side(1, 0);
+                            vec2f a(block.x, block.y+1.5);
                             
-                            switch (i) {
+                            /*switch (i) {
                                 case 0:
                                     side.x = 1; side.y = 0;
                                     a.x = block.x; a.y = block.y+1;
@@ -144,7 +144,7 @@ class Player {
                                 case 3:
                                     side.x = 0; side.y = 1;
                                     a.x = block.x; a.y = block.y;
-                            }
+                            }*/
                             
                             if (velocity.det(side) == 0) {continue;}
 
@@ -153,6 +153,7 @@ class Player {
                             
                             if ((0 < t2 && t2 < 1) && (0 < t1 && t1 < 1)) {
                                 position = velocity*t1 + position;
+                                oldposition = position;
                             }
                         }
                     }
