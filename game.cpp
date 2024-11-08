@@ -127,7 +127,7 @@ class Player {
                         if (!blockstate) {continue;}
 
                         vec2 velocity = position - oldposition;
-                        for (int i = 0; i < 4; i++) {
+                        for (int i = 0; i < 1; i++) {
                             vec2f side(0, 0);
                             vec2f a(0, 0);
                             
@@ -153,6 +153,7 @@ class Player {
                             
                             if ((0 < t2 && t2 < 1) && (0 < t1 && t1 < 1)) {
                                 position = velocity*t1 + position;
+                                position.y += hitbox.h;
                             }
                         }
                     }
