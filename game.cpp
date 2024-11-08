@@ -127,23 +127,27 @@ class Player {
                         if (!blockstate) {continue;}
 
                         vec2 velocity = position - oldposition;
-                        for (int i = 0; i < 1; i++) {
+                        for (int i = 0; i < 4; i++) {
                             vec2f side(0, 0);
                             vec2f a(0, 0);
                             
                             switch (i) {
-                                case 0:
-                                    side.x = 1; side.y = 0;
-                                    a.x = block.x; a.y = block.y+1;
-                                case 1:
-                                    side.x = 0; side.y = -1;
-                                    a.x = block.x+1; a.y = block.y+1;
-                                case 2:
-                                    side.x = -1; side.y = 0;
-                                    a.x = block.x+1; a.y = block.y;
-                                case 3:
-                                    side.x = 0; side.y = 1;
-                                    a.x = block.x; a.y = block.y;
+                            case 0:
+                                side.x = 1; side.y = 0;
+                                a.x = block.x; a.y = block.y+1;
+                                break;
+                            case 1:
+                                side.x = 0; side.y = -1;
+                                a.x = block.x+1; a.y = block.y+1;
+                                break;
+                            case 2:
+                                side.x = -1; side.y = 0;
+                                a.x = block.x+1; a.y = block.y;
+                                break;
+                            case 3:
+                                side.x = 0; side.y = 1;
+                                a.x = block.x; a.y = block.y;
+                                break;
                             }
                             
                             if (velocity.det(side) == 0) {continue;}
@@ -152,8 +156,23 @@ class Player {
                             float t2 = (velocity.y*(a.x-position.x) - velocity.x*(a.y-position.y)) / ((velocity.x*side.y) - (velocity.y*side.x));
                             
                             if ((0 < t2 && t2 < 1) && (0 < t1 && t1 < 1)) {
-                                position = velocity*t1 + position;
-                                position.y += hitbox.h;
+                                /*position.x += velocity.x*t1;
+                                position.y += velocity.y*t1;*/
+
+                                switch (i) {
+                                case 0:
+                                    position.y += position.y - a.y;
+                                    break;
+                                case 1:
+                                    position.x += position.x - a.x;
+                                    break;
+                                case 2:
+                                    position.y -= position.y - a.y;
+                                    break;
+                                case 3:
+                                    position.x -= position.x - a.x;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -181,6 +200,8 @@ class Player {
             
                 edge_collision();
                 block_collision(map);
+
+                cout << dt << " " << 1.f/dt << endl;
             }
 
             void update(const Uint8* keys, float dt, TileMap* map) {
@@ -245,14 +266,6 @@ int main(int argc, char* argv[])
     Uint32 graphiclastframe = 16;
 
     while (!quit) {
-        // Camera position
-        float playercam = player.position.x-(camerapos.x+camerasize.x/2);
-        if (playercam > 0) {
-            camerapos.x += 0.01*max(abs(playercam)-10,0.f);
-        } else {
-            camerapos.x -= 0.01*max(abs(playercam)-10,0.f);
-        }
-
         time = SDL_GetTicks();
 
         SDL_PollEvent(&event);
@@ -262,6 +275,14 @@ int main(int argc, char* argv[])
             case SDL_QUIT:
                 quit = true;
                 break;
+        }
+
+        // Camera position
+        float playercam = player.position.x-(camerapos.x+camerasize.x/2);
+        if (playercam > 0) {
+            camerapos.x += 0.01*max(abs(playercam)-10,0.f);
+        } else {
+            camerapos.x -= 0.01*max(abs(playercam)-10,0.f);
         }
 
         // Mouse handle
@@ -295,7 +316,8 @@ int main(int argc, char* argv[])
             graphiclastframe = time;
         }
 
-        SDL_Delay(4);
+        Uint32 now = SDL_GetTicks();
+        SDL_Delay(max(0, 20 - (int)(now-time)));
         dt = (float)(SDL_GetTicks()-time)/1000;
     }
 
