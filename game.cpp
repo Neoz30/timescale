@@ -155,7 +155,7 @@ class Player {
                             float t1 = (side.x*(position.y-a.y) - side.y*(position.x-a.x)) / ((velocity.x*side.y) - (velocity.y*side.x));
                             float t2 = (velocity.y*(a.x-position.x) - velocity.x*(a.y-position.y)) / ((velocity.x*side.y) - (velocity.y*side.x));
                             
-                            if ((0 < t2 && t2 < 1) && (0 < t1 && t1 < 1)) {
+                            if ((-0.5 < t2 && t2 < 1.5) && (0 < t1 && t1 < 1)) {
                                 /*position.x += velocity.x*t1;
                                 position.y += velocity.y*t1;*/
 
