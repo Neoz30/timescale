@@ -4,13 +4,15 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
-#include "vec2.hpp"
+#include <libmath/vec2.hpp>
 
 using namespace std;
 
-const float CS45 = sin(M_PI/4);
 
-vec2f camerapos(0, 0);
+
+const float CS45 = sqrt(2)/2;
+
+Vec2 camerapos(0, 0);
 
 class TileMap {
     public:
@@ -76,12 +78,12 @@ class Player {
         public:
             SDL_Rect rect;
             Hitbox hitbox;
-            vec2f position;
-            vec2f oldposition;
-            vec2f acceleration = {0, 0};
+            Vec2 position;
+            Vec2 oldposition;
+            Vec2 acceleration = {0, 0};
             bool onground = false;
 
-            Player(vec2f basepos, int width, int height) {
+            Player(Vec2 basepos, int width, int height) {
                 position = basepos;
                 oldposition = basepos;
                 hitbox.w = width;
@@ -89,15 +91,15 @@ class Player {
             }
 
             bool touchground(TileMap* map) {
-                vec2i underblock(position.x, position.y-1);
-                int offset = (position.x-underblock.x < 0.5) ? -1 : 1;
-                if (position.x-underblock.x == 0.5) offset = 0;
-                vec2i underblock2(position.x+offset, position.y-1);
-                if (map->tiles[underblock.x][underblock.y] == 0 && map->tiles[underblock2.x][underblock2.y] == 0) {
+                int underblock[2] = {position.x, position.y-1};
+                int offset = (position.x-underblock[0] < 0.5) ? -1 : 1;
+                if (position.x-underblock[0] == 0.5) offset = 0;
+                int underblock2[2] = {position.x+offset, position.y-1};
+                if (map->tiles[underblock[0]][underblock[1]] == 0 && map->tiles[underblock2[0]][underblock2[1]] == 0) {
                     return false;
                 }
 
-                float deltaY = position.y-(underblock.y+0.5);
+                float deltaY = position.y-(underblock[1]+0.5);
                 if (deltaY <= 1.05 && 0 <= deltaY) {return true;}
                 return false;
             }
@@ -125,17 +127,17 @@ class Player {
             void block_collision(TileMap* map) {
                 for (int dx = -1; dx <= 1; dx++) {
                     for (int dy = -1; dy <= 1; dy++) {
-                        vec2i player = {(int)position.x, (int)position.y};
-                        vec2i block = {player.x+dx, player.y+dy};
-                        if (block.x < 0 || block.x > 63 || block.y < 0 || block.y > 63) {
+                        Vec2 player = {(int)position.x, (int)position.y};
+                        int block[2] = {player.x+dx, player.y+dy};
+                        if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) {
                             continue;
                         }
 
-                        unsigned int blockstate = map->tiles[block.x][block.y];
+                        unsigned int blockstate = map->tiles[block[0]][block[1]];
 
-                        if (blockstate == 1 && block_detection(block.x, block.y)) {                          
-                            vec2f delta = {(float)block.x-position.x+0.5f, (float)block.y-position.y+0.5f};
-                            vec2f dir = vec2f(delta).normalize();
+                        if (blockstate == 1 && block_detection(block[0], block[1])) {                          
+                            Vec2 delta = {(float)block[0]-position.x+0.5f, (float)block[1]-position.y+0.5f};
+                            Vec2 dir = Vec2(delta).normalize();
 
                             if (dir.x > CS45+0.05) {position.x -= hitbox.w/2+0.5 - delta.x;}
                             if (dir.x < -CS45-0.05) {position.x += hitbox.w/2+0.5 + delta.x;}
@@ -151,19 +153,19 @@ class Player {
                 acceleration.y -= 64;
 
                 //Update physic player
-                vec2f velocity = position - oldposition;
+                Vec2 velocity = position - oldposition;
                 
-                vec2f inverse_speed = velocity/-dt;
+                Vec2 inverse_speed = velocity/-dt;
                 float speedfriction = 0.1f*pow(inverse_speed.length(), 2);
-                vec2f kineticfriction = vec2f(inverse_speed).normalize()*speedfriction;
-                acceleration += kineticfriction;
+                Vec2 kineticfriction = Vec2(inverse_speed).normalize()*speedfriction;
+                acceleration = kineticfriction + acceleration;
                 if (onground) {
-                    vec2f staticfriction = inverse_speed.normalize()*16;
-                    acceleration += staticfriction;
+                    Vec2 staticfriction = inverse_speed.normalize()*16;
+                    acceleration = staticfriction + acceleration;
                 }
 
                 oldposition = position;
-                position = acceleration*dt*dt + velocity + position;
+                position = acceleration*dt*dt + velocity + position; // This line make crash the game ???
             
                 edge_collision();
                 block_collision(map);
@@ -213,13 +215,13 @@ int main(int argc, char* argv[])
 
     TileMap map(&DM);
 
-    Player player(vec2f(16, 16), 1, 1);
+    Player player(Vec2(16, 16), 1, 1);
     
     for (int i = 0; i < 64; i++) {
         map.tiles[i][0] = 1;
     }
 
-    vec2f camerasize((float)DM.w/map.tilesize, (float)DM.h/map.tilesize);
+    Vec2 camerasize((float)DM.w/map.tilesize, (float)DM.h/map.tilesize);
 
     // Input handle
     const Uint8* keys = SDL_GetKeyboardState(NULL);

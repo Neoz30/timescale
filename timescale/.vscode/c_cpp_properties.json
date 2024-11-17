@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files (x86)/SDL2/include/SDL2",
+                "C:/Program Files (x86)/SDL2_image/include/SDL2"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerPath": "C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/bin/g++.exe"
+        }
+    ],
+    "version": 4
+}

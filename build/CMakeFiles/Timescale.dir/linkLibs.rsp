@@ -1,0 +1,1 @@
+ "C:/Program Files (x86)/SDL2/lib/libSDL2main.a" "C:/Program Files (x86)/SDL2_image/lib/libSDL2_image.dll.a" -lmingw32 libVec2.a -lshell32 -Wl,--undefined=WinMain "C:/Program Files (x86)/SDL2/lib/libSDL2.dll.a" -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

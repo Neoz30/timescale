@@ -59,7 +59,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = C:\Users\enzom\Desktop\Projets\Timescale
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\enzom\Desktop\Projets\Timescale
+CMAKE_BINARY_DIR = C:\Users\enzom\Desktop\Projets\Timescale\build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\enzom\Desktop\Projets\Timescale\CMakeFiles C:\Users\enzom\Desktop\Projets\Timescale\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\enzom\Desktop\Projets\Timescale\build\CMakeFiles C:\Users\enzom\Desktop\Projets\Timescale\build\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\enzom\Desktop\Projets\Timescale\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\enzom\Desktop\Projets\Timescale\build\CMakeFiles 0
 .PHONY : all
 
 # The main codegen target
@@ -135,24 +135,24 @@ Timescale/fast:
 .PHONY : Timescale/fast
 
 #=============================================================================
-# Target rules for targets named Libmath
+# Target rules for targets named Vec2
 
 # Build rule for target.
-Libmath: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Libmath
-.PHONY : Libmath
+Vec2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Vec2
+.PHONY : Vec2
 
 # fast build rule for target.
-Libmath/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Libmath.dir\build.make CMakeFiles/Libmath.dir/build
-.PHONY : Libmath/fast
+Vec2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Vec2.dir\build.make CMakeFiles/Vec2.dir/build
+.PHONY : Vec2/fast
 
 timescale/libmath/vec2.obj: timescale/libmath/vec2.cpp.obj
 .PHONY : timescale/libmath/vec2.obj
 
 # target to build an object file
 timescale/libmath/vec2.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Libmath.dir\build.make CMakeFiles/Libmath.dir/timescale/libmath/vec2.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Vec2.dir\build.make CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj
 .PHONY : timescale/libmath/vec2.cpp.obj
 
 timescale/libmath/vec2.i: timescale/libmath/vec2.cpp.i
@@ -160,7 +160,7 @@ timescale/libmath/vec2.i: timescale/libmath/vec2.cpp.i
 
 # target to preprocess a source file
 timescale/libmath/vec2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Libmath.dir\build.make CMakeFiles/Libmath.dir/timescale/libmath/vec2.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Vec2.dir\build.make CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.i
 .PHONY : timescale/libmath/vec2.cpp.i
 
 timescale/libmath/vec2.s: timescale/libmath/vec2.cpp.s
@@ -168,7 +168,7 @@ timescale/libmath/vec2.s: timescale/libmath/vec2.cpp.s
 
 # target to generate assembly for a file
 timescale/libmath/vec2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Libmath.dir\build.make CMakeFiles/Libmath.dir/timescale/libmath/vec2.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Vec2.dir\build.make CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.s
 .PHONY : timescale/libmath/vec2.cpp.s
 
 timescale/main.obj: timescale/main.cpp.obj
@@ -203,8 +203,8 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... Libmath
 	@echo ... Timescale
+	@echo ... Vec2
 	@echo ... timescale/libmath/vec2.obj
 	@echo ... timescale/libmath/vec2.i
 	@echo ... timescale/libmath/vec2.s
