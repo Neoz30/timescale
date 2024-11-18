@@ -159,11 +159,13 @@ class Player {
                 float speedfriction = 0.1f*pow(inverse_speed.length(), 2);
                 Vec2 kineticfriction = Vec2(inverse_speed).normalize()*speedfriction;
                 acceleration = kineticfriction + acceleration;
+                cout << kineticfriction.x << " " << kineticfriction.y << endl;
                 if (onground) {
                     Vec2 staticfriction = inverse_speed.normalize()*16;
                     acceleration = staticfriction + acceleration;
                 }
 
+                cout << acceleration.x << " " << acceleration.y << endl;
                 oldposition = position;
                 position = acceleration*dt*dt + velocity + position; // This line make crash the game ???
             

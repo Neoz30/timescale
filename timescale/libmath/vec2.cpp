@@ -30,7 +30,6 @@ float Vec2::length() {
     return sqrt(x*x + y*y);
 }
 Vec2 Vec2::normalize() {
-    float lenght = (*this).length();
-    x /= lenght; y /= lenght;
-    return *this;
+    float len = length();
+    return Vec2(x / len, y / len);
 }
