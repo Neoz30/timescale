@@ -1,3 +1,6 @@
+#ifndef VEC2_MATH
+
+#define VEC2_MATH 1
 #include <math.h>
 
 class Vec2 {
@@ -38,3 +41,5 @@ class Vec2 {
         float length();
         Vec2& normalize();
 };
+
+#endif
