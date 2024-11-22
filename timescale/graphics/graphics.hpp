@@ -105,7 +105,7 @@ class Graphism {
             SDL_RenderCopy(renderer, background, NULL, NULL);
         }
 
-        void draw_terrain(TileMap* terrain) {
+        void draw_terrain(unsigned int tiles[64][64]) {
             SDL_Rect texturepos = {0, 0, 16, 16};
             SDL_Rect tile;
             tile.w = pxpertile;
@@ -113,17 +113,17 @@ class Graphism {
             for (int i = 0; i < 64; i++) {
                 for (int j = 0; j < 64; j++) {
 
-                    if (terrain->tiles[i][j]) {
+                    if (tiles[i][j]) {
                         int tile_pos[2];
                         tile_to_screen((float)i-cam.position.x, (float)j, tile_pos);
                         tile.x = tile_pos[0];
                         tile.y = tile_pos[1] - pxpertile;
 
                         int code = 0;
-                        if (j+1 < 64) code |= terrain->tiles[i][j+1];
-                        if (i+1 < 64) code |= (terrain->tiles[i+1][j] << 1);
-                        if (j-1 >= 0) code |= (terrain->tiles[i][j-1] << 2);
-                        if (i-1 >= 0) code |= (terrain->tiles[i-1][j] << 3);
+                        if (j+1 < 64) code |= tiles[i][j+1];
+                        if (i+1 < 64) code |= (tiles[i+1][j] << 1);
+                        if (j-1 >= 0) code |= (tiles[i][j-1] << 2);
+                        if (i-1 >= 0) code |= (tiles[i-1][j] << 3);
 
                         texturepos.x = (0b0011 & code)*16;
                         texturepos.y = (code >> 2)*16;
@@ -134,15 +134,16 @@ class Graphism {
             }
         }
 
-        void draw_player(Vec2 player_pos, Hitbox player_hitbox) {
+        void draw_player(Vec2 player_pos, float pwidth, float pheight) {
             int toscreen[2];
             tile_to_screen(player_pos.x, player_pos.y, toscreen);
 
             SDL_Rect rect;
-            rect.x = (int)toscreen[0]-pxpertile/2;
+            rect.x = (int)toscreen[0]-pxpertile/2-cam.position.x;
             rect.y = (int)toscreen[1]-pxpertile/2;
-            rect.w = (int)player_hitbox.w*pxpertile;
-            rect.h = (int)player_hitbox.h*pxpertile;
+            rect.w = (int)pwidth*pxpertile;
+            rect.h = (int)pheight*pxpertile;
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
             SDL_RenderFillRect(renderer, &rect);
         }
 
@@ -151,10 +152,10 @@ class Graphism {
         SDL_Texture* background;
 
         void LoadTextures() {
-            SDL_Surface* blockSurface = IMG_Load("./textures/celeste_terrain->tileset/grass.png");
-            if (!block) cout << "Block textures not finded !" << endl;
+            SDL_Surface* blockSurface = IMG_Load("./textures/celeste_tileset/grass.png");
+            if (!blockSurface) cout << "Block textures not finded !" << endl;
             SDL_Surface* backgroundSurface = IMG_Load("./textures/mountain_background.png");
-            if (!background) cout << "Beckground texture not finded !" << endl;
+            if (!backgroundSurface) cout << "Beckground texture not finded !" << endl;
 
             block = SDL_CreateTextureFromSurface(renderer, blockSurface);
             background = SDL_CreateTextureFromSurface(renderer, backgroundSurface);

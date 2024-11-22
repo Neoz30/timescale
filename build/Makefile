@@ -91,12 +91,6 @@ all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\enzom\Desktop\Projets\Timescale\build\CMakeFiles 0
 .PHONY : all
 
-# The main codegen target
-codegen: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold "Finished generating code"
-.PHONY : codegen
-
 # The main clean target
 clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 clean

@@ -333,6 +333,7 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: C:/Users/enzom/Desktop/Projets/
   C:/Program\ Files\ (x86)/SDL2/include/SDL2/begin_code.h \
   C:/Program\ Files\ (x86)/SDL2/include/SDL2/close_code.h \
   C:/Program\ Files\ (x86)/SDL2_image/include/SDL2/SDL_image.h \
+  C:/Users/enzom/Desktop/Projets/Timescale/timescale/graphics/graphics.hpp \
   C:/Users/enzom/Desktop/Projets/Timescale/timescale/libmath/vec2.hpp
 
 
@@ -641,6 +642,8 @@ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64
 C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/clocale:
 
 C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstddef:
+
+C:/Users/enzom/Desktop/Projets/Timescale/timescale/graphics/graphics.hpp:
 
 C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/crtdefs.h:
 

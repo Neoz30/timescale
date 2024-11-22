@@ -187,8 +187,8 @@ int main(int argc, char* argv[])
             gamescreen.fill_black();
             gamescreen.draw_background();
             
-            gamescreen.draw_player(player.position, player.hitbox);
-            gamescreen.draw_terrain(&map);
+            gamescreen.draw_player(player.position, player.hitbox.w, player.hitbox.h);
+            gamescreen.draw_terrain(map.tiles);
 
             gamescreen.update();
             graphiclastframe = time;
