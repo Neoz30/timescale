@@ -1,8 +1,8 @@
 #include <iostream>
 #include <math.h>
 
-#include <graphics/graphics.hpp>
 #include <libmath/vec2.hpp>
+#include <graphics/graphics.hpp>
 
 using namespace std;
 
@@ -41,10 +41,10 @@ class Player {
         }
 
         bool touchground(TileMap* map) {
-            int underblock[2] = {position.x, position.y-1};
+            int underblock[2] = {(int)position.x, (int)position.y-1};
             int offset = (position.x-underblock[0] < 0.5) ? -1 : 1;
             if (position.x-underblock[0] == 0.5) offset = 0;
-            int underblock2[2] = {position.x+offset, position.y-1};
+            int underblock2[2] = {(int)position.x+offset, (int)position.y-1};
             if (map->tiles[underblock[0]][underblock[1]] == 0 && map->tiles[underblock2[0]][underblock2[1]] == 0) {
                 return false;
             }
@@ -77,8 +77,7 @@ class Player {
         void block_collision(TileMap* map) {
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dy = -1; dy <= 1; dy++) {
-                    Vec2 player = {(int)position.x, (int)position.y};
-                    int block[2] = {player.x+dx, player.y+dy};
+                    int block[2] = {(int)position.x+dx, (int)position.y+dy};
                     if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) {
                         continue;
                     }
@@ -171,12 +170,16 @@ int main(int argc, char* argv[])
         mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
         if (mouse && (0 <= mouse_x && mouse_x < gamescreen.DM.w && 0 <= mouse_y && mouse_y < gamescreen.DM.h)) {
             int tile_pos[2];
-            int mx = max(0, min(gamescreen.DM.w, mouse_x)) + gamescreen.cam.position.x*gamescreen.pxpertile;
-            int my = max(0, min(gamescreen.DM.h, mouse_y)) + gamescreen.cam.position.y*gamescreen.pxpertile;
-            gamescreen.screen_to_tile(mx, my, tile_pos);
+            gamescreen.screen_to_tile(
+                mouse_x + gamescreen.cam.position.x*gamescreen.pxpertile,
+                mouse_y + gamescreen.cam.position.y*gamescreen.pxpertile,
+                tile_pos
+            );
 
-            if (mouse & SDL_BUTTON(1)) map.tiles[tile_pos[0]][tile_pos[1]] = 1;
-            if (mouse & SDL_BUTTON(3)) map.tiles[tile_pos[0]][tile_pos[1]] = 0;
+            if (0 <= tile_pos[0] && tile_pos[0] < 64 && 0 <= tile_pos[1] && tile_pos[1] < 64) {
+                if (mouse & SDL_BUTTON(1)) map.tiles[tile_pos[0]][tile_pos[1]] = 1;
+                if (mouse & SDL_BUTTON(3)) map.tiles[tile_pos[0]][tile_pos[1]] = 0;
+            }
         }
 
         player.update(keys, dt, &map);

@@ -95,9 +95,10 @@ Timescale_EXTERNAL_OBJECTS =
 
 Timescale.exe: CMakeFiles/Timescale.dir/timescale/main.cpp.obj
 Timescale.exe: CMakeFiles/Timescale.dir/build.make
+Timescale.exe: libVec2.a
+Timescale.exe: libGraphics.a
 Timescale.exe: C:/Program\ Files\ (x86)/SDL2/lib/libSDL2main.a
 Timescale.exe: C:/Program\ Files\ (x86)/SDL2_image/lib/libSDL2_image.dll.a
-Timescale.exe: libVec2.a
 Timescale.exe: C:/Program\ Files\ (x86)/SDL2/lib/libSDL2.dll.a
 Timescale.exe: CMakeFiles/Timescale.dir/linkLibs.rsp
 Timescale.exe: CMakeFiles/Timescale.dir/objects1.rsp

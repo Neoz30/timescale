@@ -141,6 +141,43 @@ Vec2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Vec2.dir\build.make CMakeFiles/Vec2.dir/build
 .PHONY : Vec2/fast
 
+#=============================================================================
+# Target rules for targets named Graphics
+
+# Build rule for target.
+Graphics: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Graphics
+.PHONY : Graphics
+
+# fast build rule for target.
+Graphics/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Graphics.dir\build.make CMakeFiles/Graphics.dir/build
+.PHONY : Graphics/fast
+
+timescale/graphics/graphics.obj: timescale/graphics/graphics.cpp.obj
+.PHONY : timescale/graphics/graphics.obj
+
+# target to build an object file
+timescale/graphics/graphics.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Graphics.dir\build.make CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj
+.PHONY : timescale/graphics/graphics.cpp.obj
+
+timescale/graphics/graphics.i: timescale/graphics/graphics.cpp.i
+.PHONY : timescale/graphics/graphics.i
+
+# target to preprocess a source file
+timescale/graphics/graphics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Graphics.dir\build.make CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.i
+.PHONY : timescale/graphics/graphics.cpp.i
+
+timescale/graphics/graphics.s: timescale/graphics/graphics.cpp.s
+.PHONY : timescale/graphics/graphics.s
+
+# target to generate assembly for a file
+timescale/graphics/graphics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Graphics.dir\build.make CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.s
+.PHONY : timescale/graphics/graphics.cpp.s
+
 timescale/libmath/vec2.obj: timescale/libmath/vec2.cpp.obj
 .PHONY : timescale/libmath/vec2.obj
 
@@ -197,8 +234,12 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Graphics
 	@echo ... Timescale
 	@echo ... Vec2
+	@echo ... timescale/graphics/graphics.obj
+	@echo ... timescale/graphics/graphics.i
+	@echo ... timescale/graphics/graphics.s
 	@echo ... timescale/libmath/vec2.obj
 	@echo ... timescale/libmath/vec2.i
 	@echo ... timescale/libmath/vec2.s

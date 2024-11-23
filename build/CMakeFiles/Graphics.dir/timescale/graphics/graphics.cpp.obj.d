@@ -1,11 +1,68 @@
-CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
- C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iostream \
+CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj: \
+ C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/math.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cmath \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/requires_hosted.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++config.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/cpu_defines.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/pstl/pstl_config.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cpp_type_traits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/type_traits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/math.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/crtdefs.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/corecrt.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/vadefs.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_abs.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/stdlib.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/syslimits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/limits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdlib.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/malloc.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/errno.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/version.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/specfun.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_algobase.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functexcept.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/exception_defines.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/numeric_traits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_pair.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/type_traits \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/move.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/utility.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator_base_types.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator_base_funcs.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/concept_check.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/debug/assertions.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ptr_traits.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/debug/debug.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/predefined_ops.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bit \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/limits \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/gamma.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/special_function_util.h \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/bessel_function.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/beta_function.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/ell_integral.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/exp_integral.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/hypergeometric.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/legendre_function.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/modified_bessel_func.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_hermite.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_laguerre.tcc \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/riemann_zeta.tcc \
+ C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.hpp \
+ C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iostream \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ostream \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ios \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/iosfwd \
@@ -14,32 +71,20 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/postypes.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cwchar \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/wchar.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/corecrt.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_mac.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_secapi.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/vadefs.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/_mingw_stat64.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/swprintf.inl \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/sec_api/wchar_s.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/exception \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/exception.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/version.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/exception_ptr.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/exception_defines.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_init_exception.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/stddef.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/crtdefs.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/typeinfo \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/hash_bytes.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/new \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/move.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/type_traits \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/nested_exception.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/char_traits.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/localefwd.h \
@@ -55,13 +100,9 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/pthread.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/errno.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/sys/types.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/process.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/syslimits.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/limits.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/signal.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/pthread_signal.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/time.h \
@@ -77,27 +118,10 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/allocator.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/x86_64-w64-mingw32/bits/c++allocator.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/new_allocator.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/functexcept.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cpp_type_traits.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ostream_insert.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/cxxabi_forced.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator_base_funcs.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/concept_check.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/debug/assertions.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator_base_types.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_iterator.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/type_traits.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ptr_traits.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_function.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/backward/binders.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/numeric_traits.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_algobase.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/stl_pair.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/utility.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/debug/debug.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/predefined_ops.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bit \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/concepts \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/refwrap.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/invoke.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/range_access.h \
@@ -111,12 +135,6 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/string_view.tcc \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/ext/string_conversions.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdlib \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/stdlib.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/stdlib.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/malloc.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/std_abs.h \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cstdio \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cerrno \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/charconv.h \
@@ -144,25 +162,6 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/ostream.tcc \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/istream \
  C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/istream.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/math.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/cmath \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/x86_64-w64-mingw32/include/math.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/bits/specfun.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/limits \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/gamma.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/special_function_util.h \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/bessel_function.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/beta_function.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/ell_integral.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/exp_integral.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/hypergeometric.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/legendre_function.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/modified_bessel_func.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_hermite.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/poly_laguerre.tcc \
- C:/MinGW/x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/c++/tr1/riemann_zeta.tcc \
- C:/Users/enzom/Desktop/Projets/Timescale/timescale/libmath/vec2.hpp \
- C:/Users/enzom/Desktop/Projets/Timescale/timescale/graphics/graphics.hpp \
  C:/PROGRA~2/SDL2/include/SDL2/SDL.h \
  C:/PROGRA~2/SDL2/include/SDL2/SDL_main.h \
  C:/PROGRA~2/SDL2/include/SDL2/SDL_stdinc.h \
@@ -335,4 +334,5 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: \
  C:/PROGRA~2/SDL2_image/include/SDL2/SDL_image.h \
  C:/PROGRA~2/SDL2/include/SDL2/SDL_version.h \
  C:/PROGRA~2/SDL2/include/SDL2/begin_code.h \
- C:/PROGRA~2/SDL2/include/SDL2/close_code.h
+ C:/PROGRA~2/SDL2/include/SDL2/close_code.h \
+ C:/Users/enzom/Desktop/Projets/Timescale/timescale/libmath/vec2.hpp

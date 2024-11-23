@@ -74,4 +74,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/Timescale.dir/DependInfo.cmake"
   "CMakeFiles/Vec2.dir/DependInfo.cmake"
+  "CMakeFiles/Graphics.dir/DependInfo.cmake"
   )

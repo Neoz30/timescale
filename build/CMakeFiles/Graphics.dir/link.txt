@@ -1,0 +1,2 @@
+C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\ar.exe qc libGraphics.a CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj
+C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\ranlib.exe libGraphics.a
