@@ -21,6 +21,7 @@ class Camera {
         void set_view(SDL_DisplayMode* displaymode, int pxpertile) {
             view.x = (float)displaymode->w/pxpertile;
             view.y = (float)displaymode->h/pxpertile;
+            cout << view.x << " " << view.y << endl;
         }
 
         void step(Vec2 player_pos) {
@@ -30,9 +31,13 @@ class Camera {
             case CAM_MODE_DYNAMIC:
                 float playercam = player_pos.x-(position.x+view.x/2);
                 if (playercam > 0) {
-                    position.x += 0.01*max(abs(playercam)-10,0.f);
+                    position.x += max(
+                        (10.f*(4*playercam-view.x)) / (view.x*(0.5f*view.x-playercam)), 0.f
+                        );
                 } else {
-                    position.x -= 0.01*max(abs(playercam)-10,0.f);
+                    position.x -= max(
+                        (10.f*(-4*playercam-view.x)) / (view.x*(0.5f*view.x+playercam)), 0.f
+                        );
                 }
                 break;
             }
@@ -136,10 +141,10 @@ class Graphism {
 
         void draw_player(Vec2 player_pos, float pwidth, float pheight) {
             int toscreen[2];
-            tile_to_screen(player_pos.x, player_pos.y, toscreen);
+            tile_to_screen(player_pos.x-cam.position.x, player_pos.y, toscreen);
 
             SDL_Rect rect;
-            rect.x = (int)toscreen[0]-pxpertile/2-cam.position.x;
+            rect.x = (int)toscreen[0]-pxpertile/2;
             rect.y = (int)toscreen[1]-pxpertile/2;
             rect.w = (int)pwidth*pxpertile;
             rect.h = (int)pheight*pxpertile;
