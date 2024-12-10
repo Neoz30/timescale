@@ -76,15 +76,15 @@ CMakeFiles/Timescale.dir/timescale/main.cpp.obj: CMakeFiles/Timescale.dir/includ
 CMakeFiles/Timescale.dir/timescale/main.cpp.obj: C:/Users/enzom/Desktop/Projets/Timescale/timescale/main.cpp
 CMakeFiles/Timescale.dir/timescale/main.cpp.obj: CMakeFiles/Timescale.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\enzom\Desktop\Projets\Timescale\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Timescale.dir/timescale/main.cpp.obj"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Timescale.dir/timescale/main.cpp.obj -MF CMakeFiles\Timescale.dir\timescale\main.cpp.obj.d -o CMakeFiles\Timescale.dir\timescale\main.cpp.obj -c C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Timescale.dir/timescale/main.cpp.obj -MF CMakeFiles\Timescale.dir\timescale\main.cpp.obj.d -o CMakeFiles\Timescale.dir\timescale\main.cpp.obj -c C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp
 
 CMakeFiles/Timescale.dir/timescale/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Timescale.dir/timescale/main.cpp.i"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp > CMakeFiles\Timescale.dir\timescale\main.cpp.i
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp > CMakeFiles\Timescale.dir\timescale\main.cpp.i
 
 CMakeFiles/Timescale.dir/timescale/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Timescale.dir/timescale/main.cpp.s"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp -o CMakeFiles\Timescale.dir\timescale\main.cpp.s
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\enzom\Desktop\Projets\Timescale\timescale\main.cpp -o CMakeFiles\Timescale.dir\timescale\main.cpp.s
 
 # Object files for target Timescale
 Timescale_OBJECTS = \

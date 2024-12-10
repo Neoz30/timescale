@@ -76,6 +76,14 @@ void Graphism::update() {
 void Graphism::draw_background() {
     SDL_RenderCopy(renderer, background, NULL, NULL);
 }
+
+int remove_useless(int bitmap) {
+    if (bitmap & 16 and not (bitmap & 1 and bitmap & 2)) bitmap -= 16;
+    if (bitmap & 32 and not (bitmap & 2 and bitmap & 4)) bitmap -= 32;
+    if (bitmap & 64 and not (bitmap & 4 and bitmap & 8)) bitmap -= 64;
+    if (bitmap & 128 and not (bitmap & 8 and bitmap & 1)) bitmap -= 128;
+    return bitmap;
+}
 void Graphism::draw_terrain(unsigned int tiles[64][64]) {
     SDL_Rect texturepos = {0, 0, 16, 16};
     SDL_Rect tile;
@@ -91,12 +99,17 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
                 tile.y = tile_pos[1] - pxpertile;
 
                 int code = 0;
+                for (int dx = -1; dx < 2; dx++) {
+                    for (int dy = -1; dy < 2; dy++) {
+                        if (i < 0 && i > 63);
+                    }
+                }
                 if (j+1 < 64) code |= tiles[i][j+1];
                 if (i+1 < 64) code |= (tiles[i+1][j] << 1);
                 if (j-1 >= 0) code |= (tiles[i][j-1] << 2);
                 if (i-1 >= 0) code |= (tiles[i-1][j] << 3);
 
-                texturepos.x = (0b0011 & code)*16;
+                texturepos.x = (code & 3)*16;
                 texturepos.y = (code >> 2)*16;
 
                 SDL_RenderCopy(renderer, block, &texturepos, &tile);
@@ -104,6 +117,7 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
         }
     }
 }
+
 void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     int toscreen[2];
     tile_to_screen(player_pos.x-cam.position.x, player_pos.y, toscreen);
@@ -117,10 +131,10 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     SDL_RenderFillRect(renderer, &rect);
 }
 void Graphism::LoadTextures() {
-    SDL_Surface* blockSurface = IMG_Load("./textures/celeste_tileset/grass.png");
+    SDL_Surface* blockSurface = IMG_Load("./textures/celeste_tileset/mountain.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;
     SDL_Surface* backgroundSurface = IMG_Load("./textures/mountain_background.png");
-    if (!backgroundSurface) cout << "Beckground texture not finded !" << endl;
+    if (!backgroundSurface) cout << "Background texture not finded !" << endl;
 
     block = SDL_CreateTextureFromSurface(renderer, blockSurface);
     background = SDL_CreateTextureFromSurface(renderer, backgroundSurface);

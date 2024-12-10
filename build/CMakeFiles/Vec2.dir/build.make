@@ -75,15 +75,15 @@ CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj: CMakeFiles/Vec2.dir/flags.ma
 CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj: C:/Users/enzom/Desktop/Projets/Timescale/timescale/libmath/vec2.cpp
 CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj: CMakeFiles/Vec2.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\enzom\Desktop\Projets\Timescale\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj -MF CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.obj.d -o CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.obj -c C:\Users\enzom\Desktop\Projets\Timescale\timescale\libmath\vec2.cpp
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj -MF CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.obj.d -o CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.obj -c C:\Users\enzom\Desktop\Projets\Timescale\timescale\libmath\vec2.cpp
 
 CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.i"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\enzom\Desktop\Projets\Timescale\timescale\libmath\vec2.cpp > CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.i
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\enzom\Desktop\Projets\Timescale\timescale\libmath\vec2.cpp > CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.i
 
 CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.s"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\enzom\Desktop\Projets\Timescale\timescale\libmath\vec2.cpp -o CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.s
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\enzom\Desktop\Projets\Timescale\timescale\libmath\vec2.cpp -o CMakeFiles\Vec2.dir\timescale\libmath\vec2.cpp.s
 
 # Object files for target Vec2
 Vec2_OBJECTS = \

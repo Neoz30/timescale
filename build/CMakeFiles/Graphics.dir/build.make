@@ -76,15 +76,15 @@ CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj: CMakeFiles/Graphics
 CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj: C:/Users/enzom/Desktop/Projets/Timescale/timescale/graphics/graphics.cpp
 CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj: CMakeFiles/Graphics.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\enzom\Desktop\Projets\Timescale\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj -MF CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.obj.d -o CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.obj -c C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj -MF CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.obj.d -o CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.obj -c C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp
 
 CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.i"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp > CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.i
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp > CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.i
 
 CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.s"
-	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp -o CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.s
+	C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\enzom\Desktop\Projets\Timescale\timescale\graphics\graphics.cpp -o CMakeFiles\Graphics.dir\timescale\graphics\graphics.cpp.s
 
 # Object files for target Graphics
 Graphics_OBJECTS = \
