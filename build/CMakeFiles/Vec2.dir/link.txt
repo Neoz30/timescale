@@ -1,2 +1,0 @@
-/usr/bin/ar qc libVec2.a CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.o
-/usr/bin/ranlib libVec2.a

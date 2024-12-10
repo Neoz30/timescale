@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/Timescale.dir/timescale/main.cpp.o -o Timescale  libVec2.a libGraphics.a /usr/lib/x86_64-linux-gnu/libSDL2.so /usr/lib/x86_64-linux-gnu/libSDL2_image.so 
