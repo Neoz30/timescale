@@ -1,10 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Timescale.dir/timescale/main.cpp.obj"
-  "CMakeFiles/Timescale.dir/timescale/main.cpp.obj.d"
-  "Timescale.exe"
-  "Timescale.exe.manifest"
+  "CMakeFiles/Timescale.dir/timescale/main.cpp.o"
+  "CMakeFiles/Timescale.dir/timescale/main.cpp.o.d"
+  "Timescale"
   "Timescale.pdb"
-  "libTimescale.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

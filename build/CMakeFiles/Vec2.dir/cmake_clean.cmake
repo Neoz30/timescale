@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj"
-  "CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj.d"
+  "CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.o"
+  "CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.o.d"
   "libVec2.a"
   "libVec2.pdb"
 )

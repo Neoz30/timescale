@@ -99,18 +99,37 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
                 tile.y = tile_pos[1] - pxpertile;
 
                 int code = 0;
-                for (int dx = -1; dx < 2; dx++) {
-                    for (int dy = -1; dy < 2; dy++) {
-                        if (i < 0 && i > 63);
+                if (j+1 < 64) code |= tiles[i][j+1];
+                if (i+1 < 64) code |= tiles[i+1][j] << 1;
+                if (j-1 >= 0) code |= tiles[i][j-1] << 2;
+                if (i-1 >= 0) code |= tiles[i-1][j] << 3;
+                if (i+1 < 64 && j+1 < 64) code |= tiles[i+1][j+1] << 4;
+                if (i+1 < 64 && j-1 < 64) code |= tiles[i+1][j-1] << 5;
+                if (i-1 < 64 && j-1 < 64) code |= tiles[i-1][j-1] << 6;
+                if (i-1 < 64 && j+1 < 64) code |= tiles[i-1][j+1] << 7;
+
+                code = remove_useless(code);
+
+                texturepos.x = ((code&48) >> 2) | (code&3);
+                texturepos.y = ((code&192) >> 4) | ((code&12) >> 2);
+
+                if (texturepos.x == 7) {
+                    if (texturepos.y == 4 || texturepos.y == 7) {
+                        texturepos.x -= 2;
+                    } else {
+                        texturepos.x -= 1;
                     }
                 }
-                if (j+1 < 64) code |= tiles[i][j+1];
-                if (i+1 < 64) code |= (tiles[i+1][j] << 1);
-                if (j-1 >= 0) code |= (tiles[i][j-1] << 2);
-                if (i-1 >= 0) code |= (tiles[i-1][j] << 3);
+                if (texturepos.y == 7) {
+                    if (texturepos.x == 4 || texturepos.x == 7) {
+                        texturepos.y -= 2;
+                    } else {
+                        texturepos.x -= 1;
+                    }
+                }
 
-                texturepos.x = (code & 3)*16;
-                texturepos.y = (code >> 2)*16;
+                texturepos.x *= 16;
+                texturepos.y *= 16;
 
                 SDL_RenderCopy(renderer, block, &texturepos, &tile);
             }

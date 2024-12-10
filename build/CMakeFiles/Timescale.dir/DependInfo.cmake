@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/enzom/Desktop/Projets/Timescale/timescale/main.cpp" "CMakeFiles/Timescale.dir/timescale/main.cpp.obj" "gcc" "CMakeFiles/Timescale.dir/timescale/main.cpp.obj.d"
+  "/home/ubuntu/Desktop/Projets/timescale/timescale/main.cpp" "CMakeFiles/Timescale.dir/timescale/main.cpp.o" "gcc" "CMakeFiles/Timescale.dir/timescale/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

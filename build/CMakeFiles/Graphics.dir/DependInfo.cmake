@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/enzom/Desktop/Projets/Timescale/timescale/graphics/graphics.cpp" "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj" "gcc" "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj.d"
+  "/home/ubuntu/Desktop/Projets/timescale/timescale/graphics/graphics.cpp" "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.o" "gcc" "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

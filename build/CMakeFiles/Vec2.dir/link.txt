@@ -1,2 +1,2 @@
-C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\ar.exe qc libVec2.a CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.obj
-C:\MinGW\x86_64-14.2.0-release-posix-seh-ucrt-rt_v12-rev0\mingw64\bin\ranlib.exe libVec2.a
+/usr/bin/ar qc libVec2.a CMakeFiles/Vec2.dir/timescale/libmath/vec2.cpp.o
+/usr/bin/ranlib libVec2.a

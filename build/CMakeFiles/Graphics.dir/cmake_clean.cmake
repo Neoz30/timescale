@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj"
-  "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.obj.d"
+  "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.o"
+  "CMakeFiles/Graphics.dir/timescale/graphics/graphics.cpp.o.d"
   "libGraphics.a"
   "libGraphics.pdb"
 )
