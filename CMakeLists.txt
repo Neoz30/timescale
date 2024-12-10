@@ -35,3 +35,5 @@ target_link_libraries(Timescale
 	PUBLIC Vec2
 	PUBLIC Graphics
 	)
+
+file(COPY timescale/textures/ DESTINATION textures/)
