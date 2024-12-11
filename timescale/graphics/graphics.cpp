@@ -78,10 +78,10 @@ void Graphism::draw_background() {
 }
 
 int remove_useless(int bitmap) {
-    if (bitmap & 16 and not (bitmap & 1 and bitmap & 2)) bitmap -= 16;
-    if (bitmap & 32 and not (bitmap & 2 and bitmap & 4)) bitmap -= 32;
-    if (bitmap & 64 and not (bitmap & 4 and bitmap & 8)) bitmap -= 64;
-    if (bitmap & 128 and not (bitmap & 8 and bitmap & 1)) bitmap -= 128;
+    if (bitmap & 16 && !(bitmap & 1 && bitmap & 2)) bitmap -= 16;
+    if (bitmap & 32 && !(bitmap & 2 && bitmap & 4)) bitmap -= 32;
+    if (bitmap & 64 && !(bitmap & 4 && bitmap & 8)) bitmap -= 64;
+    if (bitmap & 128 && !(bitmap & 8 && bitmap & 1)) bitmap -= 128;
     return bitmap;
 }
 void Graphism::draw_terrain(unsigned int tiles[64][64]) {
@@ -104,32 +104,40 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
                 if (j-1 >= 0) code |= tiles[i][j-1] << 2;
                 if (i-1 >= 0) code |= tiles[i-1][j] << 3;
                 if (i+1 < 64 && j+1 < 64) code |= tiles[i+1][j+1] << 4;
-                if (i+1 < 64 && j-1 < 64) code |= tiles[i+1][j-1] << 5;
-                if (i-1 < 64 && j-1 < 64) code |= tiles[i-1][j-1] << 6;
-                if (i-1 < 64 && j+1 < 64) code |= tiles[i-1][j+1] << 7;
+                if (i+1 < 64 && j-1 >= 0) code |= tiles[i+1][j-1] << 5;
+                if (i-1 >= 0 && j-1 >= 0) code |= tiles[i-1][j-1] << 6;
+                if (i-1 >= 0 && j+1 < 64) code |= tiles[i-1][j+1] << 7;
 
                 code = remove_useless(code);
 
-                texturepos.x = ((code&48) >> 2) | (code&3);
-                texturepos.y = ((code&192) >> 4) | ((code&12) >> 2);
+                int x = ((code&48) >> 2) | (code&3);
+                int y = ((code&192) >> 4) | ((code&12) >> 2);
 
-                if (texturepos.x == 7) {
-                    if (texturepos.y == 4 || texturepos.y == 7) {
-                        texturepos.x -= 2;
-                    } else {
-                        texturepos.x -= 1;
-                    }
+                switch (x & 12) {
+                    case 12: x -= 8;
+                    case 8: x -= 5;
+                    case 4: x -= 3;
+                    default: break;
                 }
-                if (texturepos.y == 7) {
-                    if (texturepos.x == 4 || texturepos.x == 7) {
-                        texturepos.y -= 2;
-                    } else {
-                        texturepos.x -= 1;
-                    }
+                switch (y & 12) {
+                    case 12: y -= 8;
+                    case 8: y -= 5;
+                    case 4: y -= 3;
+                    default: break;
                 }
 
-                texturepos.x *= 16;
-                texturepos.y *= 16;
+                if (x == 7 || y == 7) {
+                    if ((y == 4 || y == 7) && (x == 4 || x == 7)) {
+                        x -= 2;
+                        y -= 2;
+                    } else {
+                        x -= 1;
+                        y -= 1;
+                    }
+                }
+
+                texturepos.x = 16*x;
+                texturepos.y = 16*y;
 
                 SDL_RenderCopy(renderer, block, &texturepos, &tile);
             }
