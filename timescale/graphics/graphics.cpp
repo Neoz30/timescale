@@ -85,7 +85,7 @@ int remove_useless(int bitmap) {
     return bitmap;
 }
 void Graphism::draw_terrain(unsigned int tiles[64][64]) {
-    SDL_Rect texturepos = {0, 0, 16, 16};
+    SDL_Rect texturepos = {0, 0, 8, 8};
     SDL_Rect tile;
     tile.w = pxpertile;
     tile.h = pxpertile;
@@ -110,8 +110,8 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
 
                 code = remove_useless(code);
 
-                int x = ((code&48) >> 2) | (code&3);
-                int y = ((code&192) >> 4) | ((code&12) >> 2);
+                int x =  (code & 3) | ((code & 48) >> 2);
+                int y =  ((code & 12) >> 2) | ((code & 192) >> 4);
 
                 switch (x & 12) {
                     case 12: x -= 8;
@@ -136,8 +136,8 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
                     }
                 }
 
-                texturepos.x = 16*x;
-                texturepos.y = 16*y;
+                texturepos.x = 8*x;
+                texturepos.y = 8*y;
 
                 SDL_RenderCopy(renderer, block, &texturepos, &tile);
             }
@@ -158,7 +158,7 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     SDL_RenderFillRect(renderer, &rect);
 }
 void Graphism::LoadTextures() {
-    SDL_Surface* blockSurface = IMG_Load("./textures/celeste_tileset/mountain.png");
+    SDL_Surface* blockSurface = IMG_Load("./textures/debug/layout_texture.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;
     SDL_Surface* backgroundSurface = IMG_Load("./textures/mountain_background.png");
     if (!backgroundSurface) cout << "Background texture not finded !" << endl;
