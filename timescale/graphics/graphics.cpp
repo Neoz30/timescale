@@ -46,9 +46,7 @@ Graphism::Graphism() {
     cam.set_view(&DM, pxpertile);
     cam.mode = CAM_MODE_DYNAMIC;
 }
-Graphism::~Graphism() {
-    delete &DM, &cam, &FPS, &pxpertile;
-    
+Graphism::~Graphism() {    
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
@@ -114,15 +112,15 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
                 int y =  ((code & 12) >> 2) | ((code & 192) >> 4);
 
                 switch (x & 12) {
-                    case 12: x -= 8;
-                    case 8: x -= 5;
-                    case 4: x -= 3;
+                    case 12: x -= 8; break;
+                    case 8: x -= 5; break;
+                    case 4: x -= 3; break;
                     default: break;
                 }
                 switch (y & 12) {
-                    case 12: y -= 8;
-                    case 8: y -= 5;
-                    case 4: y -= 3;
+                    case 12: y -= 8; break;
+                    case 8: y -= 5; break;
+                    case 4: y -= 3; break;
                     default: break;
                 }
 
@@ -158,7 +156,7 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     SDL_RenderFillRect(renderer, &rect);
 }
 void Graphism::LoadTextures() {
-    SDL_Surface* blockSurface = IMG_Load("./textures/debug/layout_texture.png");
+    SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite_full.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;
     SDL_Surface* backgroundSurface = IMG_Load("./textures/mountain_background.png");
     if (!backgroundSurface) cout << "Background texture not finded !" << endl;

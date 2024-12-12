@@ -19,15 +19,15 @@ int main() {
 
         // Caution send negative output value
         switch (x & 12) {
-            case 12: x -= 8;
-            case 8: x -= 5;
-            case 4: x -= 3;
+            case 12: x -= 8; break;
+            case 8: x -= 5; break;
+            case 4: x -= 3; break;
             default: break;
         }
         switch (y & 12) {
-            case 12: y -= 8;
-            case 8: y -= 5;
-            case 4: y -= 3;
+            case 12: y -= 8; break;
+            case 8: y -= 5; break;
+            case 4: y -= 3; break;
             default: break;
         }
 
