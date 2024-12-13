@@ -156,7 +156,7 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     SDL_RenderFillRect(renderer, &rect);
 }
 void Graphism::LoadTextures() {
-    SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite_full.png");
+    SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite2.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;
     SDL_Surface* backgroundSurface = IMG_Load("./textures/mountain_background.png");
     if (!backgroundSurface) cout << "Background texture not finded !" << endl;
