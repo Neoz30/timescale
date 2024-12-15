@@ -96,15 +96,15 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
                 tile.x = tile_pos[0];
                 tile.y = tile_pos[1] - pxpertile;
 
-                int code = 0;
-                if (j+1 < 64) code |= tiles[i][j+1];
-                if (i+1 < 64) code |= tiles[i+1][j] << 1;
-                if (j-1 >= 0) code |= tiles[i][j-1] << 2;
-                if (i-1 >= 0) code |= tiles[i-1][j] << 3;
-                if (i+1 < 64 && j+1 < 64) code |= tiles[i+1][j+1] << 4;
-                if (i+1 < 64 && j-1 >= 0) code |= tiles[i+1][j-1] << 5;
-                if (i-1 >= 0 && j-1 >= 0) code |= tiles[i-1][j-1] << 6;
-                if (i-1 >= 0 && j+1 < 64) code |= tiles[i-1][j+1] << 7;
+                char code = 255;
+                if (j+1 < 64 && tiles[i][j+1] == 0) code &= 254;
+                if (i+1 < 64 && tiles[i+1][j] == 0) code &= 253;
+                if (j-1 >= 0 && tiles[i][j-1] == 0) code &= 251;
+                if (i-1 >= 0 && tiles[i-1][j] == 0) code &= 247;
+                if (i+1 < 64 && j+1 < 64 && tiles[i+1][j+1] == 0) code &= 239;
+                if (i+1 < 64 && j-1 >= 0 && tiles[i+1][j-1] == 0) code &= 223;
+                if (i-1 >= 0 && j-1 >= 0 && tiles[i-1][j-1] == 0) code &= 191;
+                if (i-1 >= 0 && j+1 < 64 && tiles[i-1][j+1] == 0) code &= 127;
 
                 code = remove_useless(code);
 
@@ -156,7 +156,7 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     SDL_RenderFillRect(renderer, &rect);
 }
 void Graphism::LoadTextures() {
-    SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite2.png");
+    SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;
     SDL_Surface* backgroundSurface = IMG_Load("./textures/mountain_background.png");
     if (!backgroundSurface) cout << "Background texture not finded !" << endl;
