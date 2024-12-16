@@ -6,7 +6,6 @@
 
 using namespace std;
 
-const float CS45 = sqrt(2)/2;
 
 class TileMap {
     public:
@@ -78,20 +77,18 @@ class Player {
             for (int dx = -1; dx <= 1; dx++) {
                 for (int dy = -1; dy <= 1; dy++) {
                     int block[2] = {(int)position.x+dx, (int)position.y+dy};
-                    if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) {
-                        continue;
-                    }
+                    if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) continue;
 
                     unsigned int blockstate = map->tiles[block[0]][block[1]];
 
                     if (blockstate == 1 && block_detection(block[0], block[1])) {                          
                         Vec2 delta = {(float)block[0]-position.x+0.5f, (float)block[1]-position.y+0.5f};
-                        //Vec2 dir = Vec2(delta).normalize();
+                        Vec2 delta2 = {(float)block[0]-oldposition.x+0.5f, (float)block[1]-oldposition.y+0.5f};
 
-                        if (delta.x > abs(delta.y)) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                        if (-delta.x > abs(delta.y)) {position.x += hitbox.w/2+0.5 + delta.x;}
-                        if (delta.y > abs(delta.x)) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                        if (-delta.y > abs(delta.x)) {position.y += hitbox.h/2+0.5 + delta.y;}
+                        if (delta2.x > abs(delta2.y)) {position.x -= hitbox.w/2+0.5 - delta.x;}
+                        if (-delta2.x > abs(delta2.y)) {position.x += hitbox.w/2+0.5 + delta.x;}
+                        if (delta2.y > abs(delta2.x)) {position.y -= hitbox.h/2+0.5 - delta.y;}
+                        if (-delta2.y > abs(delta2.x)) {position.y += hitbox.h/2+0.5 + delta.y;}
                     }
                 }
             }
