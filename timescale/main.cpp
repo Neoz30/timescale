@@ -86,12 +86,12 @@ class Player {
 
                     if (blockstate == 1 && block_detection(block[0], block[1])) {                          
                         Vec2 delta = {(float)block[0]-position.x+0.5f, (float)block[1]-position.y+0.5f};
-                        Vec2 dir = Vec2(delta).normalize();
+                        //Vec2 dir = Vec2(delta).normalize();
 
-                        if (dir.x > CS45+0.05) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                        if (dir.x < -CS45-0.05) {position.x += hitbox.w/2+0.5 + delta.x;}
-                        if (dir.y > CS45+0.05) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                        if (dir.y < -CS45-0.05) {position.y += hitbox.h/2+0.5 + delta.y;}
+                        if (delta.x > abs(delta.y)) {position.x -= hitbox.w/2+0.5 - delta.x;}
+                        if (-delta.x > abs(delta.y)) {position.x += hitbox.w/2+0.5 + delta.x;}
+                        if (delta.y > abs(delta.x)) {position.y -= hitbox.h/2+0.5 - delta.y;}
+                        if (-delta.y > abs(delta.x)) {position.y += hitbox.h/2+0.5 + delta.y;}
                     }
                 }
             }
@@ -116,7 +116,7 @@ class Player {
             }
 
             oldposition = position;
-            position = acceleration*dt*dt + velocity + position; // This line make crash the game ???
+            position = acceleration*dt*dt + velocity + position;
         
             edge_collision();
             block_collision(map);
