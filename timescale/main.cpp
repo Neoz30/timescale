@@ -49,13 +49,13 @@ class Player {
             }
 
             float deltaY = position.y-(underblock[1]+0.5);
-            if (deltaY <= 1.05 && 0 <= deltaY) {return true;}
+            if (deltaY <= 1.05 && 1.0 <= deltaY) {return true;}
             return false;
         }
 
         void key_movement(const Uint8* keys, float dt) {
             if (onground && keys[SDL_SCANCODE_SPACE]){
-                acceleration.y += 2048;
+                acceleration.y += 1700;
             }
             if (keys[SDL_SCANCODE_D]){acceleration.x += 32;}
             if (keys[SDL_SCANCODE_A]){acceleration.x -= 32;}
@@ -74,22 +74,22 @@ class Player {
         }
 
         void block_collision(TileMap* map) {
-            for (int dx = -1; dx <= 1; dx++) {
-                for (int dy = -1; dy <= 1; dy++) {
-                    int block[2] = {(int)position.x+dx, (int)position.y+dy};
-                    if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) continue;
+            int offset[9][2] = {{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0},
+                                {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
+            for (int i = 0; i < 9; i++) {
+                int block[2] = {(int)position.x+offset[i][0], (int)position.y+offset[i][1]};
+                if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) continue;
 
-                    unsigned int blockstate = map->tiles[block[0]][block[1]];
+                unsigned int blockstate = map->tiles[block[0]][block[1]];
 
-                    if (blockstate == 1 && block_detection(block[0], block[1])) {                          
-                        Vec2 delta = {(float)block[0]-position.x+0.5f, (float)block[1]-position.y+0.5f};
-                        Vec2 delta2 = {(float)block[0]-oldposition.x+0.5f, (float)block[1]-oldposition.y+0.5f};
+                if (blockstate == 1 && block_detection(block[0], block[1])) {                          
+                    Vec2 delta = {(float)block[0]-position.x+0.5f, (float)block[1]-position.y+0.5f};
+                    Vec2 delta2 = {(float)block[0]-oldposition.x+0.5f, (float)block[1]-oldposition.y+0.5f};
 
-                        if (delta2.x > abs(delta2.y)) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                        if (-delta2.x > abs(delta2.y)) {position.x += hitbox.w/2+0.5 + delta.x;}
-                        if (delta2.y > abs(delta2.x)) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                        if (-delta2.y > abs(delta2.x)) {position.y += hitbox.h/2+0.5 + delta.y;}
-                    }
+                    if (delta2.x > abs(delta2.y)) {position.x -= hitbox.w/2+0.5 - delta.x;}
+                    if (-delta2.x > abs(delta2.y)) {position.x += hitbox.w/2+0.5 + delta.x;}
+                    if (delta2.y > abs(delta2.x)) {position.y -= hitbox.h/2+0.5 - delta.y;}
+                    if (-delta2.y > abs(delta2.x)) {position.y += hitbox.h/2+0.5 + delta.y;}
                 }
             }
         }
