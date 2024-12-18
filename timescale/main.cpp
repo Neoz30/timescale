@@ -194,7 +194,7 @@ int main(int argc, char* argv[])
             graphiclastframe = time;
         }
 
-        SDL_Delay(4);
+        SDL_Delay(8);
         dt = (float)(SDL_GetTicks()-time)/1000;
     }
 
