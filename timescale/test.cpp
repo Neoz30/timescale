@@ -25,7 +25,22 @@ int operation(int value, int value2, int index) {
         return value >> value2;
         break;
     case 6:
+        return value;
+        break;
+    case 7:
         return -value;
+        break;
+    case 8:
+        return value+value2;
+        break;
+    case 9:
+        return value-value2;
+        break;
+    case 10:
+        return value*value2;
+        break;
+    case 11:
+        return value/value2;
         break;
     default:
         return 0;
@@ -39,33 +54,38 @@ class Individu {
     
         void randomize() {
             for (int i = 0; i < 8; i+=2) {
-                parameters[i] = rand() % 7;
+                parameters[i] = rand() % 16;
             }
             for (int i = 1; i < 8; i+=2) {
-                parameters[i] = rand() % 8;
+                parameters[i] = rand() % 12;
             }
         }
 
-        // A verifier pour donnar les meilleur resultat
         int fitness() {
             int score = 0;
             for (int i = 0; i < 9; i++) {
                 int x = operation(operation(i, parameters[0], parameters[1]), parameters[2], parameters[3]);
                 int y = operation(operation(i, parameters[4], parameters[5]), parameters[6], parameters[7]);
 
-                x = abs(x); y = abs(y);
+                int dst2 = x*x + y*y;
 
-                if (i == 0 && x == 0 && y == 0) score++;
-                if (1 <= i && i <= 4 && ((x == -1 && x == 1) ^ (y == -1 && y == 1))) score++;
-                if (5 <= i && i <= 8 &&  ((x == -1 && x == 1) && (y == -1 && y == 1))) score++;
+                if (i == 0 && dst2 == 0) score++;
+                if (1 <= i && i <= 4 && dst2 == 1) score++;
+                if (5 <= i && i <= 8 &&  dst2 == 2) score++;
             }
             return score;
         }
 
+        void crossover(Individu ind1, Individu ind2) {
+            for (int i = 0; i < 16; i++) {
+                parameters[i] = (rand() % 2 == 0) ? ind1.parameters[i]: ind2.parameters[i];
+            }
+        }
+
         void mutation() {
             if (rand() % 100 < 60) {
-                parameters[rand() % 4 * 2] = rand() % 7;
-                parameters[rand() % 4 * 2 + 1] = rand() % 8;
+                parameters[rand() % 4 * 2] = rand() % 16;
+                parameters[rand() % 4 * 2 + 1] = rand() % 12;
             }
         }
 };
@@ -97,7 +117,7 @@ int main() {
     int fitness_score[16] = {0};
 
     int gen = 0;
-    while (gen < 100000) {
+    while (gen < 10000) {
         cout << gen << endl;
         for (int i = 0; i < 16; i++) {
             fitness_score[i] = population[i].fitness();
@@ -106,6 +126,13 @@ int main() {
         selection(population, fitness_score);
 
         if (fitness_score[15] == 9) break;
+
+        /*population[2].crossover(population[2], population[3]);
+        population[3].crossover(population[2], population[4]);
+        population[4].crossover(population[2], population[5]);
+        population[5].crossover(population[3], population[4]);
+        population[6].crossover(population[3], population[5]);
+        population[7].crossover(population[4], population[5]);*/
 
         for (int i = 0; i < 16; i++) {population[i].mutation();}
         for (int i = 8; i < 16; i++) {population[i].randomize();}
