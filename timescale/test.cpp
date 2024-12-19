@@ -40,6 +40,7 @@ int operation(int value, int value2, int index) {
         return value*value2;
         break;
     case 11:
+        if (value2 == 0) return -1;
         return value/value2;
         break;
     default:
@@ -57,55 +58,63 @@ class Individu {
                 parameters[i] = rand() % 16;
             }
             for (int i = 1; i < 8; i+=2) {
-                parameters[i] = rand() % 12;
+                parameters[i] = rand() % 11;
             }
         }
 
         int fitness() {
-            int score = 0;
+            bool taken[3][3] = {false};
+
             for (int i = 0; i < 9; i++) {
                 int x = operation(operation(i, parameters[0], parameters[1]), parameters[2], parameters[3]);
                 int y = operation(operation(i, parameters[4], parameters[5]), parameters[6], parameters[7]);
 
+                if (x < -1 || 1 < x || y < -1 || 1 < y) continue;
+
                 int dst2 = x*x + y*y;
 
-                if (i == 0 && dst2 == 0) score++;
-                if (1 <= i && i <= 4 && dst2 == 1) score++;
-                if (5 <= i && i <= 8 &&  dst2 == 2) score++;
+                if (i == 0 && dst2 == 0) taken[y+1][x+1] = true;
+                if (1 <= i && i <= 4 && dst2 == 1) taken[y+1][x+1] = true;
+                if (5 <= i && i <= 8 &&  dst2 == 2) taken[y+1][x+1] = true;
+            }
+
+            int score = 0;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (taken[i][j]) score++; 
+                }
             }
             return score;
         }
 
         void crossover(Individu ind1, Individu ind2) {
-            for (int i = 0; i < 16; i++) {
+            for (int i = 0; i < 8; i++) {
                 parameters[i] = (rand() % 2 == 0) ? ind1.parameters[i]: ind2.parameters[i];
             }
         }
 
         void mutation() {
-            if (rand() % 100 < 60) {
-                parameters[rand() % 4 * 2] = rand() % 16;
-                parameters[rand() % 4 * 2 + 1] = rand() % 12;
+            if (rand() % 100 < 10) {
+                int p = rand() % 8;
+                int k = (p % 2 == 0) ? 16 : 11;
+                parameters[p] = rand() % k;
             }
         }
 };
 
 void selection(Individu population[16], int order[16]) {
-    bool swapped = true;
-    while (swapped) {
-        swapped = false;
-        for (int i = 0; i < 15; i++) {
-            if (order[i] > order[i+1]) {
-                int s0 = order[i];
-                order[i] = order[i+1];
-                order[i+1] = s0;
-                Individu s1 = population[i];
-                population[i] = population[i+1];
-                population[i+1] = s1;
+    for (int i = 1; i < 16; ++i) {
+        int key = order[i];
+        Individu store = population[i];
+        int j = i - 1;
 
-                swapped = true;
-            }
+        while (j >= 0 && order[j] > key) {
+            order[j+1] = order[j];
+            population[j+1] = population[j];
+            j--;
         }
+        order[j+1] = key;
+        population[j+1] = store;
     }
 }
 
@@ -117,8 +126,7 @@ int main() {
     int fitness_score[16] = {0};
 
     int gen = 0;
-    while (gen < 10000) {
-        cout << gen << endl;
+    while (gen < 100000) {
         for (int i = 0; i < 16; i++) {
             fitness_score[i] = population[i].fitness();
         }
@@ -127,18 +135,20 @@ int main() {
 
         if (fitness_score[15] == 9) break;
 
-        /*population[2].crossover(population[2], population[3]);
-        population[3].crossover(population[2], population[4]);
-        population[4].crossover(population[2], population[5]);
-        population[5].crossover(population[3], population[4]);
-        population[6].crossover(population[3], population[5]);
-        population[7].crossover(population[4], population[5]);*/
+        population[13].crossover(population[13], population[12]);
+        population[12].crossover(population[13], population[11]);
+        population[11].crossover(population[13], population[10]);
+        population[10].crossover(population[12], population[11]);
+        population[9].crossover(population[12], population[10]);
+        population[8].crossover(population[11], population[10]);
 
-        for (int i = 0; i < 16; i++) {population[i].mutation();}
-        for (int i = 8; i < 16; i++) {population[i].randomize();}
+        for (int i = 0; i < 8; i++) {population[i].randomize();}
+        for (int i = 8; i < 16; i++) {population[i].mutation();}
 
         gen++;
     }
+
+    cout << "Last Generation: " << gen << endl;
 
     Individu best = population[15];
     cout << best.fitness() << endl;
