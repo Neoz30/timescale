@@ -51,13 +51,13 @@ int operation(int value, int value2, int index) {
 
 class Individu {
     public:
-        int parameters[8] = {0};
+        int parameters[16] = {0};
     
         void randomize() {
-            for (int i = 0; i < 8; i+=2) {
+            for (int i = 0; i < 16; i+=2) {
                 parameters[i] = rand() % 16;
             }
-            for (int i = 1; i < 8; i+=2) {
+            for (int i = 1; i < 16; i+=2) {
                 parameters[i] = rand() % 11;
             }
         }
@@ -68,6 +68,8 @@ class Individu {
             for (int i = 0; i < 9; i++) {
                 int x = operation(operation(i, parameters[0], parameters[1]), parameters[2], parameters[3]);
                 int y = operation(operation(i, parameters[4], parameters[5]), parameters[6], parameters[7]);
+                x = operation(operation(x, parameters[8], parameters[9]), parameters[10], parameters[11]);
+                y = operation(operation(y, parameters[12], parameters[13]), parameters[14], parameters[15]);
 
                 if (x < -1 || 1 < x || y < -1 || 1 < y) continue;
 
@@ -75,7 +77,7 @@ class Individu {
 
                 if (i == 0 && dst2 == 0) taken[y+1][x+1] = true;
                 if (1 <= i && i <= 4 && dst2 == 1) taken[y+1][x+1] = true;
-                if (5 <= i && i <= 8 &&  dst2 == 2) taken[y+1][x+1] = true;
+                if (5 <= i && i <= 8 && dst2 == 2) taken[y+1][x+1] = true;
             }
 
             int score = 0;
@@ -88,14 +90,14 @@ class Individu {
         }
 
         void crossover(Individu ind1, Individu ind2) {
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 16; i++) {
                 parameters[i] = (rand() % 2 == 0) ? ind1.parameters[i]: ind2.parameters[i];
             }
         }
 
         void mutation() {
-            if (rand() % 100 < 10) {
-                int p = rand() % 8;
+            if (rand() % 100 < 20) {
+                int p = rand() % 16;
                 int k = (p % 2 == 0) ? 16 : 11;
                 parameters[p] = rand() % k;
             }
@@ -133,7 +135,7 @@ int main() {
 
         selection(population, fitness_score);
 
-        if (fitness_score[15] == 9) break;
+        if (fitness_score[15] >= 6) break;
 
         population[13].crossover(population[13], population[12]);
         population[12].crossover(population[13], population[11]);
