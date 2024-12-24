@@ -148,10 +148,10 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     tile_to_screen(player_pos.x-cam.position.x, player_pos.y, toscreen);
 
     SDL_Rect rect;
-    rect.x = (int)toscreen[0]-pxpertile/2;
-    rect.y = (int)toscreen[1]-pxpertile/2;
-    rect.w = (int)pwidth*pxpertile;
-    rect.h = (int)pheight*pxpertile;
+    rect.w = (int)(pwidth*pxpertile);
+    rect.h = (int)(pheight*pxpertile);
+    rect.x = toscreen[0]-rect.w/2;
+    rect.y = toscreen[1]-rect.h/2;
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(renderer, &rect);
 }

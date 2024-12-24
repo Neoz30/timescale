@@ -28,13 +28,12 @@ class Player {
     public:
         Hitbox hitbox;
         Vec2 position;
-        Vec2 oldposition;
-        Vec2 acceleration = {0, 0};
+        Vec2 velocity {0, 0};
+        Vec2 acceleration {0, 0};
         bool onground = false;
 
-        Player(Vec2 basepos, int width, int height) {
+        Player(Vec2 basepos, float width, float height) {
             position = basepos;
-            oldposition = basepos;
             hitbox.w = width;
             hitbox.h = height;
         }
@@ -48,8 +47,8 @@ class Player {
                 return false;
             }
 
-            float deltaY = position.y-(underblock[1]+0.5);
-            if (deltaY <= 1.05 && 1.0 <= deltaY) {return true;}
+            float deltaY = (position.y-hitbox.h/2)-(underblock[1]+1);
+            if (deltaY <= 0.05f && 0.f <= deltaY) {return true;}
             return false;
         }
 
@@ -62,34 +61,46 @@ class Player {
         }
 
         void edge_collision() {
-            if (position.y-hitbox.h/2 < 0) position.y = hitbox.h/2;
-            if (position.y+hitbox.h/2 > 64) position.y = 64-hitbox.h/2;
-            if (position.x-hitbox.w/2 < 0) position.x = hitbox.w/2;
-            if (position.x+hitbox.w/2 > 64) position.x = 64-hitbox.w/2;
+            if (position.y-hitbox.h/2 < 0) {position.y = hitbox.h/2; velocity.y = 0;}
+            if (position.y+hitbox.h/2 > 64) {position.y = 64-hitbox.h/2; velocity.y = 0;}
+            if (position.x-hitbox.w/2 < 0) {position.x = hitbox.w/2; velocity.x = 0;}
+            if (position.x+hitbox.w/2 > 64) {position.x = 64-hitbox.w/2; velocity.x = 0;}
         }
 
-        bool block_detection(int blockX, int blockY) {
-            return position.x-hitbox.w/2 < blockX+1 && position.x+hitbox.w/2 > blockX &&
-            position.y-hitbox.h/2 < blockY+1 && position.y+hitbox.h/2 > blockY;
+        bool will_collide(int blockX, int blockY) {
+            Vec2 nextposition = position+velocity;
+            return nextposition.x-hitbox.w/2 < blockX+1 && nextposition.x+hitbox.w/2 > blockX &&
+            nextposition.y-hitbox.h/2 < blockY+1 && nextposition.y+hitbox.h/2 > blockY;
         }
 
         void block_collision(TileMap* map) {
-            int offset[9][2] = {{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0},
-                                {1, 1}, {1, -1}, {-1, -1}, {-1, 1}};
+            int offset[9][2] = {
+                {0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0},
+                {1, 1}, {1, -1}, {-1, -1}, {-1, 1}
+                };
+
             for (int i = 0; i < 9; i++) {
-                int block[2] = {(int)position.x+offset[i][0], (int)position.y+offset[i][1]};
+                Vec2 nextposition = position+velocity;
+
+                int block[2] = {(int)nextposition.x+offset[i][0], (int)nextposition.y+offset[i][1]};
                 if (block[0] < 0 || block[0] > 63 || block[1] < 0 || block[1] > 63) continue;
 
                 unsigned int blockstate = map->tiles[block[0]][block[1]];
 
-                if (blockstate == 1 && block_detection(block[0], block[1])) {                          
-                    Vec2 delta = {(float)block[0]-position.x+0.5f, (float)block[1]-position.y+0.5f};
-                    Vec2 delta2 = {(float)block[0]-oldposition.x+0.5f, (float)block[1]-oldposition.y+0.5f};
-
-                    if (delta2.x > abs(delta2.y)) {position.x -= hitbox.w/2+0.5 - delta.x;}
-                    if (-delta2.x > abs(delta2.y)) {position.x += hitbox.w/2+0.5 + delta.x;}
-                    if (delta2.y > abs(delta2.x)) {position.y -= hitbox.h/2+0.5 - delta.y;}
-                    if (-delta2.y > abs(delta2.x)) {position.y += hitbox.h/2+0.5 + delta.y;}
+                if (blockstate > 0 && will_collide(block[0], block[1])) {
+                    Vec2 delta = {
+                        (float)block[0]-position.x+0.5f,
+                        (float)block[1]-position.y+0.5f
+                        };
+                    Vec2 delta2 = {
+                        (float)block[0]-nextposition.x+0.5f,
+                        (float)block[1]-nextposition.y+0.5f
+                        };
+                    
+                    if (delta.x > abs(delta.y)) {velocity.x -= hitbox.w/2+0.5 - delta2.x;}
+                    if (-delta.x > abs(delta.y)) {velocity.x += hitbox.w/2+0.5 + delta2.x;}
+                    if (delta.y > abs(delta.x)) {velocity.y -= hitbox.h/2+0.5 - delta2.y;}
+                    if (-delta.y > abs(delta.x)) {velocity.y += hitbox.w/2+0.5 + delta2.y;}
                 }
             }
         }
@@ -99,24 +110,25 @@ class Player {
             acceleration.y -= 64;
 
             //Update physic player
-            Vec2 velocity = position - oldposition;
+            Vec2 opposite_speed = velocity*-1;
+            float speedfriction = 0.1f*pow(opposite_speed.length(), 2);
+            opposite_speed.normalize();
             
-            Vec2 inverse_speed = velocity/-dt;
-            float speedfriction = 0.1f*pow(inverse_speed.length(), 2);
-            
-            Vec2 kineticfriction = Vec2(inverse_speed).normalize()*speedfriction;
+            Vec2 kineticfriction = opposite_speed*speedfriction;
             acceleration += kineticfriction;
 
             if (onground) {
-                Vec2 staticfriction = inverse_speed.normalize()*16;
+                Vec2 staticfriction = opposite_speed*16;
                 acceleration += staticfriction;
             }
 
-            oldposition = position;
-            position = acceleration*dt*dt + velocity + position;
-        
+            velocity = (acceleration*dt + velocity)*dt;
+
             edge_collision();
             block_collision(map);
+
+            position = velocity + position;
+            velocity = velocity/dt;
         }
 
         void update(const Uint8* keys, float dt, TileMap* map) {
