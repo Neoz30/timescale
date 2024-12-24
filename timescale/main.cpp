@@ -117,10 +117,10 @@ class Player {
             Vec2 kineticfriction = opposite_speed*speedfriction;
             acceleration += kineticfriction;
 
-            if (onground) {
+            if (onground && velocity.length() > 0.01f) {
                 Vec2 staticfriction = opposite_speed*16;
                 acceleration += staticfriction;
-            }
+            } else acceleration = velocity*-1 + acceleration;
 
             velocity = (acceleration*dt + velocity)*dt;
 
