@@ -110,7 +110,7 @@ class Player {
             acceleration.y -= 64;
 
             //Update physic player
-            Vec2 opposite_speed = velocity*-1;
+            Vec2 opposite_speed = -velocity;
             float speedfriction = 0.1f*pow(opposite_speed.length(), 2);
             opposite_speed.normalize();
             
