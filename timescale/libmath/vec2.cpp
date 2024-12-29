@@ -1,4 +1,3 @@
-#include <iostream>
 #include "vec2.hpp"
 
 // Vec2

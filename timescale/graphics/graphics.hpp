@@ -1,12 +1,13 @@
-#ifndef GRAPHICS
-#define GRAPHICS 1
+#pragma once
 
 #include <iostream>
 using namespace std;
 
 #include <SDL.h>
 #include <SDL_image.h>
+
 #include <libmath/vec2.hpp>
+#include <game/game.hpp>
 
 const unsigned char CAM_MODE_STATIC = 0;
 const unsigned char CAM_MODE_DYNAMIC = 1;
@@ -48,7 +49,7 @@ class Graphism {
 
         void draw_background();
 
-        void draw_terrain(unsigned int tiles[64][64]);
+        void draw_terrain(TileMap* map);
 
         void draw_player(Vec2 player_pos, float pwidth, float pheight);
 
@@ -58,4 +59,3 @@ class Graphism {
 
         void LoadTextures();
 };
-#endif

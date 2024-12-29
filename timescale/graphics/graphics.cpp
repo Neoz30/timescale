@@ -1,9 +1,7 @@
-#include <math.h>
 #include "graphics.hpp"
 
-
 //Camera class function
-Camera::Camera() {mode = 0;}
+Camera::Camera() {mode = CAM_MODE_STATIC;}
 void Camera::set_view(SDL_DisplayMode* displaymode, int pxpertile) {
     view.x = (float)displaymode->w/pxpertile;
     view.y = (float)displaymode->h/pxpertile;
@@ -82,7 +80,7 @@ int remove_useless(int bitmap) {
     if (bitmap & 128 && !(bitmap & 8 && bitmap & 1)) bitmap -= 128;
     return bitmap;
 }
-void Graphism::draw_terrain(unsigned int tiles[64][64]) {
+void Graphism::draw_terrain(TileMap* map) {
     SDL_Rect texturepos = {0, 0, 8, 8};
     SDL_Rect tile;
     tile.w = pxpertile;
@@ -90,21 +88,21 @@ void Graphism::draw_terrain(unsigned int tiles[64][64]) {
     for (int i = 0; i < 64; i++) {
         for (int j = 0; j < 64; j++) {
 
-            if (tiles[i][j]) {
+            if (map->tiles[i][j].id) {
                 int tile_pos[2];
                 tile_to_screen((float)i-cam.position.x, (float)j, tile_pos);
                 tile.x = tile_pos[0];
                 tile.y = tile_pos[1] - pxpertile;
 
                 char code = 255;
-                if (j+1 < 64 && tiles[i][j+1] == 0) code &= 254;
-                if (i+1 < 64 && tiles[i+1][j] == 0) code &= 253;
-                if (j-1 >= 0 && tiles[i][j-1] == 0) code &= 251;
-                if (i-1 >= 0 && tiles[i-1][j] == 0) code &= 247;
-                if (i+1 < 64 && j+1 < 64 && tiles[i+1][j+1] == 0) code &= 239;
-                if (i+1 < 64 && j-1 >= 0 && tiles[i+1][j-1] == 0) code &= 223;
-                if (i-1 >= 0 && j-1 >= 0 && tiles[i-1][j-1] == 0) code &= 191;
-                if (i-1 >= 0 && j+1 < 64 && tiles[i-1][j+1] == 0) code &= 127;
+                if (j+1 < 64 && map->tiles[i][j+1].id == 0) code &= 254;
+                if (i+1 < 64 && map->tiles[i+1][j].id == 0) code &= 253;
+                if (j-1 >= 0 && map->tiles[i][j-1].id == 0) code &= 251;
+                if (i-1 >= 0 && map->tiles[i-1][j].id == 0) code &= 247;
+                if (i+1 < 64 && j+1 < 64 && map->tiles[i+1][j+1].id == 0) code &= 239;
+                if (i+1 < 64 && j-1 >= 0 && map->tiles[i+1][j-1].id == 0) code &= 223;
+                if (i-1 >= 0 && j-1 >= 0 && map->tiles[i-1][j-1].id == 0) code &= 191;
+                if (i-1 >= 0 && j+1 < 64 && map->tiles[i-1][j+1].id == 0) code &= 127;
 
                 code = remove_useless(code);
 
