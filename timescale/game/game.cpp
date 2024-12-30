@@ -15,19 +15,19 @@ Player::Player(Vec2 basepos, float width, float height) {
 }
 
 bool Player::touchground(TileMap* map) {
-    int underblock[2] = {(int)position.x, (int)position.y-1};
-    int offset = (position.x-underblock[0] < 0.5) ? -1 : 1;
-    if (position.x-underblock[0] == 0.5) offset = 0;
-    int underblock2[2] = {(int)position.x+offset, (int)position.y-1};
+    int playerint[2] = {(int)position.x, (int)position.y};
+    Block blockbelow = map->tiles[playerint[0]][playerint[1]-1];
 
-    Block groundcenter = map->tiles[underblock[0]][underblock[1]];
-    Block groundside = map->tiles[underblock2[0]][underblock2[1]];
-    if (groundcenter.id == 0 && groundside.id == 0) {
+    int offset = 0;
+    if (playerint[0]+0.5f != position.x) offset = (playerint[0]+0.5f < position.x) ? 1 : -1;
+    Block belowside = map->tiles[playerint[0]+offset][playerint[1]-1];
+
+    if (blockbelow.id == 0 && belowside.id == 0) {
         return false;
     }
 
-    float deltaY = (position.y-hitbox.h/2)-(underblock[1]+1);
-    if (deltaY <= 0.05f && 0.f <= deltaY) {return true;}
+    float deltaY = (position.y-hitbox.h/2)-playerint[1];
+    if (deltaY <= 0.02f && 0.f <= deltaY) return true;
     return false;
 }
 
@@ -94,8 +94,8 @@ void Player::physic(float dt, TileMap* map) {
     Vec2 kineticfriction = opposite_speed*speedfriction;
     acceleration += kineticfriction;
 
-    if (onground && velocity.length() > 0.01f) {
-        Vec2 staticfriction = opposite_speed*16;
+    Vec2 staticfriction = opposite_speed*16;
+    if (onground && velocity.length() > staticfriction.length()*dt) {
         acceleration += staticfriction;
     } else acceleration = velocity*-1 + acceleration;
 
