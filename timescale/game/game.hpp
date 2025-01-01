@@ -6,6 +6,11 @@ struct Hitbox {
 };
 
 class Entity {
+    public:
+        Hitbox hitbox {1, 1};
+        Vec2 position {0, 0};
+        Vec2 velocity {0, 0};
+        Vec2 acceleration {0, 0};
 };
 class BlockEntity {
 };
@@ -41,4 +46,19 @@ class Player {
 
         void physic(float dt, TileMap* map);
         void update(float dt, TileMap* map);
+};
+
+class AwayMob: public Entity {
+public:
+    bool onground = false;
+
+    AwayMob(Vec2 basepos);
+
+    bool touchground(TileMap* map);
+    void edge_collision();
+    bool will_collide(int blockX, int blockY);
+    void block_collision(TileMap* map);
+
+    void physic(float dt, TileMap* map);
+    void update(float dt, Vec2 toplayer, TileMap* map);
 };

@@ -53,6 +53,8 @@ class Graphism {
 
         void draw_player(Vec2 player_pos, float pwidth, float pheight);
 
+        void draw_awaymob(Vec2 position, float pwidth, float pheight);
+
     private:
         SDL_Texture* block;
         SDL_Texture* background;

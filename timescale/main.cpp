@@ -16,6 +16,8 @@ int main(int argc, char* argv[])
     TileMap map;
 
     Player player(Vec2(16, 16), 1, 1);
+
+    AwayMob firstmob(Vec2(4, 32));
     
     for (int i = 0; i < 64; i++) {
         map.tiles[i][0].id = 1;
@@ -66,6 +68,9 @@ int main(int argc, char* argv[])
 
         player.update(dt, &map);
 
+        Vec2 toplayer = player.position - firstmob.position;
+        firstmob.update(dt, toplayer, &map);
+
         if (time-graphiclastframe > 1000.0/gamescreen.FPS) {
             gamescreen.cam.step(player.position);
 
@@ -73,6 +78,8 @@ int main(int argc, char* argv[])
             gamescreen.draw_background();
             
             gamescreen.draw_player(player.position, player.hitbox.w, player.hitbox.h);
+            gamescreen.draw_awaymob(firstmob.position, firstmob.hitbox.w, firstmob.hitbox.h);
+
             gamescreen.draw_terrain(&map);
 
             gamescreen.update();

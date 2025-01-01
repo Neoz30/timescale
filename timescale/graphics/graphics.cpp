@@ -153,6 +153,20 @@ void Graphism::draw_player(Vec2 player_pos, float pwidth, float pheight) {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(renderer, &rect);
 }
+
+void Graphism::draw_awaymob(Vec2 position, float pwidth, float pheight) {
+    int toscreen[2];
+    tile_to_screen(position.x-cam.position.x, position.y, toscreen);
+
+    SDL_Rect rect;
+    rect.w = (int)(pwidth*pxpertile);
+    rect.h = (int)(pheight*pxpertile);
+    rect.x = toscreen[0]-rect.w/2;
+    rect.y = toscreen[1]-rect.h/2;
+    SDL_SetRenderDrawColor(renderer, 20, 100, 199, 255);
+    SDL_RenderFillRect(renderer, &rect);
+}
+
 void Graphism::LoadTextures() {
     SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;
