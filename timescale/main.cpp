@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     TileMap map;
 
-    Player player(Vec2(16, 16), 1, 1);
+    Player player(Vec2(16, 16), 1.15, 1.15);
 
     AwayMob firstmob(Vec2(4, 32));
     

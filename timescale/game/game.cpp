@@ -8,6 +8,45 @@ TileMap::TileMap() {
     }
 }
 
+Entity::Entity(float w, float h, Vec2 pos) {
+    hitbox.w = w;
+    hitbox.h = h;
+    position = pos;
+}
+
+void Entity::physic(float dt, TileMap* map) {
+    // Gravity Force
+    acceleration.y -= 64;
+
+    //Update physic player
+    Vec2 opposite_speed = -velocity;
+    float speedfriction = 0.1f*pow(opposite_speed.length(), 2);
+    opposite_speed.normalize();
+    
+    Vec2 kineticfriction = opposite_speed*speedfriction;
+    acceleration += kineticfriction;
+
+    Vec2 staticfriction = opposite_speed*16;
+    if (frictionX && velocity.length() > staticfriction.length()*dt) {
+        acceleration += staticfriction;
+    } else acceleration = velocity*-1 + acceleration;
+
+    velocity = (acceleration*dt + velocity)*dt;
+
+    edge_collision();
+    block_collision(map);
+
+    position = velocity + position;
+    velocity = velocity/dt;
+}
+
+void Entity::update(float dt, TileMap* map) {
+    acceleration = {0, 0};
+    control_movement(dt);
+    onground = touchground(map);
+    physic(dt, map);
+}
+
 Player::Player(Vec2 basepos, float width, float height) {
     position = basepos;
     hitbox.w = width;
@@ -213,7 +252,7 @@ void AwayMob::update(float dt, Vec2 toplayer, TileMap* map) {
     acceleration = {0, 0};
 
     float distplayer = toplayer.length();
-    float desire = distplayer - 5.f;
+    float desire = distplayer - 10.f;
     acceleration.x += (toplayer.normalize()*desire).x*27;
 
     onground = touchground(map);

@@ -39,6 +39,7 @@ class Vec2 {
 
         float length();
         Vec2& normalize();
+        float dot(Vec2& other);
 };
 
 Vec2 operator+(float other, Vec2& self);

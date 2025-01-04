@@ -84,3 +84,6 @@ Vec2& Vec2::normalize() {
     x /= len; y /= len;
     return *this;
 }
+float Vec2::dot(Vec2& other) {
+    return x*other.x + y*other.y;
+}
