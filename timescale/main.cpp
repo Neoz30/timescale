@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 
     TileMap map;
 
-    Player player(1.0, 1.0, Vec2(16, 16));
+    Player player(0.85, 0.85, Vec2(16, 16));
 
     AwayMob firstmob(Vec2(4, 32));
     
@@ -81,6 +81,21 @@ int main(int argc, char* argv[])
             gamescreen.draw_awaymob(firstmob.position, firstmob.hitbox.w, firstmob.hitbox.h);
 
             gamescreen.draw_terrain(&map);
+
+            // Debug render
+            int block_center[2] = {
+                (int)player.position.x,
+                (int)player.position.y
+                };
+            for (int x = -1; x < 2; x++) {
+                for (int y = -1; y < 2; y++) {
+                    gamescreen.draw_debugblock_border(
+                        block_center[0] + x,
+                        block_center[1] + y,
+                        {255, 0, 255, 255}
+                        );
+                }
+            }
 
             gamescreen.update();
             graphiclastframe = time;

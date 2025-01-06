@@ -9,38 +9,45 @@ TileMap::TileMap() {
 }
 
 bool Entity::touchground(TileMap* map) {
+    float halfbox[2] = {hitbox.w/2, hitbox.h/2};
+
     int playerint[2] = {(int)position.x, (int)position.y};
     Block blockbelow = map->tiles[playerint[0]][playerint[1]-1];
 
     int offset = 0;
-    if (playerint[0]+0.5f != position.x) offset = (playerint[0]+0.5f < position.x) ? 1 : -1;
+    if (playerint[0]+halfbox[0] != position.x) offset = (playerint[0]+halfbox[0] < position.x) ? 1 : -1;
     Block belowside = map->tiles[playerint[0]+offset][playerint[1]-1];
 
     if (blockbelow.id == 0 && belowside.id == 0) return false;
 
-    float deltaY = (position.y-hitbox.h/2)-playerint[1];
+    float deltaY = (position.y-halfbox[1])-playerint[1];
     if (deltaY <= 0.02f && 0.f <= deltaY) return true;
     return false;
 }
 
 bool Entity::will_collide(int blockX, int blockY) {
+    float halfbox[2] = {hitbox.w/2, hitbox.h/2};
+
     Vec2 nextposition = position+velocity;
-    return nextposition.x-hitbox.w/2 < blockX+1 && nextposition.x+hitbox.w/2 > blockX &&
-    nextposition.y-hitbox.h/2 < blockY+1 && nextposition.y+hitbox.h/2 > blockY;
+    return nextposition.x-halfbox[0] < blockX+1 && nextposition.x+halfbox[0] > blockX &&
+    nextposition.y-halfbox[1] < blockY+1 && nextposition.y+halfbox[1] > blockY;
 }
 
 void Entity::edge_collision() {
-    if (position.y-hitbox.h/2 < 0) {position.y = hitbox.h/2; velocity.y = 0;}
-    if (position.y+hitbox.h/2 > 64) {position.y = 64-hitbox.h/2; velocity.y = 0;}
-    if (position.x-hitbox.w/2 < 0) {position.x = hitbox.w/2; velocity.x = 0;}
-    if (position.x+hitbox.w/2 > 64) {position.x = 64-hitbox.w/2; velocity.x = 0;}
+    float halfbox[2] = {hitbox.w/2, hitbox.h/2};
+
+    if (position.y-halfbox[1] < 0) {position.y = halfbox[1]; velocity.y = 0;}
+    if (position.y+halfbox[1] > 64) {position.y = 64-halfbox[1]; velocity.y = 0;}
+    if (position.x-halfbox[0] < 0) {position.x = halfbox[0]; velocity.x = 0;}
+    if (position.x+halfbox[0] > 64) {position.x = 64-halfbox[0]; velocity.x = 0;}
 }
 
 void Entity::block_collision(TileMap* map) {
     int offset[9][2] = {
-        {0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0},
-        {1, 1}, {1, -1}, {-1, -1}, {-1, 1}
+        {0, 0}, {0, -1}, {-1, 0}, {1, 0}, {0, 1},
+        {-1, -1}, {1, -1}, {-1, 1}, {1, 1}
         };
+    float halfbox[2] = {hitbox.w/2, hitbox.h/2};
 
     for (int i = 0; i < 9; i++) {
         Vec2 nextposition = position+velocity;
@@ -52,18 +59,18 @@ void Entity::block_collision(TileMap* map) {
 
         if (blockid > 0 && will_collide(block[0], block[1])) {
             Vec2 delta = {
-                (float)block[0]-position.x+0.5f,
-                (float)block[1]-position.y+0.5f
+                (float)block[0]+0.5f-position.x,
+                (float)block[1]+0.5f-position.y
                 };
             Vec2 delta2 = {
-                (float)block[0]-nextposition.x+0.5f,
-                (float)block[1]-nextposition.y+0.5f
+                (float)block[0]+0.5f-nextposition.x,
+                (float)block[1]+0.5f-nextposition.y
                 };
             
-            if (delta.x > abs(delta.y)) {velocity.x -= hitbox.w/2+0.5 - delta2.x;}
-            if (-delta.x > abs(delta.y)) {velocity.x += hitbox.w/2+0.5 + delta2.x;}
-            if (delta.y > abs(delta.x)) {velocity.y -= hitbox.h/2+0.5 - delta2.y;}
-            if (-delta.y > abs(delta.x)) {velocity.y += hitbox.w/2+0.5 + delta2.y;}
+            if (delta.x > abs(delta.y)) {velocity.x -= (halfbox[0]+0.5f) - delta2.x;}
+            if (-delta.x > abs(delta.y)) {velocity.x += (halfbox[0]+0.5f) + delta2.x;}
+            if (delta.y > abs(delta.x)) {velocity.y -= (halfbox[1]+0.5f) - delta2.y;}
+            if (-delta.y > abs(delta.x)) {velocity.y += (halfbox[1]+0.5f) + delta2.y;}
         }
     }
 }

@@ -167,6 +167,21 @@ void Graphism::draw_awaymob(Vec2 position, float pwidth, float pheight) {
     SDL_RenderFillRect(renderer, &rect);
 }
 
+void Graphism::draw_debugblock_border(int x, int y, SDL_Color color) {
+    int toscreen[2];
+    tile_to_screen(x-cam.position.x, y+1, toscreen);
+
+    SDL_Rect rect = {
+        toscreen[0],
+        toscreen[1],
+        pxpertile,
+        pxpertile
+        };
+    
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
 void Graphism::LoadTextures() {
     SDL_Surface* blockSurface = IMG_Load("./textures/custom/diorite.png");
     if (!blockSurface) cout << "Block textures not finded !" << endl;

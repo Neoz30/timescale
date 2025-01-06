@@ -55,6 +55,8 @@ class Graphism {
 
         void draw_awaymob(Vec2 position, float pwidth, float pheight);
 
+        void draw_debugblock_border(int x, int y, SDL_Color color);
+
     private:
         SDL_Texture* block;
         SDL_Texture* background;
