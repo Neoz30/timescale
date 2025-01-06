@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     Uint32 graphiclastframe = 16;
 
     while (!quit) {
-        time = SDL_GetTicks();
+        time = SDL_GetTicks64();
 
         SDL_PollEvent(&event);
 
@@ -86,8 +86,9 @@ int main(int argc, char* argv[])
             graphiclastframe = time;
         }
 
-        SDL_Delay(8);
-        dt = (float)(SDL_GetTicks()-time)/1000;
+        Uint8 run_time = SDL_GetTicks64()-time;
+        SDL_Delay(max(8-run_time, 0));
+        dt = (float)(SDL_GetTicks64()-time)/1000;
     }
 
     return 0;
