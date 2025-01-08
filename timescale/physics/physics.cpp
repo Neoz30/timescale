@@ -1,6 +1,26 @@
 #include <physics/physics.hpp>
 
-bool Line() {return true;}
+bool SameDirection(Vec2& dir, Vec2& AO) {
+    return dir.dot(AO);
+}
+
+bool Line(Simplex& points, Vec2& dir) {
+    Vec2 a = points.points[0], b = points.points[1];
+    Vec2 ab = b - a, ao = -a;
+
+    if (SameDirection(ab, ao)) {
+        dir = ab;
+    }
+    else {
+        points.points[0] = a;
+        points.count = 1;
+
+        dir = ao;
+    }
+
+    return true;
+}
+
 bool Triangle() {return true;}
 
 BoundBox::BoundBox(uchar c) {
