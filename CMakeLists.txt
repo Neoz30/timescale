@@ -10,6 +10,7 @@ add_executable(Timescale timescale/main.cpp)
 add_library(Vec2 timescale/libmath/vec2.cpp)
 add_library(Game timescale/game/game.cpp)
 add_library(Graphics timescale/graphics/graphics.cpp)
+add_library(Physics timescale/physics/physics.cpp)
 
 if (NOT PNG AND WIN32 AND NOT MSVC)
 	set(PNG_LIBRARY "C:/Program Files (x86)/libpng")
@@ -24,6 +25,7 @@ target_include_directories(Graphics
 	PUBLIC ${SDL2_INCLUDE_DIR}
 	PUBLIC ${SDL2IMAGE_INCLUDE_DIRS}
 	)
+target_include_directories(Physics PUBLIC timescale)
 target_include_directories(Game PUBLIC timescale)
 target_include_directories(Timescale PUBLIC timescale)
 
@@ -37,6 +39,7 @@ target_link_libraries(Timescale
 	PUBLIC Vec2
 	PUBLIC Game
 	PUBLIC Graphics
+	PUBLIC Physics
 	)
 
 file(COPY timescale/textures/ DESTINATION textures/)

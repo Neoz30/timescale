@@ -8,11 +8,11 @@ class Vec2 {
 
         Vec2(float xi = 0, float yi = 0);
 
-        Vec2 operator+(Vec2& other);
+        Vec2 operator+(Vec2 other);
         Vec2 operator+(float other);
         Vec2 operator+(int other);
 
-        Vec2 operator-(Vec2& other);
+        Vec2 operator-(Vec2 other);
         Vec2 operator-(float other);
         Vec2 operator-(int other);
         Vec2 operator-();
@@ -40,6 +40,7 @@ class Vec2 {
         float length();
         Vec2& normalize();
         float dot(Vec2& other);
+        Vec2 cross();
 };
 
 Vec2 operator+(float other, Vec2& self);

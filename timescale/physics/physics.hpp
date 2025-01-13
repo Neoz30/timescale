@@ -8,7 +8,7 @@ struct BoundBox {
     uchar count;
 
     BoundBox(uchar count);
-    Vec2& findFurthestPoint(Vec2 dir);
+    Vec2 findFurthestPoint(Vec2 dir);
 };
 
 struct Simplex {

@@ -4,14 +4,14 @@
 Vec2::Vec2(float xi, float yi) {x = xi, y = yi;}
 
 // Overloading Vec2 Operator+
-Vec2 Vec2::operator+(Vec2& other) {return Vec2(x+other.x, y+other.y);}
+Vec2 Vec2::operator+(Vec2 other) {return Vec2(x+other.x, y+other.y);}
 Vec2 Vec2::operator+(float other) {return Vec2(x+other, y+other);}
 Vec2 Vec2::operator+(int other) {return Vec2(x+other, y+other);}
 Vec2 operator+(float other, Vec2& self) {return self+other;}
 Vec2 operator+(int other, Vec2& self) {return self+other;}
 
 // Overloading Vec2 Operator-
-Vec2 Vec2::operator-(Vec2& other) {return Vec2(x-other.x, y-other.y);}
+Vec2 Vec2::operator-(Vec2 other) {return Vec2(x-other.x, y-other.y);}
 Vec2 Vec2::operator-(float other) {return Vec2(x-other, y-other);}
 Vec2 Vec2::operator-(int other) {return Vec2(x-other, y-other);}
 Vec2 Vec2::operator-() {return Vec2(-x, -y);}
@@ -86,4 +86,7 @@ Vec2& Vec2::normalize() {
 }
 float Vec2::dot(Vec2& other) {
     return x*other.x + y*other.y;
+}
+Vec2 Vec2::cross() {
+    return Vec2(y, -x);
 }

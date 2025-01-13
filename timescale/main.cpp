@@ -4,6 +4,7 @@ using namespace std;
 #include <libmath/vec2.hpp>
 #include <game/game.hpp>
 #include <graphics/graphics.hpp>
+#include <physics/physics.hpp>
 
 
 int main(int argc, char* argv[])
@@ -87,13 +88,25 @@ int main(int argc, char* argv[])
                 (int)player.position.x,
                 (int)player.position.y
                 };
+            BoundBox BBplayer = BoundBox(4);
+            BBplayer.points[0] = Vec2(player.position.x-player.hitbox.w/2, player.position.y-player.hitbox.h/2);
+            BBplayer.points[1] = Vec2(player.position.x-player.hitbox.w/2, player.position.y+player.hitbox.h/2);
+            BBplayer.points[2] = Vec2(player.position.x+player.hitbox.w/2, player.position.y+player.hitbox.h/2);
+            BBplayer.points[3] = Vec2(player.position.x+player.hitbox.w/2, player.position.y-player.hitbox.h/2);
             for (int x = -1; x < 2; x++) {
                 for (int y = -1; y < 2; y++) {
-                    gamescreen.draw_debugblock_border(
-                        block_center[0] + x,
-                        block_center[1] + y,
-                        {255, 0, 255, 255}
-                        );
+                    int bx = block_center[0] + x, by = block_center[1] + y;
+                    if (bx < 0 || 63 < bx || by < 0 || 63 < by) continue;
+                    if (map.tiles[bx][by].id == 0) continue; 
+
+                    BoundBox BBblock = BoundBox(4);
+                    BBplayer.points[0] = Vec2(bx  , by  );
+                    BBplayer.points[1] = Vec2(bx  , by+1);
+                    BBplayer.points[2] = Vec2(bx+1, by+1);
+                    BBplayer.points[3] = Vec2(bx+1, by  );
+                    if (detectionGJK(&BBplayer, &BBblock)) continue;
+                    
+                    gamescreen.draw_debugblock_border(bx, by, {255, 0, 255, 255});
                 }
             }
 
