@@ -95,7 +95,7 @@ void Entity::physic(float dt, TileMap* map) {
     velocity = (acceleration*dt + velocity)*dt;
 
     edge_collision();
-    //block_collision(map);
+    block_collision(map);
 
     position = velocity + position;
     velocity = velocity/dt;

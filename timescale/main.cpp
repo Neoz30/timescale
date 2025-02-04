@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 
     TileMap map;
 
-    Player player(0.85, 0.85, Vec2(16, 16));
+    Player player(1.f, 1.f, Vec2(16, 16));
 
     AwayMob firstmob(Vec2(4, 32));
     
@@ -42,6 +42,9 @@ int main(int argc, char* argv[])
         {
             case SDL_QUIT:
                 quit = true;
+                break;
+            case SDL_MOUSEWHEEL:
+                cout << event.wheel.y << endl;
                 break;
         }
 
@@ -104,7 +107,7 @@ int main(int argc, char* argv[])
                     BBplayer.points[1] = Vec2(bx  , by+1);
                     BBplayer.points[2] = Vec2(bx+1, by+1);
                     BBplayer.points[3] = Vec2(bx+1, by  );
-                    if (detectionGJK(&BBplayer, &BBblock)) continue;
+                    if (detectionGJK(BBplayer, BBblock)) continue;
                     
                     gamescreen.draw_debugblock_border(bx, by, {255, 0, 255, 255});
                 }

@@ -20,8 +20,8 @@ struct Simplex {
 };
 
 
-Vec2 supportFunction(const BoundBox& bbA, const BoundBox&, Vec2 dir);
+Vec2 supportFunction(BoundBox& bbA, BoundBox&, Vec2 dir);
 
 bool nextSimplex(Simplex& points, Vec2& dir);
 
-bool detectionGJK(const BoundBox& bbA, const BoundBox& bbB);
+bool detectionGJK(BoundBox& bbA, BoundBox& bbB);

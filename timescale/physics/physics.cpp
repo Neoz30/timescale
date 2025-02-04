@@ -87,7 +87,7 @@ Simplex& Simplex::operator=(Simplex& other) {
     return *this;
 }
 
-Vec2 supportFunction(const BoundBox& bbA, const BoundBox& bbB, Vec2 dir) {
+Vec2 supportFunction(BoundBox& bbA, BoundBox& bbB, Vec2 dir) {
     return bbA.findFurthestPoint(dir) - bbB.findFurthestPoint(-dir);
 }
 
@@ -100,7 +100,7 @@ bool nextSimplex(Simplex& points, Vec2& dir) {
     return false;
 }
 
-bool detectionGJK(const BoundBox& bbA, const BoundBox& bbB) {
+bool detectionGJK(BoundBox& bbA, BoundBox& bbB) {
     Vec2 support = supportFunction(bbA, bbB, Vec2(0.f, 1.f));
 
     Simplex simplex;
