@@ -33,19 +33,20 @@ int main(int argc, char* argv[])
     float dt = 1.0/gamescreen.FPS;
     Uint32 graphiclastframe = 16;
 
+    float delatation = 1.0f; 
     while (!quit) {
         time = SDL_GetTicks64();
 
-        SDL_PollEvent(&event);
-
-        switch (event.type)
-        {
-            case SDL_QUIT:
-                quit = true;
-                break;
-            case SDL_MOUSEWHEEL:
-                cout << event.wheel.y << endl;
-                break;
+        while (SDL_PollEvent(&event)) {
+            switch (event.type)
+            {
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+                case SDL_MOUSEWHEEL:
+                    delatation += (float)event.wheel.y/10;
+                    break;
+            }
         }
 
         // Mouse handle
@@ -70,6 +71,7 @@ int main(int argc, char* argv[])
         player.controller[4] = keys[SDL_SCANCODE_SPACE];
 
 
+        dt *= delatation;
         player.update(dt, &map);
 
         Vec2 toplayer = player.position - firstmob.position;
