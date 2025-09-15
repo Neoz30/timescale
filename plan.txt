@@ -1,0 +1,10 @@
+# What I want
+	- A game with time as the core mechanic
+	- The player has the ability to stop/slow/speed the time (dilatation)
+	- Use his power in smart way (puzzle, risk consequence)
+
+# Thing to do
+	! Organise one class -> one file and collection of function for one thing in one file
+	- Setup CMake (condition: class extern x2)
+	- Setup SDL3 basics: Fait
+	- Make Vec2 class for position information
