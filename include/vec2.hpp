@@ -15,24 +15,49 @@ template <typename T> class Vec2
     Vec2(T a)
     {
         x = a;
-        x = a;
+        y = a;
     }
 
-    Vec2 operator+(Vec2 &other)
+    Vec2 operator+(Vec2 other)
     {
         return Vec2(x + other.x, y + other.y);
     }
-    Vec2 operator-(Vec2 &other)
+    Vec2 operator-(Vec2 other)
     {
         return Vec2(x - other.x, y - other.y);
     }
-    Vec2 operator*(Vec2 &other)
+    Vec2 operator*(Vec2 other)
     {
         return Vec2(x * other.x, y * other.y);
     }
-    Vec2 operator/(Vec2 &other)
+    Vec2 operator/(Vec2 other)
     {
         return Vec2(x / other.x, y / other.y);
+    }
+
+    Vec2 &operator+=(Vec2 other)
+    {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+    Vec2 &operator-=(Vec2 other)
+    {
+        x -= other.x;
+        y -= other.y;
+        return *this;
+    }
+    Vec2 &operator*=(Vec2 other)
+    {
+        x *= other.x;
+        y *= other.y;
+        return *this;
+    }
+    Vec2 &operator/=(Vec2 other)
+    {
+        x /= other.x;
+        y /= other.y;
+        return *this;
     }
 };
 

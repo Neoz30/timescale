@@ -7,4 +7,6 @@
 	! Organise one class -> one file and collection of function for one thing in one file
 	- Setup CMake (condition: class extern x2)
 	- Setup SDL3 basics: Fait
-	- Make Vec2 class for position information
+	- Make Vec2 class for position information: Fait
+	- Create environment class: Fait
+	- Fix Map space to screen space problem
