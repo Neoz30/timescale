@@ -9,10 +9,10 @@ const int MAP_HEIGHT = 256;
 
 enum Tile
 {
-    AIR,
-    GRASS,
-    SNOW,
-    STONE,
+    VOID,
+    GREY,
+    LIGHT_GREY,
+    WHITE,
 };
 
 extern SDL_Color COLORS[4];

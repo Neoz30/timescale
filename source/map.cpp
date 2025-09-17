@@ -2,9 +2,9 @@
 
 SDL_Color COLORS[4] = {
     {  0,   0,   0,   0},
-    { 17, 124,  19, 255},
-    {255, 250, 250, 255},
-    {140, 141, 141, 255}
+    { 127, 127,  127, 255},
+    {191, 191, 191, 255},
+    {255, 255, 255, 255}
 };
 
 Map::Map()
@@ -13,7 +13,7 @@ Map::Map()
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            tiles[x][y] = GRASS;
+            tiles[x][y] = VOID;
         }
     }
 }
@@ -21,9 +21,9 @@ Map::Map()
 void Map::draw(SDL_Renderer *renderer)
 {
     SDL_FRect rect = {0, 0, TILE_SIZE, TILE_SIZE};
-    for (int x = 0; x < 4; x++)
+    for (int x = 0; x < MAP_WIDTH; x++)
     {
-        for (int y = 0; y < 4; y++)
+        for (int y = 0; y < MAP_HEIGHT; y++)
         {
             Vec2I screen_transform = rect_correction(screen_convertion(Vec2I(x, y)));
             rect.x = screen_transform.x;
