@@ -6,23 +6,29 @@ int SCREEN_WIDTH = 1;
 int SCREEN_HEIGHT = 1;
 float TILE_SIZE = 1;
 
-Vec2I screen_convertion(Vec2I position)
+Vec2F screen_convertion(Vec2I position)
+{
+    Vec2F pos(position.x, position.y);
+    pos *= TILE_SIZE;
+    pos.y = pos.y * -1 + SCREEN_HEIGHT;
+    return pos;
+}
+
+Vec2F screen_convertion(Vec2F position)
 {
     position *= TILE_SIZE;
     position.y = position.y * -1 + SCREEN_HEIGHT;
     return position;
 }
 
-Vec2I screen_convertion(Vec2F position)
+Vec2F rect_correction(Vec2F position)
 {
-    position *= TILE_SIZE;
-    position.y = position.y * -1 + SCREEN_HEIGHT;
-    return Vec2I(position.x, position.y);
+    return position - Vec2F(0, TILE_SIZE);
 }
 
-Vec2I rect_correction(Vec2I position)
+Vec2F rect_correction(Vec2F position, float height)
 {
-    return position - Vec2I(0, TILE_SIZE);
+    return position - Vec2F(0, TILE_SIZE * height);
 }
 
 void change_screen_scale(float screen_scale)

@@ -2,6 +2,7 @@
 #include "vec2.hpp"
 #include "map.hpp"
 #include "entity.hpp"
+#include "physic.hpp"
 
 using namespace std;
 
@@ -45,10 +46,8 @@ int main(int argc, char** argv)
     map.tiles[6][0] = WHITE;
     map.tiles[7][0] = WHITE;
 
-    Entity entity1(Vec2F(2, 2), 0.5, 0.5);
-    Entity entity2(Vec2F(4, 2), 1.0, 0.5);
-    Entity entity3(Vec2F(2, 4), 0.5, 1.0);
-    Entity entity4(Vec2F(4, 4), 1.0, 1.0);
+    Entity entities[256];
+    entities[0] = Entity(Vec2F(2, 0), 0.5, 0.5);
 
     bool key_dir[4] = {false, false, false, false};
     enum SDL_Scancode key_map[4] = {
@@ -93,12 +92,14 @@ int main(int argc, char** argv)
             if (key_dir[2]) want.y -= 1.f;
             if (key_dir[3]) want.x -= 1.f;
 
-            entity1.acceleration += want.normalize();
+            entities[0].acceleration += want.normalize() * 10.f;
 
-            entity1.step(dt);
-            entity2.step(dt);
-            entity3.step(dt);
-            entity4.step(dt);
+            for (int i = 0; i < 256; i++)
+            {
+                entities[i].step(dt);
+            }
+            
+            collision_resolution(&map, entities, 256);
         }
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -106,10 +107,10 @@ int main(int argc, char** argv)
 
         map.draw(renderer);
 
-        entity1.draw(renderer);
-        entity2.draw(renderer);
-        entity3.draw(renderer);
-        entity4.draw(renderer);
+        for (int i = 0; i < 256; i++)
+        {
+            entities[i].draw(renderer);
+        }
 
         SDL_RenderPresent(renderer);
     }

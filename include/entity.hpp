@@ -13,7 +13,11 @@ class Entity
     float width;
     float height;
 
+    bool active;
+
     Entity(Vec2F start_pos, float w, float h);
+    Entity();
+
     void step(float dt);
     void draw(SDL_Renderer *renderer);
 };

@@ -5,20 +5,38 @@ Entity::Entity(Vec2F start_pos, float w, float h)
     position = start_pos;
     width = w;
     height = h;
+    active = true;
+}
+
+Entity::Entity()
+{
+    width = 1.f;
+    height = 1.f;
+    active = false;
 }
 
 void Entity::step(float dt)
 {
+    if (!active) return;
+
+    float len = velocity.length();
+    acceleration -= velocity.normalize() * 0.5 * (len * len);
+
     velocity += acceleration * dt;
     position += velocity * dt;
+
+    acceleration.x = 0.f;
+    acceleration.y = 0.f;
 }
 
 void Entity::draw(SDL_Renderer *renderer)
 {
-    Vec2I screen_transform = rect_correction(screen_convertion(position));
+    if (!active) return;
+
+    Vec2F screen_transform = rect_correction(screen_convertion(position), height);
     SDL_FRect rect = {
-        (float)screen_transform.x,
-        (float)screen_transform.y,
+        screen_transform.x,
+        screen_transform.y,
         width * TILE_SIZE,
         height * TILE_SIZE
     };

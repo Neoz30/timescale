@@ -25,7 +25,7 @@ void Map::draw(SDL_Renderer *renderer)
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            Vec2I screen_transform = rect_correction(screen_convertion(Vec2I(x, y)));
+            Vec2F screen_transform = rect_correction(screen_convertion(Vec2I(x, y)));
             rect.x = screen_transform.x;
             rect.y = screen_transform.y;
             
