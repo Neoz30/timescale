@@ -12,4 +12,4 @@
 	- Fix Map space to screen space problem: Fait
 	- Create Entity class: Fait
 	- Make basics physics law
-	- Make collision resolution
+	- Make collision resolution: Fait

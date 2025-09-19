@@ -39,6 +39,10 @@ template <typename T> class Vec2
     {
         return Vec2(x / other.x, y / other.y);
     }
+    Vec2 operator-()
+    {
+        return Vec2(-x, -y);
+    }
 
     Vec2 &operator+=(Vec2 other)
     {
@@ -75,6 +79,11 @@ template <typename T> class Vec2
         T len = length();
         if (len) return Vec2(x / len, y / len);
         return Vec2(x, y);
+    }
+
+    T dot(Vec2 other)
+    {
+        return x * other.x + y * other.y;
     }
 };
 

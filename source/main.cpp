@@ -47,7 +47,8 @@ int main(int argc, char** argv)
     map.tiles[7][0] = WHITE;
 
     Entity entities[256];
-    entities[0] = Entity(Vec2F(2, 0), 0.5, 0.5);
+    entities[0] = Entity(Vec2F(14, 8), 0.5, 0.5);
+    entities[1] = Entity(Vec2F(4, 4), 0.75, 0.75);
 
     bool key_dir[4] = {false, false, false, false};
     enum SDL_Scancode key_map[4] = {
