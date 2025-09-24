@@ -1,30 +1,62 @@
 #include "physic.hpp"
 
-bool collision_detection(Vec2I tile, Entity *entity)
+PhysicWorld::PhysicWorld(float dt)
 {
-    return
-    entity->position.x < tile.x + 1 &&
-    entity->position.x + entity->width > tile.x &&
-    entity->position.y < tile.y + 1 &&
-    entity->position.y + entity->height > tile.y;
+    delta_time = dt;
 }
 
-bool collision_detection(Entity *entity1, Entity *entity2)
+void PhysicWorld::add_collider(Collider *collider)
 {
-    return
-    entity1->position.x < entity2->position.x + entity2->width &&
-    entity1->position.x + entity1->width > entity2->position.x &&
-    entity1->position.y < entity2->position.y + entity2->height &&
-    entity1->position.y + entity1->height > entity2->position.y;
+    colliders.push_back(collider);
 }
 
-void entity_collision(Entity *entity1, Entity *entity2)
+void PhysicWorld::add_colliders(vector<Collider *> colliders)
 {
-    if (!collision_detection(entity1, entity2)) return;
+    for (Collider *collider: colliders)
+    {
+        add_collider(collider);
+    }
+}
+
+void PhysicWorld::clear()
+{
+    while (!colliders.empty())
+    {
+        colliders.pop_back();
+    }
+}
+
+#include <stdio.h>
+void PhysicWorld::move_collider(Collider *collider)
+{
+    float len = collider->velocity.length();
+
+    collider->acceleration -= collider->velocity.normalize() * 0.5 * air_friction * (len * len);
+    collider->acceleration += gravity;
+
+    collider->velocity += collider->acceleration * delta_time;
+    collider->position += collider->velocity * delta_time;
+
+    collider->acceleration.x = 0.f;
+    collider->acceleration.y = 0.f;
+}
+
+bool PhysicWorld::collision_detection(Collider *collider1, Collider *collider2)
+{
+    return
+    collider1->position.x < collider2->position.x + collider2->size.x &&
+    collider1->position.x + collider1->size.x > collider2->position.x &&
+    collider1->position.y < collider2->position.y + collider2->size.y &&
+    collider1->position.y + collider1->size.y > collider2->position.y;
+}
+
+void PhysicWorld::collision_resolution(Collider *collider1, Collider *collider2)
+{
+    if (!collision_detection(collider1, collider2)) return;
 
     Vec2F delta(
-        (entity2->position.x + entity2->width / 2) - (entity1->position.x + entity1->width / 2),
-        (entity2->position.y + entity2->height / 2) - (entity1->position.y + entity1->height / 2)
+        (collider2->position.x + collider2->size.x / 2) - (collider1->position.x + collider1->size.x / 2),
+        (collider2->position.y + collider2->size.y / 2) - (collider1->position.y + collider1->size.y / 2)
     );
 
     float dist;
@@ -33,85 +65,35 @@ void entity_collision(Entity *entity1, Entity *entity2)
     if (abs(delta.x) > abs(delta.y))
     {
         reduced.x = (delta.x > 0) ? 1 : -1;
-        dist = abs(delta.x) - entity1->width / 2 - entity2->width / 2;
+        dist = abs(delta.x) - collider1->size.x / 2 - collider2->size.x / 2;
     }
     else
     {
         reduced.y = (delta.y > 0) ? 1 : -1;
-        dist = abs(delta.y) - entity1->width / 2 - entity2->width / 2;
+        dist = abs(delta.y) - collider1->size.x / 2 - collider2->size.x / 2;
     }
 
     dist /= 2;
 
-    entity1->position += -reduced * -dist;
-    entity1->velocity += -reduced * abs(reduced.dot(entity2->velocity.normalize())) * entity2->velocity.length();
+    collider1->position += -reduced * -dist;
+    collider1->velocity += -reduced * abs(reduced.dot(collider2->velocity));
 
-    entity2->position += reduced * -dist;
-    entity2->velocity += reduced * abs(reduced.dot(entity2->velocity.normalize())) * entity2->velocity.length();
+    collider2->position += reduced * -dist;
+    collider2->velocity += reduced * abs(reduced.dot(collider2->velocity));
 }
 
-void map_collision(Map *map, Entity *entity)
+void PhysicWorld::step()
 {
-    Vec2I downleft(entity->position.x, entity->position.y);
-    Vec2I topright(entity->position.x, entity->position.y);
-    downleft -= Vec2I(2);
-    topright += Vec2I(4);
-
-    for (int x = downleft.x; x < topright.x; x++)
+    for (Collider *collider : colliders)
     {
-        if (x < 0 || x >= MAP_WIDTH) continue;
-        for (int y = downleft.y; y < topright.y; y++)
-        {
-            if (y < 0 || y >= MAP_HEIGHT) continue;
-            if (map->tiles[x][y] == VOID) continue;
-            if (!collision_detection(Vec2I(x, y), entity)) continue;
-
-            Vec2F delta(
-                (entity->position.x + entity->width / 2) - (x + 0.5),
-                (entity->position.y + entity->height / 2) - (y + 0.5)
-            );
-
-            float dist;
-            Vec2F reduced;
-
-            if (abs(delta.x) > abs(delta.y))
-            {
-                reduced.x = (delta.x > 0) ? 1 : -1;
-                dist = abs(delta.x) - entity->width / 2 - 0.5;
-            }
-            else
-            {
-                reduced.y = (delta.y > 0) ? 1 : -1;
-                dist = abs(delta.y) - entity->height / 2 - 0.5;
-            }
-
-            entity->position += reduced * -dist;
-            entity->velocity += reduced * abs(reduced.dot(entity->velocity.normalize())) * entity->velocity.length();
-        }
+        move_collider(collider);
     }
-}
 
-void collision_resolution(Map *map, Entity *entities, int length)
-{
-    for (int i = 1; i < length; i++)
+    for (int i = 1; i < colliders.size(); i++)
     {
-        Entity *entity1 = &entities[i];
-        if (!entity1->active) continue;
-
         for (int j = 0; j < i; j++)
         {
-            Entity *entity2 = &entities[j];
-            if (!entity2->active) continue;
-            
-            entity_collision(entity1, entity2);
+            collision_resolution(colliders[i], colliders[j]);
         }
-    }
-
-    for (int i = 0; i < length; i++)
-    {
-        Entity *entity = &entities[i];
-        if (!entity->active) return;
-
-        map_collision(map, entity);
     }
 }

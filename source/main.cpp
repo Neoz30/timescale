@@ -1,8 +1,7 @@
-#include <SDL3/SDL.h>
 #include "vec2.hpp"
-#include "map.hpp"
-#include "entity.hpp"
 #include "physic.hpp"
+#include "map.hpp"
+#include "graphic.hpp"
 
 using namespace std;
 
@@ -14,41 +13,16 @@ int main(int argc, char** argv)
         if (argv[1] == "debug") debugmode = true;
     }
 
-    SDL_Init(SDL_INIT_VIDEO);
+    GraphicView view(1.f / 16);
+    PhysicWorld physic(1.f / 50);
 
-    const SDL_DisplayMode *DM = SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay());
-    if (DM == NULL) {
-        SDL_Log(SDL_GetError());
-        return (1);
-    }
-    SCREEN_WIDTH = DM->w;
-    SCREEN_HEIGHT = DM->h;
-    change_screen_scale(1.f / 16);
-
-    SDL_Window *window = SDL_CreateWindow("Timescale", DM->w, DM->h, SDL_WINDOW_FULLSCREEN);
-    if (window == NULL)
+    for (int i = 0; i < map1.size(); i++)
     {
-        SDL_Log(SDL_GetError());
-        return (1);
+        physic.add_collider(&map1[i]);
     }
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
-    if (renderer == NULL)
-    {
-        SDL_Log(SDL_GetError());
-        return (1);
-    }
-
-    Map map;
-    map.tiles[2][0] = GREY;
-    map.tiles[3][0] = GREY;
-    map.tiles[4][0] = LIGHT_GREY;
-    map.tiles[5][0] = LIGHT_GREY;
-    map.tiles[6][0] = WHITE;
-    map.tiles[7][0] = WHITE;
-
-    Entity entities[256];
-    entities[0] = Entity(Vec2F(14, 8), 0.5, 0.5);
-    entities[1] = Entity(Vec2F(4, 4), 0.75, 0.75);
+    
+    Collider player(Vec2F(4, 4), Vec2F(0.75));
+    physic.add_collider(&player);
 
     bool key_dir[4] = {false, false, false, false};
     enum SDL_Scancode key_map[4] = {
@@ -84,7 +58,7 @@ int main(int argc, char** argv)
 
         Uint64 time = SDL_GetTicks();
         if (time - previous_time > 20)
-        {
+        {            
             float dt = 1.f / 50;
 
             Vec2F want = {0.f, 0.f};
@@ -93,31 +67,13 @@ int main(int argc, char** argv)
             if (key_dir[2]) want.y -= 1.f;
             if (key_dir[3]) want.x -= 1.f;
 
-            entities[0].acceleration += want.normalize() * 10.f;
+            player.acceleration += want.normalize() * 25.f;
 
-            for (int i = 0; i < 256; i++)
-            {
-                entities[i].step(dt);
-            }
-            
-            collision_resolution(&map, entities, 256);
+            physic.step();
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-
-        map.draw(renderer);
-
-        for (int i = 0; i < 256; i++)
-        {
-            entities[i].draw(renderer);
-        }
-
-        SDL_RenderPresent(renderer);
+        view.draw_physic_colliders(&physic);
+        view.render();
     }
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
     return 0;
 }

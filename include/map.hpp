@@ -1,27 +1,19 @@
 #pragma once
-#include <SDL3/SDL.h>
-#include "transforms.hpp"
+
+#include <vector>
+#include "collider.hpp"
 
 using namespace std;
 
-const int MAP_WIDTH = 256;
-const int MAP_HEIGHT = 256;
-
-enum Tile
-{
-    VOID,
-    GREY,
-    LIGHT_GREY,
-    WHITE,
+vector<Collider> map1 = {
+    Collider(Vec2F(0, 0), Vec2F(8, 2)),
+    Collider(Vec2F(0, 16), Vec2F(8, 2))
 };
 
-extern SDL_Color COLORS[4];
+vector<Collider> map2 = {
+    {Vec2F(0, 0), Vec2F(4, 4)}
+};
 
-class Map
-{
-    public:
-    enum Tile tiles[MAP_WIDTH][MAP_HEIGHT];
-
-    Map();
-    void draw(SDL_Renderer *renderer);
+vector<Collider> map3 = {
+    {Vec2F(8, 8), Vec2F(8, 8)}
 };

@@ -1,12 +1,32 @@
 #pragma once
+
+#include <vector>
 #include "vec2.hpp"
-#include "map.hpp"
-#include "entity.hpp"
+#include "collider.hpp"
+
 using namespace std;
 
-bool collision_detection(Vec2I tile, Entity *entity);
-bool collision_detection(Entity *entity1, Entity *entity2);
 
-void entity_collision(Entity *entity1, Entity *entity2);
-void map_collision(Map *map, Entity *entity);
-void collision_resolution(Map *map, Entity *entities, int length);
+class PhysicWorld
+{
+    public:
+    vector<Collider *> colliders;
+    
+    const Vec2F gravity = Vec2F(0.f, 0.f);
+    const float air_friction = 0.05;
+    const float friction = 0.2;
+    float delta_time;
+
+    PhysicWorld(float dt);
+
+    void add_collider(Collider *collider);
+    void add_colliders(vector<Collider *> colliders);
+    void clear();
+
+    void move_collider(Collider *collider);
+
+    bool collision_detection(Collider *collider1, Collider *collider2);
+    void collision_resolution(Collider *collider1, Collider *collider2);
+
+    void step();
+};

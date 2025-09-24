@@ -11,5 +11,6 @@
 	- Create environment class: Fait
 	- Fix Map space to screen space problem: Fait
 	- Create Entity class: Fait
-	- Make basics physics law
+	- Make basics physics law: Fait
 	- Make collision resolution: Fait
+	- Update physics architecture

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <math.h>
 
 template <typename T> class Vec2
