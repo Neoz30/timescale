@@ -2,13 +2,14 @@
 
 #include "vec2.hpp"
 
-class Collider
+class Object
 {
     public:
     Vec2F position;
     Vec2F velocity;
-    Vec2F acceleration;
+    Vec2F force;
     Vec2F size;
+    float mass;
 
-    Collider(Vec2F pos, Vec2F s);
+    Object(Vec2F pos, Vec2F s, float mass);
 };

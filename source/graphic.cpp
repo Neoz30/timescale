@@ -1,15 +1,5 @@
 #include "graphic.hpp"
 
-void initSDL()
-{
-    SDL_Init(SDL_INIT_VIDEO);
-}
-
-void quitSDL()
-{
-    SDL_Quit();
-}
-
 void showSDLError()
 {
     SDL_Log(SDL_GetError());
@@ -23,14 +13,17 @@ GraphicView::GraphicView(float s)
 
     window = SDL_CreateWindow("Timescale", DM->w, DM->h, SDL_WINDOW_FULLSCREEN);
     if (window == NULL) showSDLError();
+    SDL_SetWindowSurfaceVSync(window, SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE);
 
     renderer = SDL_CreateRenderer(window, NULL);
     if (renderer == NULL) showSDLError();
+    SDL_SetRenderVSync(renderer, SDL_RENDERER_VSYNC_ADAPTIVE);
 
     width = DM->w, height = DM->h;
 
     scale = s;
     unit_size = min(width, height) * scale;
+    t = 0;
 }
 
 GraphicView::~GraphicView()
@@ -52,15 +45,21 @@ Vec2F GraphicView::rect_correction(Vec2F position, float h)
     return position - Vec2F(0, unit_size * h);
 }
 
-void GraphicView::draw_physic_colliders(PhysicWorld *physic)
+void GraphicView::set_interpolation_value(float interpolation)
+{
+    t = interpolation;
+}
+
+void GraphicView::draw_physic_objects(PhysicWorld *physic)
 {
     SDL_FRect rect;
     SDL_SetRenderDrawColor(renderer, 39, 183, 245, 255);
-    for (Collider *collider: physic->colliders)
+    for (Object *object: physic->objects)
     {
-        Vec2F position = rect_correction(screen_convertion(collider->position), collider->size.y);
+        Vec2F position = rect_correction(screen_convertion(object->position + object->velocity * t), object->size.y);
+
         rect.x = position.x,                   rect.y = position.y;
-        rect.w = collider->size.x * unit_size, rect.h = collider->size.y * unit_size;
+        rect.w = object->size.x * unit_size, rect.h = object->size.y * unit_size;
         SDL_RenderFillRect(renderer, &rect);
     }
 }

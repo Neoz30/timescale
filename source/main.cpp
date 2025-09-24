@@ -13,15 +13,16 @@ int main(int argc, char** argv)
         if (argv[1] == "debug") debugmode = true;
     }
 
+    float dt = 1.f / 50;
     GraphicView view(1.f / 16);
-    PhysicWorld physic(1.f / 50);
+    PhysicWorld physic(dt);
 
     for (int i = 0; i < map1.size(); i++)
     {
         physic.add_collider(&map1[i]);
     }
     
-    Collider player(Vec2F(4, 4), Vec2F(0.75));
+    Object player(Vec2F(4, 4), Vec2F(0.75), 1);
     physic.add_collider(&player);
 
     bool key_dir[4] = {false, false, false, false};
@@ -57,22 +58,24 @@ int main(int argc, char** argv)
         }
 
         Uint64 time = SDL_GetTicks();
-        if (time - previous_time > 20)
+        Uint64 delta = time - previous_time;
+        if (delta > dt * 1000)
         {            
-            float dt = 1.f / 50;
-
             Vec2F want = {0.f, 0.f};
             if (key_dir[0]) want.y += 1.f;
             if (key_dir[1]) want.x += 1.f;
             if (key_dir[2]) want.y -= 1.f;
             if (key_dir[3]) want.x -= 1.f;
 
-            player.acceleration += want.normalize() * 25.f;
-
+            player.force += want.normalize() * 25.f;
             physic.step();
+
+            previous_time = time;
+            delta = 0;
         }
 
-        view.draw_physic_colliders(&physic);
+        view.set_interpolation_value((float)delta / 1000);
+        view.draw_physic_objects(&physic);
         view.render();
     }
     return 0;
