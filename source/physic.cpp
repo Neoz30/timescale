@@ -58,28 +58,36 @@ void PhysicWorld::collision_resolution(Object *object1, Object *object2)
     );
 
     float dist;
-    Vec2F reduced;
+    Vec2F n;
 
     if (abs(delta.x) > abs(delta.y))
     {
-        reduced.x = (delta.x > 0) ? 1 : -1;
-        dist = abs(delta.x) - object1->size.x / 2 - object2->size.x / 2;
+        n.x = (delta.x > 0) ? 1 : -1;
+        dist = object1->size.x / 2 + object2->size.x / 2 - abs(delta.x);
     }
     else
     {
-        reduced.y = (delta.y > 0) ? 1 : -1;
-        dist = abs(delta.y) - object1->size.x / 2 - object2->size.x / 2;
+        n.y = (delta.y > 0) ? 1 : -1;
+        dist = object1->size.x / 2 + object2->size.x / 2 - abs(delta.y);
     }
 
-    dist /= 2;
+    Vec2F relative_vel = object2->velocity - object1->velocity;
+    float rvel_dot = relative_vel.dot(n);
 
-    object1->position += -reduced * -dist;
-    object1->velocity += -reduced * (0.5 * reduced.dot(object2->velocity) * object2->mass / object1->mass);
-    object2->velocity += reduced * (0.5 * reduced.dot(object2->velocity));
+    if (rvel_dot > 0) return;
+    
+    float invM1 = (object1->mass) ? 1.f / object1->mass : 0.f;
+    float invM2 = (object2->mass) ? 1.f / object2->mass : 0.f;
 
-    object2->position += reduced * -dist;
-    object2->velocity += reduced * (0.5 * reduced.dot(object1->velocity) * object1->mass / object2->mass);
-    object1->velocity += -reduced * abs(0.5 * reduced.dot(object2->velocity));
+    Vec2F correction = n * max(dist - 0.05f, 0.f) / (invM1 + invM2) * 0.5;
+    object1->position -= correction * invM1;
+    object2->position += correction * invM2;
+
+    float j = (-2 * rvel_dot) / (invM1 + invM2);
+
+    Vec2F impulse = n * j;
+    object1->velocity -= impulse * invM1;
+    object2->velocity += impulse * invM2;
 }
 
 void PhysicWorld::step()

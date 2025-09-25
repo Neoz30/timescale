@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     {
         physic.add_collider(&map1[i]);
     }
-    
+
     Object player(Vec2F(4, 4), Vec2F(0.75), 1);
     physic.add_collider(&player);
 

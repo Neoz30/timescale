@@ -7,8 +7,9 @@
 using namespace std;
 
 vector<Object> map1 = {
-    Object(Vec2F(0, 0), Vec2F(8, 2), INFINITY),
-    Object(Vec2F(0, 16), Vec2F(8, 2), INFINITY)
+    Object(Vec2F(0, 0), Vec2F(16, 2), INFINITY),
+    Object(Vec2F(0, 2), Vec2F(2, 14), INFINITY),
+    Object(Vec2F(8, 8), Vec2F(2, 2), INFINITY)
 };
 
 vector<Object> map2 = {
