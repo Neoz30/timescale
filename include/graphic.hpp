@@ -9,11 +9,24 @@ using namespace std;
 
 void showSDLError();
 
+struct Camera
+{
+    Vec2F position;
+    Object *followed;
+
+    Camera();
+
+    void set_tracking_on(Object *object);
+
+    void step();
+};
+
 struct GraphicView
 {
     int width, height;
     float scale, unit_size;
     float t;
+    Camera camera;
 
     const SDL_DisplayMode *DM;
     SDL_Window *window;

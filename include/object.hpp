@@ -2,6 +2,13 @@
 
 #include "vec2.hpp"
 
+enum ObjectType
+{
+    TERRAIN,
+    PLAYER,
+    BOX
+};
+
 class Object
 {
     public:
@@ -14,6 +21,7 @@ class Object
     float elasticity;
 
     bool fixed;
+    ObjectType type;
 
-    Object(Vec2F pos, Vec2F s, float mass, float elasticity, bool fixed);
+    Object(Vec2F pos, Vec2F s, float mass, float elasticity, bool fixed, ObjectType type);
 };

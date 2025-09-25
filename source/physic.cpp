@@ -48,7 +48,6 @@ bool PhysicWorld::collision_detection(Object *object1, Object *object2)
     object1->position.y + object1->size.y > object2->position.y;
 }
 
-#include <stdio.h>
 void PhysicWorld::collision_resolution(Object *object1, Object *object2)
 {
     if (!collision_detection(object1, object2)) return;

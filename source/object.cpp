@@ -1,6 +1,6 @@
 #include "object.hpp"
 
-Object::Object(Vec2F pos, Vec2F s, float m, float e, bool f)
+Object::Object(Vec2F pos, Vec2F s, float m, float e, bool f, ObjectType t)
 {
     position = pos;
     size = s;
@@ -10,4 +10,6 @@ Object::Object(Vec2F pos, Vec2F s, float m, float e, bool f)
 
     fixed = f;
     if (fixed) mass = INFINITY;
+
+    type = t;
 }

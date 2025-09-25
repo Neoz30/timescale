@@ -22,8 +22,10 @@ int main(int argc, char** argv)
         physic.add_collider(&map1[i]);
     }
 
-    Object player(Vec2F(4, 4), Vec2F(0.75), 1, 0.2, false);
+    Object player(Vec2F(8, 2), Vec2F(1), 1, 0.2, false, PLAYER);
     physic.add_collider(&player);
+
+    view.camera.set_tracking_on(&player);
 
     bool key_dir[4] = {false, false, false, false};
     enum SDL_Scancode key_map[4] = {
