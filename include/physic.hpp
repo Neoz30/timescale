@@ -11,7 +11,7 @@ class PhysicWorld
     public:
     vector<Object *> objects;
     
-    const Vec2F gravity = Vec2F(0.f, 0.f);
+    const Vec2F gravity = Vec2F(0.f, -9.8);
     const float air_friction = 0.05;
     const float friction = 0.2;
     float delta_time;

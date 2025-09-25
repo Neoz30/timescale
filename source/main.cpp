@@ -22,7 +22,7 @@ int main(int argc, char** argv)
         physic.add_collider(&map1[i]);
     }
 
-    Object player(Vec2F(4, 4), Vec2F(0.75), 1);
+    Object player(Vec2F(4, 4), Vec2F(0.75), 1, 0.2, false);
     physic.add_collider(&player);
 
     bool key_dir[4] = {false, false, false, false};

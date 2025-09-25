@@ -86,6 +86,11 @@ template <typename T> class Vec2
     {
         return x * other.x + y * other.y;
     }
+
+    T det(Vec2 other)
+    {
+        return x * other.y - y * other.x;
+    }
 };
 
 using Vec2I = Vec2<int>;

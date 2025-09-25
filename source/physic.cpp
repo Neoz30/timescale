@@ -48,6 +48,7 @@ bool PhysicWorld::collision_detection(Object *object1, Object *object2)
     object1->position.y + object1->size.y > object2->position.y;
 }
 
+#include <stdio.h>
 void PhysicWorld::collision_resolution(Object *object1, Object *object2)
 {
     if (!collision_detection(object1, object2)) return;
@@ -60,7 +61,7 @@ void PhysicWorld::collision_resolution(Object *object1, Object *object2)
     float dist;
     Vec2F n;
 
-    if (abs(delta.x) > abs(delta.y))
+    if (Vec2F(abs(delta.x), abs(delta.y)).det(object1->size * object2->size) > 0)
     {
         n.x = (delta.x > 0) ? 1 : -1;
         dist = object1->size.x / 2 + object2->size.x / 2 - abs(delta.x);
@@ -68,7 +69,7 @@ void PhysicWorld::collision_resolution(Object *object1, Object *object2)
     else
     {
         n.y = (delta.y > 0) ? 1 : -1;
-        dist = object1->size.x / 2 + object2->size.x / 2 - abs(delta.y);
+        dist = object1->size.y / 2 + object2->size.y / 2 - abs(delta.y);
     }
 
     Vec2F relative_vel = object2->velocity - object1->velocity;
@@ -79,11 +80,12 @@ void PhysicWorld::collision_resolution(Object *object1, Object *object2)
     float invM1 = (object1->mass) ? 1.f / object1->mass : 0.f;
     float invM2 = (object2->mass) ? 1.f / object2->mass : 0.f;
 
-    Vec2F correction = n * max(dist - 0.05f, 0.f) / (invM1 + invM2) * 0.5;
+    Vec2F correction = n * max(dist - 0.01f, 0.f) / (invM1 + invM2) * 0.5;
     object1->position -= correction * invM1;
     object2->position += correction * invM2;
 
-    float j = (-2 * rvel_dot) / (invM1 + invM2);
+    float elasticity = min(object1->elasticity, object2->elasticity);
+    float j = (-(1 + elasticity) * rvel_dot) / (invM1 + invM2);
 
     Vec2F impulse = n * j;
     object1->velocity -= impulse * invM1;
@@ -94,7 +96,7 @@ void PhysicWorld::step()
 {
     for (Object *object : objects)
     {
-        move_collider(object);
+        if (!object->fixed) move_collider(object);
     }
 
     for (int i = 1; i < objects.size(); i++)
