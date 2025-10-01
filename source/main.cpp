@@ -19,13 +19,11 @@ int main(int argc, char** argv)
 
     for (int i = 0; i < map1.size(); i++)
     {
-        physic.add_collider(&map1[i]);
+        physic.add_collider(map1[i]);
     }
 
-    Object player(Vec2F(8, 2), Vec2F(1), 1, 0.2, false, PLAYER);
-    physic.add_collider(&player);
-
-    view.camera.set_tracking_on(&player);
+    Object *player = map1[0];
+    view.camera.set_tracking_on(player);
 
     bool key_dir[4] = {false, false, false, false};
     enum SDL_Scancode key_map[4] = {
@@ -69,7 +67,7 @@ int main(int argc, char** argv)
             if (key_dir[2]) want.y -= 1.f;
             if (key_dir[3]) want.x -= 1.f;
 
-            player.force += want.normalize() * 25.f;
+            player->force += want.normalize() * 50.f;
             physic.step();
 
             previous_time = time;

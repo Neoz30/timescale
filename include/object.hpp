@@ -4,9 +4,11 @@
 
 enum ObjectType
 {
-    TERRAIN,
     PLAYER,
-    BOX
+    TERRAIN,
+    BOX,
+    BUTTON,
+    GATE
 };
 
 class Object
@@ -24,4 +26,36 @@ class Object
     ObjectType type;
 
     Object(Vec2F pos, Vec2F s, float mass, float elasticity, bool fixed, ObjectType type);
+};
+
+class Player: public Object
+{
+    public:
+    Player(Vec2F pos);
+};
+
+class Terrain: public Object
+{
+    public:
+    Terrain(Vec2F position, Vec2F size);
+};
+
+class Box: public Object
+{
+    public:
+    Box(Vec2F position, Vec2F size, float mass);
+};
+
+class Button: public Object
+{
+    public:
+    bool pressed;
+    Button(Vec2F position);
+};
+
+class Gate: public Object
+{
+    public:
+    bool *open;
+    Gate(Vec2F position, bool *open);
 };

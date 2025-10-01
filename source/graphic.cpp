@@ -13,12 +13,18 @@ Camera::Camera()
 void Camera::set_tracking_on(Object *object)
 {
     followed = object;
+    position.x = object->position.x;
+    position.y = object->position.y;
 }
 
 void Camera::step()
 {
+    float start_dist = 4;
     if (followed == NULL) return;
-    position.x += (followed->position.x - position.x) * 0.01;
+
+    Vec2F delta = followed->position - position;
+    float len = delta.length();
+    if (len > start_dist) position += delta.normalize() * 0.001 * (pow(2, len) - pow(2, start_dist));
 }
 
 GraphicView::GraphicView(float s)
@@ -53,6 +59,7 @@ Vec2F GraphicView::screen_convertion(Vec2F position)
 {
     position *= unit_size;
     position.x += DM->w / 2;
+    position.y += DM->h / 2;
     position.y = position.y * -1 + height;
     return position;
 }
@@ -86,6 +93,12 @@ void GraphicView::draw_physic_objects(PhysicWorld *physic)
                 break;
             case BOX:
                 SDL_SetRenderDrawColor(renderer, 99, 73, 43, 255);
+                break;
+            case BUTTON:
+                SDL_SetRenderDrawColor(renderer, 244, 187, 68, 255);
+                break;
+            case GATE:
+                SDL_SetRenderDrawColor(renderer, 175, 225, 175, 255);
                 break;
             default:
                 SDL_SetRenderDrawColor(renderer, 39, 183, 245, 255);
