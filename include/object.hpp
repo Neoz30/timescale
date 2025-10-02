@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vec2.hpp"
+#include "common.hpp"
 
 enum ObjectType
 {
@@ -26,6 +27,8 @@ class Object
     ObjectType type;
 
     Object(Vec2F pos, Vec2F s, float mass, float elasticity, bool fixed, ObjectType type);
+
+    virtual void update(vector<Object *> *objects, float delta);
 };
 
 class Player: public Object
@@ -50,7 +53,10 @@ class Button: public Object
 {
     public:
     bool pressed;
+    
     Button(Vec2F position);
+
+    void update(vector<Object *> *objects, float delta) override;
 };
 
 class Gate: public Object
@@ -58,4 +64,6 @@ class Gate: public Object
     public:
     bool *open;
     Gate(Vec2F position, bool *open);
+
+    void update(vector<Object *> *objects, float delta) override;
 };

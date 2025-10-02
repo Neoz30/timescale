@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     }
 
     float dt = 1.f / 50;
-    GraphicView view(1.f / 16);
+    GraphicView view(1.f / 10);
     PhysicWorld physic(dt);
 
     for (int i = 0; i < map1.size(); i++)
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
             if (key_dir[2]) want.y -= 1.f;
             if (key_dir[3]) want.x -= 1.f;
 
-            player->force += want.normalize() * 50.f;
+            player->force += want.normalize() * 25.f;
             physic.step();
 
             previous_time = time;

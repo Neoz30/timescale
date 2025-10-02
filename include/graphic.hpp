@@ -1,11 +1,7 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include "vec2.hpp"
-#include "object.hpp"
 #include "physic.hpp"
-
-using namespace std;
 
 void showSDLError();
 

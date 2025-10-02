@@ -41,11 +41,7 @@ void PhysicWorld::move_collider(Object *object)
 
 bool PhysicWorld::collision_detection(Object *object1, Object *object2)
 {
-    return
-    object1->position.x < object2->position.x + object2->size.x &&
-    object1->position.x + object1->size.x > object2->position.x &&
-    object1->position.y < object2->position.y + object2->size.y &&
-    object1->position.y + object1->size.y > object2->position.y;
+    return overlap_detection(object1->position, object1->size, object2->position, object2->size);
 }
 
 void PhysicWorld::collision_resolution(Object *object1, Object *object2)
@@ -95,6 +91,7 @@ void PhysicWorld::step()
 {
     for (Object *object : objects)
     {
+        object->update(&objects, delta_time);
         if (!object->fixed) move_collider(object);
     }
 

@@ -1,10 +1,6 @@
 #pragma once
 
-#include <vector>
-#include "vec2.hpp"
 #include "object.hpp"
-
-using namespace std;
 
 class PhysicWorld
 {
